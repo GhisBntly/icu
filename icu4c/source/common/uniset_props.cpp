@@ -710,7 +710,7 @@ static UBool versionFilter(UChar32 ch, void* context) {
 }
 
 typedef struct {
-    UProperty prop;
+    UCharProperty prop;
     int32_t value;
 } IntPropertyContext;
 
@@ -805,7 +805,7 @@ static UBool mungeCharName(char* dst, const char* src, int32_t dstCapacity) {
 #define FAIL(ec) {ec=U_ILLEGAL_ARGUMENT_ERROR; return *this;}
 
 UnicodeSet&
-UnicodeSet::applyIntPropertyValue(UProperty prop, int32_t value, UErrorCode& ec) {
+UnicodeSet::applyIntPropertyValue(UCharProperty prop, int32_t value, UErrorCode& ec) {
     if (U_FAILURE(ec) || isFrozen()) { return *this; }
     if (prop == UCHAR_GENERAL_CATEGORY_MASK) {
         const UnicodeSet* inclusions = CharacterProperties::getInclusionsForProperty(prop, ec);
@@ -857,7 +857,7 @@ UnicodeSet::applyPropertyAlias(const UnicodeString& prop,
     vname.appendInvariantChars(value, ec);
     if (U_FAILURE(ec)) return *this;
 
-    UProperty p;
+    UCharProperty p;
     int32_t v;
     UBool invert = FALSE;
 
@@ -1119,7 +1119,7 @@ UnicodeSet& UnicodeSet::applyPropertyPattern(const UnicodeString& pattern,
             // This is a little inefficient since it means we have to
             // parse NAME_PROP back to UCHAR_NAME even though we already
             // know it's UCHAR_NAME.  If we refactor the API to
-            // support args of (UProperty, char*) then we can remove
+            // support args of (UCharProperty, char*) then we can remove
             // NAME_PROP and make this a little more efficient.
             valueName = propName;
             propName = UnicodeString(NAME_PROP, NAME_PROP_LENGTH, US_INV);

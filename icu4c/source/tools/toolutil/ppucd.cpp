@@ -36,7 +36,7 @@ PropertyNames::getPropertyEnum(const char *name) const {
 
 int32_t
 PropertyNames::getPropertyValueEnum(int32_t property, const char *name) const {
-    return u_getPropertyValueEnum((UProperty)property, name);
+    return u_getPropertyValueEnum((UCharProperty)property, name);
 }
 
 UniProps::UniProps()

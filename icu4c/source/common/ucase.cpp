@@ -1525,7 +1525,7 @@ u_foldCase(UChar32 c, uint32_t options) {
 }
 
 U_CFUNC int32_t U_EXPORT2
-ucase_hasBinaryProperty(UChar32 c, UProperty which) {
+ucase_hasBinaryProperty(UChar32 c, UCharProperty which) {
     /* case mapping properties */
     const UChar *resultString;
     switch(which) {

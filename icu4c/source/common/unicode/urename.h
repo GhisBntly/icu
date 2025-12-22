@@ -337,6 +337,7 @@
 #define u_setAtomicIncDecFunctions U_ICU_ENTRY_POINT_RENAME(u_setAtomicIncDecFunctions)
 #define u_setDataDirectory U_ICU_ENTRY_POINT_RENAME(u_setDataDirectory)
 #define u_setMemoryFunctions U_ICU_ENTRY_POINT_RENAME(u_setMemoryFunctions)
+#define u_setDataFileFunctions U_ICU_ENTRY_POINT_RENAME(u_setDataFileFunctions)
 #define u_setMutexFunctions U_ICU_ENTRY_POINT_RENAME(u_setMutexFunctions)
 #define u_setTimeZoneFilesDirectory U_ICU_ENTRY_POINT_RENAME(u_setTimeZoneFilesDirectory)
 #define u_shapeArabic U_ICU_ENTRY_POINT_RENAME(u_shapeArabic)

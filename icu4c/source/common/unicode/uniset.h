@@ -727,7 +727,7 @@ public:
      *
      * @stable ICU 2.4
      */
-    UnicodeSet& applyIntPropertyValue(UProperty prop,
+    UnicodeSet& applyIntPropertyValue(UCharProperty prop,
                                       int32_t value,
                                       UErrorCode& ec);
 

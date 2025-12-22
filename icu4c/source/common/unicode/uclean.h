@@ -152,6 +152,12 @@ U_STABLE void U_EXPORT2
 u_setMemoryFunctions(const void *context, UMemAllocFn * U_CALLCONV_FPTR a, UMemReallocFn * U_CALLCONV_FPTR r, UMemFreeFn * U_CALLCONV_FPTR f, 
                     UErrorCode *status);
 
+typedef UBool U_CALLCONV UDataFileOpenFn(const void *context, void **fileContext, void **contents, const char *path);
+typedef void U_CALLCONV UDataFileCloseFn(const void *context, void *const fileContext, void *const contents);
+
+U_STABLE void U_EXPORT2 
+u_setDataFileFunctions(const void *context, UDataFileOpenFn *o, UDataFileCloseFn *c, UErrorCode *status);
+
 U_CDECL_END
 
 #ifndef U_HIDE_DEPRECATED_API

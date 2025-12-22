@@ -37,7 +37,7 @@ ubidi_addPropertyStarts(const USetAdder *sa, UErrorCode *pErrorCode);
 /* property access functions */
 
 U_CFUNC int32_t
-ubidi_getMaxValue(UProperty which);
+ubidi_getMaxValue(UCharProperty which);
 
 U_CAPI UCharDirection
 ubidi_getClass(UChar32 c);

@@ -25,6 +25,62 @@
 #include "unicode/ustring.h"
 #include "udatamem.h"
 #include "umapfile.h"
+#include "unicode/uclean.h"
+
+/* Function Pointers for user-supplied data file functions  */
+static const void	    *pContext = NULL;
+static UDataFileOpenFn  *pOpen = NULL;
+static UDataFileCloseFn *pClose = NULL;
+
+U_CAPI void U_EXPORT2
+u_setDataFileFunctions(const void *context, UDataFileOpenFn *o, UDataFileCloseFn *c, UErrorCode *status)
+{
+	UBool bOIsNull;
+	UBool bCIsNull;
+
+	if (U_FAILURE(*status)) {
+		return;
+	}
+
+	bOIsNull = (o == NULL);
+	bCIsNull = (c == NULL);
+	
+	// All are valid or all are null.
+	if(!(bOIsNull && bCIsNull) && !(!bOIsNull && !bCIsNull)) {
+		*status = U_ILLEGAL_ARGUMENT_ERROR;
+		return;
+	}
+	
+	pContext  = context;
+	pOpen     = o;
+	pClose    = c;
+}
+
+U_CFUNC UBool
+uprv_mapFileFromCallback(UDataMemory *pData, const char *path, UErrorCode *status)
+{
+	if(U_FAILURE(*status)) {
+		return FALSE;
+	}
+
+	if(pData==NULL || pOpen==NULL) {
+		return FALSE;
+	}
+
+	UDataMemory_init(pData); /* Clear the output struct. */
+	return pOpen(pContext, (void**)&pData->map, (void**)&pData->pHeader, path);
+}
+
+U_CFUNC void
+uprv_unmapFileFromCallback(UDataMemory *pData) {
+	if(pData==NULL || pClose==NULL) {
+		return;
+	}
+
+	pClose(pContext, (void*)pData->map, (void*)pData->pHeader);
+	pData->map = NULL;
+	pData->pHeader = NULL;
+}
 
 /* memory-mapping base definitions ------------------------------------------ */
 
@@ -106,6 +162,9 @@ typedef HANDLE MemoryMap;
 #if MAP_IMPLEMENTATION==MAP_NONE
     U_CFUNC UBool
     uprv_mapFile(UDataMemory *pData, const char *path, UErrorCode *status) {
+		if(pOpen!=NULL) {
+			return uprv_mapFileFromCallback(pData, path, status);
+		}
         if (U_FAILURE(*status)) {
             return FALSE;
         }
@@ -114,6 +173,9 @@ typedef HANDLE MemoryMap;
     }
 
     U_CFUNC void uprv_unmapFile(UDataMemory *pData) {
+		if (pClose != NULL) {
+			return uprv_unmapFileFromCallback(pData);
+		}
         /* nothing to do */
     }
 #elif MAP_IMPLEMENTATION==MAP_WIN32

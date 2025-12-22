@@ -155,7 +155,7 @@ UBool ulayout_ensureData() {
 
 struct BinaryProperty;
 
-typedef UBool BinaryPropertyContains(const BinaryProperty &prop, UChar32 c, UProperty which);
+typedef UBool BinaryPropertyContains(const BinaryProperty &prop, UChar32 c, UCharProperty which);
 
 struct BinaryProperty {
     int32_t column;  // SRC_PROPSVEC column, or "source" if mask==0
@@ -163,33 +163,33 @@ struct BinaryProperty {
     BinaryPropertyContains *contains;
 };
 
-static UBool defaultContains(const BinaryProperty &prop, UChar32 c, UProperty /*which*/) {
+static UBool defaultContains(const BinaryProperty &prop, UChar32 c, UCharProperty /*which*/) {
     /* systematic, directly stored properties */
     return (u_getUnicodeProperties(c, prop.column)&prop.mask)!=0;
 }
 
-static UBool caseBinaryPropertyContains(const BinaryProperty &/*prop*/, UChar32 c, UProperty which) {
+static UBool caseBinaryPropertyContains(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty which) {
     return static_cast<UBool>(ucase_hasBinaryProperty(c, which));
 }
 
-static UBool isBidiControl(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isBidiControl(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return ubidi_isBidiControl(c);
 }
 
-static UBool isMirrored(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isMirrored(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return ubidi_isMirrored(c);
 }
 
-static UBool isJoinControl(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isJoinControl(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return ubidi_isJoinControl(c);
 }
 
 #if UCONFIG_NO_NORMALIZATION
-static UBool hasFullCompositionExclusion(const BinaryProperty &, UChar32, UProperty) {
+static UBool hasFullCompositionExclusion(const BinaryProperty &, UChar32, UCharProperty) {
     return FALSE;
 }
 #else
-static UBool hasFullCompositionExclusion(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool hasFullCompositionExclusion(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     // By definition, Full_Composition_Exclusion is the same as NFC_QC=No.
     UErrorCode errorCode=U_ZERO_ERROR;
     const Normalizer2Impl *impl=Normalizer2Factory::getNFCImpl(errorCode);
@@ -199,11 +199,11 @@ static UBool hasFullCompositionExclusion(const BinaryProperty &/*prop*/, UChar32
 
 // UCHAR_NF*_INERT properties
 #if UCONFIG_NO_NORMALIZATION
-static UBool isNormInert(const BinaryProperty &, UChar32, UProperty) {
+static UBool isNormInert(const BinaryProperty &, UChar32, UCharProperty) {
     return FALSE;
 }
 #else
-static UBool isNormInert(const BinaryProperty &/*prop*/, UChar32 c, UProperty which) {
+static UBool isNormInert(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty which) {
     UErrorCode errorCode=U_ZERO_ERROR;
     const Normalizer2 *norm2=Normalizer2Factory::getInstance(
         (UNormalizationMode)(which-UCHAR_NFD_INERT+UNORM_NFD), errorCode);
@@ -212,11 +212,11 @@ static UBool isNormInert(const BinaryProperty &/*prop*/, UChar32 c, UProperty wh
 #endif
 
 #if UCONFIG_NO_NORMALIZATION
-static UBool changesWhenCasefolded(const BinaryProperty &, UChar32, UProperty) {
+static UBool changesWhenCasefolded(const BinaryProperty &, UChar32, UCharProperty) {
     return FALSE;
 }
 #else
-static UBool changesWhenCasefolded(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool changesWhenCasefolded(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     UnicodeString nfd;
     UErrorCode errorCode=U_ZERO_ERROR;
     const Normalizer2 *nfcNorm2=Normalizer2::getNFCInstance(errorCode);
@@ -256,11 +256,11 @@ static UBool changesWhenCasefolded(const BinaryProperty &/*prop*/, UChar32 c, UP
 #endif
 
 #if UCONFIG_NO_NORMALIZATION
-static UBool changesWhenNFKC_Casefolded(const BinaryProperty &, UChar32, UProperty) {
+static UBool changesWhenNFKC_Casefolded(const BinaryProperty &, UChar32, UCharProperty) {
     return FALSE;
 }
 #else
-static UBool changesWhenNFKC_Casefolded(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool changesWhenNFKC_Casefolded(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     UErrorCode errorCode=U_ZERO_ERROR;
     const Normalizer2Impl *kcf=Normalizer2Factory::getNFKC_CFImpl(errorCode);
     if(U_FAILURE(errorCode)) {
@@ -284,11 +284,11 @@ static UBool changesWhenNFKC_Casefolded(const BinaryProperty &/*prop*/, UChar32 
 #endif
 
 #if UCONFIG_NO_NORMALIZATION
-static UBool isCanonSegmentStarter(const BinaryProperty &, UChar32, UProperty) {
+static UBool isCanonSegmentStarter(const BinaryProperty &, UChar32, UCharProperty) {
     return FALSE;
 }
 #else
-static UBool isCanonSegmentStarter(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isCanonSegmentStarter(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     UErrorCode errorCode=U_ZERO_ERROR;
     const Normalizer2Impl *impl=Normalizer2Factory::getNFCImpl(errorCode);
     return
@@ -297,27 +297,27 @@ static UBool isCanonSegmentStarter(const BinaryProperty &/*prop*/, UChar32 c, UP
 }
 #endif
 
-static UBool isPOSIX_alnum(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isPOSIX_alnum(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return u_isalnumPOSIX(c);
 }
 
-static UBool isPOSIX_blank(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isPOSIX_blank(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return u_isblank(c);
 }
 
-static UBool isPOSIX_graph(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isPOSIX_graph(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return u_isgraphPOSIX(c);
 }
 
-static UBool isPOSIX_print(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isPOSIX_print(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return u_isprintPOSIX(c);
 }
 
-static UBool isPOSIX_xdigit(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isPOSIX_xdigit(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return u_isxdigit(c);
 }
 
-static UBool isRegionalIndicator(const BinaryProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static UBool isRegionalIndicator(const BinaryProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     // Property starts are a subset of lb=RI etc.
     return 0x1F1E6<=c && c<=0x1F1FF;
 }
@@ -325,8 +325,8 @@ static UBool isRegionalIndicator(const BinaryProperty &/*prop*/, UChar32 c, UPro
 static const BinaryProperty binProps[UCHAR_BINARY_LIMIT]={
     /*
      * column and mask values for binary properties from u_getUnicodeProperties().
-     * Must be in order of corresponding UProperty,
-     * and there must be exactly one entry per binary UProperty.
+     * Must be in order of corresponding UCharProperty,
+     * and there must be exactly one entry per binary UCharProperty.
      *
      * Properties with mask==0 are handled in code.
      * For them, column is the UPropertySource value.
@@ -399,7 +399,7 @@ static const BinaryProperty binProps[UCHAR_BINARY_LIMIT]={
 };
 
 U_CAPI UBool U_EXPORT2
-u_hasBinaryProperty(UChar32 c, UProperty which) {
+u_hasBinaryProperty(UChar32 c, UCharProperty which) {
     /* c is range-checked in the functions that are called from here */
     if(which<UCHAR_BINARY_START || UCHAR_BINARY_LIMIT<=which) {
         /* not a known binary property */
@@ -412,8 +412,8 @@ u_hasBinaryProperty(UChar32 c, UProperty which) {
 
 struct IntProperty;
 
-typedef int32_t IntPropertyGetValue(const IntProperty &prop, UChar32 c, UProperty which);
-typedef int32_t IntPropertyGetMaxValue(const IntProperty &prop, UProperty which);
+typedef int32_t IntPropertyGetValue(const IntProperty &prop, UChar32 c, UCharProperty which);
+typedef int32_t IntPropertyGetMaxValue(const IntProperty &prop, UCharProperty which);
 
 struct IntProperty {
     int32_t column;  // SRC_PROPSVEC column, or "source" if mask==0
@@ -423,59 +423,59 @@ struct IntProperty {
     IntPropertyGetMaxValue *getMaxValue;
 };
 
-static int32_t defaultGetValue(const IntProperty &prop, UChar32 c, UProperty /*which*/) {
+static int32_t defaultGetValue(const IntProperty &prop, UChar32 c, UCharProperty /*which*/) {
     /* systematic, directly stored properties */
     return (int32_t)(u_getUnicodeProperties(c, prop.column)&prop.mask)>>prop.shift;
 }
 
-static int32_t defaultGetMaxValue(const IntProperty &prop, UProperty /*which*/) {
+static int32_t defaultGetMaxValue(const IntProperty &prop, UCharProperty /*which*/) {
     return (uprv_getMaxValues(prop.column)&prop.mask)>>prop.shift;
 }
 
-static int32_t getMaxValueFromShift(const IntProperty &prop, UProperty /*which*/) {
+static int32_t getMaxValueFromShift(const IntProperty &prop, UCharProperty /*which*/) {
     return prop.shift;
 }
 
-static int32_t getBiDiClass(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getBiDiClass(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return (int32_t)u_charDirection(c);
 }
 
-static int32_t getBiDiPairedBracketType(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getBiDiPairedBracketType(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return (int32_t)ubidi_getPairedBracketType(c);
 }
 
-static int32_t biDiGetMaxValue(const IntProperty &/*prop*/, UProperty which) {
+static int32_t biDiGetMaxValue(const IntProperty &/*prop*/, UCharProperty which) {
     return ubidi_getMaxValue(which);
 }
 
 #if UCONFIG_NO_NORMALIZATION
-static int32_t getCombiningClass(const IntProperty &, UChar32, UProperty) {
+static int32_t getCombiningClass(const IntProperty &, UChar32, UCharProperty) {
     return 0;
 }
 #else
-static int32_t getCombiningClass(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getCombiningClass(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return u_getCombiningClass(c);
 }
 #endif
 
-static int32_t getGeneralCategory(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getGeneralCategory(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return (int32_t)u_charType(c);
 }
 
-static int32_t getJoiningGroup(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getJoiningGroup(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return ubidi_getJoiningGroup(c);
 }
 
-static int32_t getJoiningType(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getJoiningType(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return ubidi_getJoiningType(c);
 }
 
-static int32_t getNumericType(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getNumericType(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     int32_t ntv=(int32_t)GET_NUMERIC_TYPE_VALUE(u_getMainProperties(c));
     return UPROPS_NTV_GET_TYPE(ntv);
 }
 
-static int32_t getScript(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getScript(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     UErrorCode errorCode=U_ZERO_ERROR;
     return (int32_t)uscript_getScript(c, &errorCode);
 }
@@ -501,7 +501,7 @@ static const UHangulSyllableType gcbToHst[]={
      */
 };
 
-static int32_t getHangulSyllableType(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getHangulSyllableType(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     /* see comments on gcbToHst[] above */
     int32_t gcb=(int32_t)(u_getUnicodeProperties(c, 2)&UPROPS_GCB_MASK)>>UPROPS_GCB_SHIFT;
     if(gcb<UPRV_LENGTHOF(gcbToHst)) {
@@ -512,48 +512,48 @@ static int32_t getHangulSyllableType(const IntProperty &/*prop*/, UChar32 c, UPr
 }
 
 #if UCONFIG_NO_NORMALIZATION
-static int32_t getNormQuickCheck(const IntProperty &, UChar32, UProperty) {
+static int32_t getNormQuickCheck(const IntProperty &, UChar32, UCharProperty) {
     return 0;
 }
 #else
-static int32_t getNormQuickCheck(const IntProperty &/*prop*/, UChar32 c, UProperty which) {
+static int32_t getNormQuickCheck(const IntProperty &/*prop*/, UChar32 c, UCharProperty which) {
     return (int32_t)unorm_getQuickCheck(c, (UNormalizationMode)(which-UCHAR_NFD_QUICK_CHECK+UNORM_NFD));
 }
 #endif
 
 #if UCONFIG_NO_NORMALIZATION
-static int32_t getLeadCombiningClass(const IntProperty &, UChar32, UProperty) {
+static int32_t getLeadCombiningClass(const IntProperty &, UChar32, UCharProperty) {
     return 0;
 }
 #else
-static int32_t getLeadCombiningClass(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getLeadCombiningClass(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return unorm_getFCD16(c)>>8;
 }
 #endif
 
 #if UCONFIG_NO_NORMALIZATION
-static int32_t getTrailCombiningClass(const IntProperty &, UChar32, UProperty) {
+static int32_t getTrailCombiningClass(const IntProperty &, UChar32, UCharProperty) {
     return 0;
 }
 #else
-static int32_t getTrailCombiningClass(const IntProperty &/*prop*/, UChar32 c, UProperty /*which*/) {
+static int32_t getTrailCombiningClass(const IntProperty &/*prop*/, UChar32 c, UCharProperty /*which*/) {
     return unorm_getFCD16(c)&0xff;
 }
 #endif
 
-static int32_t getInPC(const IntProperty &, UChar32 c, UProperty) {
+static int32_t getInPC(const IntProperty &, UChar32 c, UCharProperty) {
     return ulayout_ensureData() && gInpcTrie != nullptr ? ucptrie_get(gInpcTrie, c) : 0;
 }
 
-static int32_t getInSC(const IntProperty &, UChar32 c, UProperty) {
+static int32_t getInSC(const IntProperty &, UChar32 c, UCharProperty) {
     return ulayout_ensureData() && gInscTrie != nullptr ? ucptrie_get(gInscTrie, c) : 0;
 }
 
-static int32_t getVo(const IntProperty &, UChar32 c, UProperty) {
+static int32_t getVo(const IntProperty &, UChar32 c, UCharProperty) {
     return ulayout_ensureData() && gVoTrie != nullptr ? ucptrie_get(gVoTrie, c) : 0;
 }
 
-static int32_t layoutGetMaxValue(const IntProperty &/*prop*/, UProperty which) {
+static int32_t layoutGetMaxValue(const IntProperty &/*prop*/, UCharProperty which) {
     if (!ulayout_ensureData()) { return 0; }
     switch (which) {
     case UCHAR_INDIC_POSITIONAL_CATEGORY:
@@ -570,8 +570,8 @@ static int32_t layoutGetMaxValue(const IntProperty &/*prop*/, UProperty which) {
 static const IntProperty intProps[UCHAR_INT_LIMIT-UCHAR_INT_START]={
     /*
      * column, mask and shift values for int-value properties from u_getUnicodeProperties().
-     * Must be in order of corresponding UProperty,
-     * and there must be exactly one entry per int UProperty.
+     * Must be in order of corresponding UCharProperty,
+     * and there must be exactly one entry per int UCharProperty.
      *
      * Properties with mask==0 are handled in code.
      * For them, column is the UPropertySource value.
@@ -608,7 +608,7 @@ static const IntProperty intProps[UCHAR_INT_LIMIT-UCHAR_INT_START]={
 };
 
 U_CAPI int32_t U_EXPORT2
-u_getIntPropertyValue(UChar32 c, UProperty which) {
+u_getIntPropertyValue(UChar32 c, UCharProperty which) {
     if(which<UCHAR_INT_START) {
         if(UCHAR_BINARY_START<=which && which<UCHAR_BINARY_LIMIT) {
             const BinaryProperty &prop=binProps[which];
@@ -624,12 +624,12 @@ u_getIntPropertyValue(UChar32 c, UProperty which) {
 }
 
 U_CAPI int32_t U_EXPORT2
-u_getIntPropertyMinValue(UProperty /*which*/) {
+u_getIntPropertyMinValue(UCharProperty /*which*/) {
     return 0; /* all binary/enum/int properties have a minimum value of 0 */
 }
 
 U_CAPI int32_t U_EXPORT2
-u_getIntPropertyMaxValue(UProperty which) {
+u_getIntPropertyMaxValue(UCharProperty which) {
     if(which<UCHAR_INT_START) {
         if(UCHAR_BINARY_START<=which && which<UCHAR_BINARY_LIMIT) {
             return 1;  // maximum TRUE for all binary properties
@@ -642,7 +642,7 @@ u_getIntPropertyMaxValue(UProperty which) {
 }
 
 U_CFUNC UPropertySource U_EXPORT2
-uprops_getSource(UProperty which) {
+uprops_getSource(UCharProperty which) {
     if(which<UCHAR_BINARY_START) {
         return UPROPS_SRC_NONE; /* undefined */
     } else if(which<UCHAR_BINARY_LIMIT) {

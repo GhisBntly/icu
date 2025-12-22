@@ -288,20 +288,20 @@ U_NAMESPACE_END
 // Public API implementation
 
 U_CAPI const char* U_EXPORT2
-u_getPropertyName(UProperty property,
+u_getPropertyName(UCharProperty property,
                   UPropertyNameChoice nameChoice) {
     U_NAMESPACE_USE
     return PropNameData::getPropertyName(property, nameChoice);
 }
 
-U_CAPI UProperty U_EXPORT2
+U_CAPI UCharProperty U_EXPORT2
 u_getPropertyEnum(const char* alias) {
     U_NAMESPACE_USE
-    return (UProperty)PropNameData::getPropertyEnum(alias);
+    return (UCharProperty)PropNameData::getPropertyEnum(alias);
 }
 
 U_CAPI const char* U_EXPORT2
-u_getPropertyValueName(UProperty property,
+u_getPropertyValueName(UCharProperty property,
                        int32_t value,
                        UPropertyNameChoice nameChoice) {
     U_NAMESPACE_USE
@@ -309,7 +309,7 @@ u_getPropertyValueName(UProperty property,
 }
 
 U_CAPI int32_t U_EXPORT2
-u_getPropertyValueEnum(UProperty property,
+u_getPropertyValueEnum(UCharProperty property,
                        const char* alias) {
     U_NAMESPACE_USE
     return PropNameData::getPropertyValueEnum(property, alias);

@@ -418,7 +418,7 @@ typedef enum UPropertySource UPropertySource;
  * @internal
  */
 U_CFUNC UPropertySource U_EXPORT2
-uprops_getSource(UProperty which);
+uprops_getSource(UCharProperty which);
 
 /**
  * Enumerate uprops.icu's main data trie and add the
@@ -469,7 +469,7 @@ class UnicodeSet;
 class CharacterProperties {
 public:
     CharacterProperties() = delete;
-    static const UnicodeSet *getInclusionsForProperty(UProperty prop, UErrorCode &errorCode);
+    static const UnicodeSet *getInclusionsForProperty(UCharProperty prop, UErrorCode &errorCode);
 };
 
 // implemented in uniset_props.cpp

@@ -79,7 +79,7 @@ U_CDECL_BEGIN
  * "About the Unicode Character Database" (http://www.unicode.org/ucd/)
  * and the ICU User Guide chapter on Properties (http://icu-project.org/userguide/properties.html).
  *
- * Many properties are accessible via generic functions that take a UProperty selector.
+ * Many properties are accessible via generic functions that take a UCharProperty selector.
  * - u_hasBinaryProperty() returns a binary value (TRUE/FALSE) per property and code point.
  * - u_getIntPropertyValue() returns an integer value per property and code point.
  *   For each supported enumerated or catalog property, there is
@@ -192,9 +192,9 @@ U_CDECL_BEGIN
  * @see u_getUnicodeVersion
  * @stable ICU 2.1
  */
-typedef enum UProperty {
+typedef enum UCharProperty {
     /*
-     * Note: UProperty constants are parsed by preparseucd.py.
+     * Note: UCharProperty constants are parsed by preparseucd.py.
      * It matches lines like
      *     UCHAR_<Unicode property name>=<integer>,
      */
@@ -714,7 +714,7 @@ typedef enum UProperty {
 
     /** Represents a nonexistent or invalid property or property value. @stable ICU 2.4 */
     UCHAR_INVALID_CODE = -1
-} UProperty;
+} UCharProperty;
 
 /**
  * Data for enumerated Unicode general category types.
@@ -2563,20 +2563,20 @@ typedef enum UVerticalOrientation {
  * then properties marked with "new in Unicode 3.2" are not or not fully available.
  *
  * @param c Code point to test.
- * @param which UProperty selector constant, identifies which binary property to check.
+ * @param which UCharProperty selector constant, identifies which binary property to check.
  *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT.
  * @return TRUE or FALSE according to the binary Unicode property value for c.
  *         Also FALSE if 'which' is out of bounds or if the Unicode version
  *         does not have data for the property at all, or not for this code point.
  *
- * @see UProperty
+ * @see UCharProperty
  * @see u_getBinaryPropertySet
  * @see u_getIntPropertyValue
  * @see u_getUnicodeVersion
  * @stable ICU 2.1
  */
 U_STABLE UBool U_EXPORT2
-u_hasBinaryProperty(UChar32 c, UProperty which);
+u_hasBinaryProperty(UChar32 c, UCharProperty which);
 
 #ifndef U_HIDE_DRAFT_API
 
@@ -2590,13 +2590,13 @@ u_hasBinaryProperty(UChar32 c, UProperty which);
  * @param property UCHAR_BINARY_START..UCHAR_BINARY_LIMIT-1
  * @param pErrorCode an in/out ICU UErrorCode
  * @return the property as a set
- * @see UProperty
+ * @see UCharProperty
  * @see u_hasBinaryProperty
  * @see Unicode::fromUSet
  * @draft ICU 63
  */
 U_CAPI const USet * U_EXPORT2
-u_getBinaryPropertySet(UProperty property, UErrorCode *pErrorCode);
+u_getBinaryPropertySet(UCharProperty property, UErrorCode *pErrorCode);
 
 #endif  // U_HIDE_DRAFT_API
 
@@ -2683,7 +2683,7 @@ u_isUWhiteSpace(UChar32 c);
  * UBool b=(UBool)u_getIntPropertyValue(c, UCHAR_IDEOGRAPHIC);
  *
  * @param c Code point to test.
- * @param which UProperty selector constant, identifies which property to check.
+ * @param which UCharProperty selector constant, identifies which property to check.
  *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT
  *        or UCHAR_INT_START<=which<UCHAR_INT_LIMIT
  *        or UCHAR_MASK_START<=which<UCHAR_MASK_LIMIT.
@@ -2696,7 +2696,7 @@ u_isUWhiteSpace(UChar32 c);
  *         Returns 0 if 'which' is out of bounds or if the Unicode version
  *         does not have data for the property at all, or not for this code point.
  *
- * @see UProperty
+ * @see UCharProperty
  * @see u_hasBinaryProperty
  * @see u_getIntPropertyMinValue
  * @see u_getIntPropertyMaxValue
@@ -2705,20 +2705,20 @@ u_isUWhiteSpace(UChar32 c);
  * @stable ICU 2.2
  */
 U_STABLE int32_t U_EXPORT2
-u_getIntPropertyValue(UChar32 c, UProperty which);
+u_getIntPropertyValue(UChar32 c, UCharProperty which);
 
 /**
  * Get the minimum value for an enumerated/integer/binary Unicode property.
  * Can be used together with u_getIntPropertyMaxValue
  * to allocate arrays of UnicodeSet or similar.
  *
- * @param which UProperty selector constant, identifies which binary property to check.
+ * @param which UCharProperty selector constant, identifies which binary property to check.
  *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT
  *        or UCHAR_INT_START<=which<UCHAR_INT_LIMIT.
  * @return Minimum value returned by u_getIntPropertyValue for a Unicode property.
  *         0 if the property selector is out of range.
  *
- * @see UProperty
+ * @see UCharProperty
  * @see u_hasBinaryProperty
  * @see u_getUnicodeVersion
  * @see u_getIntPropertyMaxValue
@@ -2726,7 +2726,7 @@ u_getIntPropertyValue(UChar32 c, UProperty which);
  * @stable ICU 2.2
  */
 U_STABLE int32_t U_EXPORT2
-u_getIntPropertyMinValue(UProperty which);
+u_getIntPropertyMinValue(UCharProperty which);
 
 /**
  * Get the maximum value for an enumerated/integer/binary Unicode property.
@@ -2739,15 +2739,15 @@ u_getIntPropertyMinValue(UProperty which);
  * - UCHAR_SCRIPT:        0/45 (USCRIPT_COMMON/USCRIPT_TAGBANWA)
  * - UCHAR_IDEOGRAPHIC:   0/1  (FALSE/TRUE)
  *
- * For undefined UProperty constant values, min/max values will be 0/-1.
+ * For undefined UCharProperty constant values, min/max values will be 0/-1.
  *
- * @param which UProperty selector constant, identifies which binary property to check.
+ * @param which UCharProperty selector constant, identifies which binary property to check.
  *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT
  *        or UCHAR_INT_START<=which<UCHAR_INT_LIMIT.
  * @return Maximum value returned by u_getIntPropertyValue for a Unicode property.
  *         <=0 if the property selector is out of range.
  *
- * @see UProperty
+ * @see UCharProperty
  * @see u_hasBinaryProperty
  * @see u_getUnicodeVersion
  * @see u_getIntPropertyMaxValue
@@ -2755,7 +2755,7 @@ u_getIntPropertyMinValue(UProperty which);
  * @stable ICU 2.2
  */
 U_STABLE int32_t U_EXPORT2
-u_getIntPropertyMaxValue(UProperty which);
+u_getIntPropertyMaxValue(UCharProperty which);
 
 #ifndef U_HIDE_DRAFT_API
 
@@ -2770,12 +2770,12 @@ u_getIntPropertyMaxValue(UProperty which);
  * @param property UCHAR_INT_START..UCHAR_INT_LIMIT-1
  * @param pErrorCode an in/out ICU UErrorCode
  * @return the property as a map
- * @see UProperty
+ * @see UCharProperty
  * @see u_getIntPropertyValue
  * @draft ICU 63
  */
 U_CAPI const UCPMap * U_EXPORT2
-u_getIntPropertyMap(UProperty property, UErrorCode *pErrorCode);
+u_getIntPropertyMap(UCharProperty property, UErrorCode *pErrorCode);
 
 #endif  // U_HIDE_DRAFT_API
 
@@ -3565,7 +3565,7 @@ u_enumCharNames(UChar32 start, UChar32 limit,
  * "General_Category_Mask".  These names are not in
  * PropertyAliases.txt.
  *
- * @param property UProperty selector other than UCHAR_INVALID_CODE.
+ * @param property UCharProperty selector other than UCHAR_INVALID_CODE.
  *         If out of range, NULL is returned.
  *
  * @param nameChoice selector for which name to get.  If out of range,
@@ -3583,16 +3583,16 @@ u_enumCharNames(UChar32 start, UChar32 limit,
  *         non-NULL value.  The returned pointer is valid until
  *         u_cleanup() is called.
  *
- * @see UProperty
+ * @see UCharProperty
  * @see UPropertyNameChoice
  * @stable ICU 2.4
  */
 U_STABLE const char* U_EXPORT2
-u_getPropertyName(UProperty property,
+u_getPropertyName(UCharProperty property,
                   UPropertyNameChoice nameChoice);
 
 /**
- * Return the UProperty enum for a given property name, as specified
+ * Return the UCharProperty enum for a given property name, as specified
  * in the Unicode database file PropertyAliases.txt.  Short, long, and
  * any other variants are recognized.
  *
@@ -3604,13 +3604,13 @@ u_getPropertyName(UProperty property,
  * @param alias the property name to be matched.  The name is compared
  *         using "loose matching" as described in PropertyAliases.txt.
  *
- * @return a UProperty enum, or UCHAR_INVALID_CODE if the given name
+ * @return a UCharProperty enum, or UCHAR_INVALID_CODE if the given name
  *         does not match any property.
  *
- * @see UProperty
+ * @see UCharProperty
  * @stable ICU 2.4
  */
-U_STABLE UProperty U_EXPORT2
+U_STABLE UCharProperty U_EXPORT2
 u_getPropertyEnum(const char* alias);
 
 /**
@@ -3623,7 +3623,7 @@ u_getPropertyEnum(const char* alias);
  * "Letter", "LC" / "Cased_Letter", "M" / "Mark", "N" / "Number", "P"
  * / "Punctuation", "S" / "Symbol", and "Z" / "Separator".
  *
- * @param property UProperty selector constant.
+ * @param property UCharProperty selector constant.
  *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT
  *        or UCHAR_INT_START<=which<UCHAR_INT_LIMIT
  *        or UCHAR_MASK_START<=which<UCHAR_MASK_LIMIT.
@@ -3656,12 +3656,12 @@ u_getPropertyEnum(const char* alias);
  *         non-NULL value.  The returned pointer is valid until
  *         u_cleanup() is called.
  *
- * @see UProperty
+ * @see UCharProperty
  * @see UPropertyNameChoice
  * @stable ICU 2.4
  */
 U_STABLE const char* U_EXPORT2
-u_getPropertyValueName(UProperty property,
+u_getPropertyValueName(UCharProperty property,
                        int32_t value,
                        UPropertyNameChoice nameChoice);
 
@@ -3676,7 +3676,7 @@ u_getPropertyValueName(UProperty property,
  * "Letter", "LC" / "Cased_Letter", "M" / "Mark", "N" / "Number", "P"
  * / "Punctuation", "S" / "Symbol", and "Z" / "Separator".
  *
- * @param property UProperty selector constant.
+ * @param property UCharProperty selector constant.
  *        Must be UCHAR_BINARY_START<=which<UCHAR_BINARY_LIMIT
  *        or UCHAR_INT_START<=which<UCHAR_INT_LIMIT
  *        or UCHAR_MASK_START<=which<UCHAR_MASK_LIMIT.
@@ -3693,11 +3693,11 @@ u_getPropertyValueName(UProperty property,
  *         produced by U_GET_GC_MASK().  This allows grouped
  *         categories such as [:L:] to be represented.
  *
- * @see UProperty
+ * @see UCharProperty
  * @stable ICU 2.4
  */
 U_STABLE int32_t U_EXPORT2
-u_getPropertyValueEnum(UProperty property,
+u_getPropertyValueEnum(UCharProperty property,
                        const char* alias);
 
 /**

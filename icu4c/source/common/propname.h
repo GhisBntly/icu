@@ -150,14 +150,14 @@ private:
  *
  * int32_t valueMaps[];
  *
- *      The valueMaps[] begins with a map from UProperty enums to properties,
+ *      The valueMaps[] begins with a map from UCharProperty enums to properties,
  *      followed by the per-property value maps from property values to names,
  *      for those properties that have named values.
  *      (Binary & enumerated, plus General_Category_Mask.)
  *
- *      valueMaps[0] contains the number of UProperty enum ranges.
+ *      valueMaps[0] contains the number of UCharProperty enum ranges.
  *      For each range:
- *        int32_t start, limit -- first and last+1 UProperty enum of a dense range
+ *        int32_t start, limit -- first and last+1 UCharProperty enum of a dense range
  *        Followed by (limit-start) pairs of
  *          int32_t nameGroupOffset;
  *            Offset into nameGroups[] for the property's names/aliases.
@@ -170,7 +170,7 @@ private:
  *      int32_t numRanges;
  *        If numRanges is in the range 1..15, then that many ranges of values follow.
  *        Per range:
- *          int32_t start, limit -- first and last+1 UProperty enum of a range
+ *          int32_t start, limit -- first and last+1 UCharProperty enum of a range
  *          Followed by (limit-start) entries of
  *            int32_t nameGroupOffset;
  *              Offset into nameGroups[] for the property value's names/aliases.
@@ -187,7 +187,7 @@ private:
  *
  *      This is a sequence of BytesTrie structures, byte-serialized tries for
  *      mapping from names/aliases to values.
- *      The first one maps from property names/aliases to UProperty enum constants.
+ *      The first one maps from property names/aliases to UCharProperty enum constants.
  *      The following ones are indexed by property value map bytesTrieOffsets
  *      for mapping each property's names/aliases to their property values.
  *

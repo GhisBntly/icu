@@ -451,7 +451,7 @@ uset_applyPattern(USet *set,
  */
 U_STABLE void U_EXPORT2
 uset_applyIntPropertyValue(USet* set,
-                           UProperty prop, int32_t value, UErrorCode* ec);
+                           UCharProperty prop, int32_t value, UErrorCode* ec);
 
 /**
  * Modifies the set to contain those code points which have the

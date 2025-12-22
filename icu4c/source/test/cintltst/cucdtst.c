@@ -2792,7 +2792,7 @@ TestAdditionalProperties() {
         { 0x0606, UCHAR_PREPENDED_CONCATENATION_MARK, FALSE },
         { 0x110BD, UCHAR_PREPENDED_CONCATENATION_MARK, TRUE },
 
-        /* undefined UProperty values */
+        /* undefined UCharProperty values */
         { 0x61, 0x4a7, 0 },
         { 0x234bc, 0x15ed, 0 }
     };
@@ -2800,7 +2800,7 @@ TestAdditionalProperties() {
     UVersionInfo version;
     UChar32 c;
     int32_t i, result, uVersion;
-    UProperty which;
+    UCharProperty which;
 
     /* what is our Unicode version? */
     u_getUnicodeVersion(version);
@@ -2838,7 +2838,7 @@ TestAdditionalProperties() {
     if( u_getIntPropertyMaxValue(UCHAR_ID_CONTINUE)!=1) {
         log_err("error: u_getIntPropertyMaxValue(UCHAR_ID_CONTINUE) wrong\n");
     }
-    if( u_getIntPropertyMaxValue((UProperty)(UCHAR_BINARY_LIMIT-1))!=1) {
+    if( u_getIntPropertyMaxValue((UCharProperty)(UCHAR_BINARY_LIMIT-1))!=1) {
         log_err("error: u_getIntPropertyMaxValue(UCHAR_BINARY_LIMIT-1) wrong\n");
     }
     if( u_getIntPropertyMaxValue(UCHAR_BIDI_CLASS)!=(int32_t)U_CHAR_DIRECTION_COUNT-1 ) {
@@ -2905,7 +2905,7 @@ TestAdditionalProperties() {
         }
 
         c=(UChar32)props[i][0];
-        which=(UProperty)props[i][1];
+        which=(UCharProperty)props[i][1];
         whichName=u_getPropertyName(which, U_LONG_PROPERTY_NAME);
 
         if(which<UCHAR_INT_START) {
@@ -2923,7 +2923,7 @@ TestAdditionalProperties() {
         }
 
         /* test separate functions, too */
-        switch((UProperty)props[i][1]) {
+        switch((UCharProperty)props[i][1]) {
         case UCHAR_ALPHABETIC:
             if(u_isUAlphabetic((UChar32)props[i][0])!=(UBool)props[i][2]) {
                 log_err("error: u_isUAlphabetic(U+%04lx)=%d is wrong (props[%d])\n",
@@ -3047,7 +3047,7 @@ TestPropertyNames(void) {
     UBool atLeastSomething = FALSE;
 
     for (p=0; ; ++p) {
-        UProperty propEnum = (UProperty)p;
+        UCharProperty propEnum = (UCharProperty)p;
         UBool sawProp = FALSE;
         if(p > 10 && !atLeastSomething) {
           log_data_err("Never got anything after 10 tries.\nYour data is probably fried. Quitting this test\n", p, choice);
@@ -3138,7 +3138,7 @@ TestPropertyValues(void) {
     /* Min should be 0 for everything. */
     /* Until JB#2478 is fixed, the one exception is UCHAR_BLOCK. */
     for (p=UCHAR_INT_START; p<UCHAR_INT_LIMIT; ++p) {
-        UProperty propEnum = (UProperty)p;
+        UCharProperty propEnum = (UCharProperty)p;
         min = u_getIntPropertyMinValue(propEnum);
         if (min != 0) {
             if (p == UCHAR_BLOCK) {

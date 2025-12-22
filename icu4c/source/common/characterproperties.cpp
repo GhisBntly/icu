@@ -202,7 +202,7 @@ const UnicodeSet *getInclusionsForSource(UPropertySource src, UErrorCode &errorC
     return i.fSet;
 }
 
-void U_CALLCONV initIntPropInclusion(UProperty prop, UErrorCode &errorCode) {
+void U_CALLCONV initIntPropInclusion(UCharProperty prop, UErrorCode &errorCode) {
     // This function is invoked only via umtx_initOnce().
     U_ASSERT(UCHAR_INT_START <= prop && prop < UCHAR_INT_LIMIT);
     int32_t inclIndex = UPROPS_SRC_COUNT + prop - UCHAR_INT_START;
@@ -247,7 +247,7 @@ void U_CALLCONV initIntPropInclusion(UProperty prop, UErrorCode &errorCode) {
 U_NAMESPACE_BEGIN
 
 const UnicodeSet *CharacterProperties::getInclusionsForProperty(
-        UProperty prop, UErrorCode &errorCode) {
+        UCharProperty prop, UErrorCode &errorCode) {
     if (U_FAILURE(errorCode)) { return nullptr; }
     if (UCHAR_INT_START <= prop && prop < UCHAR_INT_LIMIT) {
         int32_t inclIndex = UPROPS_SRC_COUNT + prop - UCHAR_INT_START;
@@ -264,7 +264,7 @@ U_NAMESPACE_END
 
 namespace {
 
-UnicodeSet *makeSet(UProperty property, UErrorCode &errorCode) {
+UnicodeSet *makeSet(UCharProperty property, UErrorCode &errorCode) {
     if (U_FAILURE(errorCode)) { return nullptr; }
     LocalPointer<UnicodeSet> set(new UnicodeSet());
     if (set.isNull()) {
@@ -300,7 +300,7 @@ UnicodeSet *makeSet(UProperty property, UErrorCode &errorCode) {
     return set.orphan();
 }
 
-UCPMap *makeMap(UProperty property, UErrorCode &errorCode) {
+UCPMap *makeMap(UCharProperty property, UErrorCode &errorCode) {
     if (U_FAILURE(errorCode)) { return nullptr; }
     uint32_t nullValue = property == UCHAR_SCRIPT ? USCRIPT_UNKNOWN : 0;
     icu::LocalUMutableCPTriePointer mutableTrie(
@@ -355,7 +355,7 @@ UCPMap *makeMap(UProperty property, UErrorCode &errorCode) {
 U_NAMESPACE_USE
 
 U_CAPI const USet * U_EXPORT2
-u_getBinaryPropertySet(UProperty property, UErrorCode *pErrorCode) {
+u_getBinaryPropertySet(UCharProperty property, UErrorCode *pErrorCode) {
     if (U_FAILURE(*pErrorCode)) { return nullptr; }
     if (property < 0 || UCHAR_BINARY_LIMIT <= property) {
         *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;
@@ -371,7 +371,7 @@ u_getBinaryPropertySet(UProperty property, UErrorCode *pErrorCode) {
 }
 
 U_CAPI const UCPMap * U_EXPORT2
-u_getIntPropertyMap(UProperty property, UErrorCode *pErrorCode) {
+u_getIntPropertyMap(UCharProperty property, UErrorCode *pErrorCode) {
     if (U_FAILURE(*pErrorCode)) { return nullptr; }
     if (property < UCHAR_INT_START || UCHAR_INT_LIMIT <= property) {
         *pErrorCode = U_ILLEGAL_ARGUMENT_ERROR;

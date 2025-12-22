@@ -23,7 +23,7 @@
 
 #include <stdio.h>
 
-/** Additions to the uchar.h enum UProperty. */
+/** Additions to the uchar.h enum UCharProperty. */
 enum {
     /** Name_Alias */
     PPUCD_NAME_ALIAS=UCHAR_STRING_LIMIT,
@@ -127,7 +127,7 @@ public:
 
     /**
      * Parses properties from the current line.
-     * Clears newValues and sets UProperty codes for property values mentioned
+     * Clears newValues and sets UCharProperty codes for property values mentioned
      * on the current line (as opposed to being inherited).
      * Returns a pointer to the filled-in UniProps, or NULL if something went wrong.
      * The returned UniProps are usable until the next line of the same type is read.
