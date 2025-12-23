@@ -1,12 +1,16 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 en_NL{
     %%Parent{"en_150"}
     NumberElements{
         latn{
             patterns{
                 accountingFormat{"¤ #,##0.00;(¤ #,##0.00)"}
+                accountingFormat%alphaNextToNumber{"¤ #,##0.00;(¤ #,##0.00)"}
+                accountingFormat%noCurrency{"#,##0.00;(#,##0.00)"}
                 currencyFormat{"¤ #,##0.00;¤ -#,##0.00"}
+                currencyFormat%alphaNextToNumber{"¤ #,##0.00;¤ -#,##0.00"}
             }
             symbols{
                 decimal{","}
@@ -14,5 +18,4 @@ en_NL{
             }
         }
     }
-    Version{"2.1.47.70"}
 }

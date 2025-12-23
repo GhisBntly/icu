@@ -1,15 +1,19 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 uz{
     Keys{
         calendar{"taqvim"}
         cf{"valyuta formati"}
         collation{"saralash tartibi"}
         currency{"valyuta"}
+        em{"emoji namoyishi"}
         hc{"soat tizimi (12 yoki 24)"}
         lb{"qatorni uzish uslubi"}
+        lw{"so‘z ko‘chirish uslubi"}
         ms{"o‘lchov tizimi"}
         numbers{"raqamlar"}
+        ss{"qisqartirilgandan keyin gapning uzilishi"}
     }
     Languages{
         aa{"afar"}
@@ -25,30 +29,36 @@ uz{
         alt{"janubiy oltoy"}
         am{"amxar"}
         an{"aragon"}
+        ann{"obolo"}
         anp{"angika"}
         ar{"arab"}
         ar_001{"standart arab"}
         arn{"mapuche"}
         arp{"arapaxo"}
+        ars{"najd arab"}
         as{"assam"}
         asa{"asu"}
         ast{"asturiy"}
+        atj{"atikamek"}
         av{"avar"}
         awa{"avadxi"}
         ay{"aymara"}
         az{"ozarbayjon"}
         ba{"boshqird"}
+        bal{"baluj"}
         ban{"bali"}
         bas{"basa"}
         be{"belarus"}
         bem{"bemba"}
         bez{"bena"}
         bg{"bolgar"}
+        bgc{"harianvi"}
         bgn{"g‘arbiy baluj"}
         bho{"bxojpuri"}
         bi{"bislama"}
         bin{"bini"}
         bla{"siksika"}
+        blo{"Anii"}
         bm{"bambara"}
         bn{"bengal"}
         bo{"tibet"}
@@ -58,6 +68,8 @@ uz{
         bug{"bugi"}
         byn{"blin"}
         ca{"katalan"}
+        cay{"kayuga"}
+        ccp{"chakma"}
         ce{"chechen"}
         ceb{"sebuan"}
         cgg{"chiga"}
@@ -65,12 +77,21 @@ uz{
         chk{"chukot"}
         chm{"mari"}
         cho{"choktav"}
+        chp{"chipevyan"}
         chr{"cheroki"}
         chy{"cheyenn"}
         ckb{"sorani-kurd"}
+        clc{"chilkotin"}
         co{"korsikan"}
+        crg{"michif"}
+        crj{"janubi-sharqiy kri"}
+        crk{"tekislik kri"}
+        crl{"shomoli-sharqiy kri"}
+        crm{"mus kri"}
+        crr{"karolin algonkin"}
         crs{"kreol (Seyshel)"}
         cs{"chex"}
+        csw{"botqoq kri"}
         cu{"slavyan (cherkov)"}
         cv{"chuvash"}
         cy{"valliy"}
@@ -83,6 +104,7 @@ uz{
         de_CH{"yuqori nemis (Shveytsariya)"}
         dgr{"dogrib"}
         dje{"zarma"}
+        doi{"dogri"}
         dsb{"quyi sorb"}
         dua{"duala"}
         dv{"divexi"}
@@ -108,6 +130,7 @@ uz{
         eu{"bask"}
         ewo{"evondo"}
         fa{"fors"}
+        fa_AF{"dari"}
         ff{"fula"}
         fi{"fincha"}
         fil{"filipincha"}
@@ -117,6 +140,8 @@ uz{
         fr{"fransuzcha"}
         fr_CA{"fransuz (Kanada)"}
         fr_CH{"fransuz (Shveytsariya)"}
+        frc{"kajun fransuz"}
+        frr{"shimoliy friz"}
         fur{"friul"}
         fy{"g‘arbiy friz"}
         ga{"irland"}
@@ -135,26 +160,29 @@ uz{
         gv{"men"}
         gwi{"gvichin"}
         ha{"xausa"}
-        hak{"hak"}
+        hai{"hayda"}
         haw{"gavaycha"}
+        hax{"janubiy hayda"}
         he{"ivrit"}
         hi{"hind"}
         hil{"hiligaynon"}
         hmn{"xmong"}
         hr{"xorvat"}
         hsb{"yuqori sorb"}
-        hsn{"hsn"}
         ht{"gaityan"}
         hu{"venger"}
         hup{"xupa"}
+        hur{"halkomelem"}
         hy{"arman"}
         hz{"gerero"}
         ia{"interlingva"}
         iba{"iban"}
         ibb{"ibibio"}
         id{"indonez"}
+        ie{"interlingve"}
         ig{"igbo"}
         ii{"sichuan"}
+        ikt{"sharqiy-kanada inuktitut"}
         ilo{"iloko"}
         inh{"ingush"}
         io{"ido"}
@@ -176,6 +204,7 @@ uz{
         kde{"makonde"}
         kea{"kabuverdianu"}
         kfo{"koro"}
+        kgp{"kaingang"}
         kha{"kxasi"}
         khq{"koyra-chiini"}
         ki{"kikuyu"}
@@ -203,6 +232,8 @@ uz{
         kum{"qo‘miq"}
         kv{"komi"}
         kw{"korn"}
+        kwk{"kvakvala"}
+        kxv{"kuvi"}
         ky{"qirgʻizcha"}
         la{"lotincha"}
         lad{"ladino"}
@@ -211,16 +242,20 @@ uz{
         lez{"lezgin"}
         lg{"ganda"}
         li{"limburg"}
+        lij{"liguryan"}
+        lil{"lilluet"}
         lkt{"lakota"}
+        lmo{"lombard"}
         ln{"lingala"}
         lo{"laos"}
+        lou{"luiziana kreol"}
         loz{"lozi"}
         lrc{"shimoliy luri"}
+        lsm{"saamia"}
         lt{"litva"}
         lu{"luba-katanga"}
         lua{"luba-lulua"}
         lun{"lunda"}
-        luo{"luo"}
         lus{"lushay"}
         luy{"luhya"}
         lv{"latishcha"}
@@ -244,6 +279,7 @@ uz{
         ml{"malayalam"}
         mn{"mongol"}
         mni{"manipur"}
+        moe{"innu-aymun"}
         moh{"mohauk"}
         mos{"mossi"}
         mr{"maratxi"}
@@ -257,7 +293,6 @@ uz{
         myv{"erzya"}
         mzn{"mozandaron"}
         na{"nauru"}
-        nan{"nan"}
         nap{"neapolitan"}
         naq{"nama"}
         nb{"norveg-bokmal"}
@@ -274,6 +309,7 @@ uz{
         nmg{"kvasio"}
         nn{"norveg-nyunorsk"}
         nnh{"ngiyembun"}
+        no{"norveg"}
         nog{"no‘g‘ay"}
         nqo{"nko"}
         nr{"janubiy ndebel"}
@@ -283,6 +319,11 @@ uz{
         ny{"cheva"}
         nyn{"nyankole"}
         oc{"oksitan"}
+        ojb{"shimoli-gʻarbiy ojibva"}
+        ojc{"markaziy ijibve"}
+        ojs{"oji-kri"}
+        ojw{"gʻarbiy ojibva"}
+        oka{"okanagan"}
         om{"oromo"}
         or{"oriya"}
         os{"osetin"}
@@ -292,7 +333,9 @@ uz{
         pap{"papiyamento"}
         pau{"palau"}
         pcm{"kreol (Nigeriya)"}
+        pis{"pijin"}
         pl{"polyakcha"}
+        pqm{"maliset-passamakvoddi"}
         prg{"pruss"}
         ps{"pushtu"}
         pt{"portugalcha"}
@@ -300,14 +343,15 @@ uz{
         pt_PT{"portugal (Yevropa)"}
         qu{"kechua"}
         quc{"kiche"}
+        raj{"rajastani"}
         rap{"rapanui"}
         rar{"rarotongan"}
+        rhg{"rohinja"}
         rm{"romansh"}
         rn{"rundi"}
         ro{"rumincha"}
         ro_MD{"moldovan"}
         rof{"rombo"}
-        root{"tub aholi tili"}
         ru{"ruscha"}
         rup{"arumin"}
         rw{"kinyaruanda"}
@@ -333,6 +377,7 @@ uz{
         si{"singal"}
         sk{"slovakcha"}
         sl{"slovencha"}
+        slh{"janubiy lushutsid"}
         sm{"samoa"}
         sma{"janubiy saam"}
         smj{"lule-saam"}
@@ -347,31 +392,39 @@ uz{
         ss{"svati"}
         ssy{"saho"}
         st{"janubiy soto"}
+        str{"streyts salish"}
         su{"sundan"}
         suk{"sukuma"}
         sv{"shved"}
         sw{"suaxili"}
         sw_CD{"suaxili (Kongo)"}
         swb{"qamar"}
-        syr{"suriyacha"}
+        syr{"suryoniy"}
+        szl{"silez"}
         ta{"tamil"}
+        tce{"janubiy tutchone"}
         te{"telugu"}
         tem{"timne"}
         teo{"teso"}
         tet{"tetum"}
         tg{"tojik"}
+        tgx{"tagish"}
         th{"tay"}
+        tht{"taltan"}
         ti{"tigrinya"}
         tig{"tigre"}
         tk{"turkman"}
         tlh{"klingon"}
+        tli{"tlingit"}
         tn{"tsvana"}
         to{"tongan"}
+        tok{"tokipona"}
         tpi{"tok-piksin"}
         tr{"turk"}
         trv{"taroko"}
         ts{"tsonga"}
         tt{"tatar"}
+        ttm{"shimoliy tutchone"}
         tum{"tumbuka"}
         tvl{"tuvalu"}
         twq{"tasavak"}
@@ -385,9 +438,10 @@ uz{
         und{"noma’lum til"}
         ur{"urdu"}
         uz{"o‘zbek"}
-        vai{"vai"}
         ve{"venda"}
+        vec{"venet"}
         vi{"vyetnam"}
+        vmw{"makua"}
         vo{"volapyuk"}
         vun{"vunjo"}
         wa{"vallon"}
@@ -396,35 +450,59 @@ uz{
         war{"varay"}
         wbp{"valbiri"}
         wo{"volof"}
-        wuu{"wuu"}
+        wuu{"vu xitoy"}
         xal{"qalmoq"}
         xh{"kxosa"}
+        xnr{"kangri"}
         xog{"soga"}
         yav{"yangben"}
         ybb{"yemba"}
         yi{"idish"}
         yo{"yoruba"}
+        yrl{"nyengatu"}
         yue{"kanton"}
+        za{"Chjuan"}
         zgh{"tamazigxt"}
         zh{"xitoy"}
-        zh_Hans{"xitoy (soddalashgan)"}
         zh_Hant{"xitoy (an’anaviy)"}
         zu{"zulu"}
         zun{"zuni"}
         zxx{"til tarkibi yo‘q"}
         zza{"zaza"}
     }
+    Languages%core{
+        ku{"kurd"}
+    }
+    Languages%extension{
+        ku{"kurmanji"}
+    }
+    Languages%long{
+        zh_Hans{"xitoy (soddalashtirilgan mandarin)"}
+        zh_Hant{"xitoy (an’anaviy mandarin)"}
+    }
+    Languages%menu{
+        yue{"xitoy, kanton"}
+        zh{"xitoy, mandarin"}
+    }
     Languages%short{
         az{"ozar"}
         en_GB{"ingliz (Buyuk Britaniya)"}
         en_US{"ingliz (AQSH)"}
     }
+    Languages%variant{
+        hi_Latn{"hinglish"}
+    }
     Scripts{
+        Adlm{"adlam"}
         Arab{"arab"}
+        Aran{"nastaʼliq"}
         Armn{"arman"}
         Beng{"bengal"}
         Bopo{"bopomofo"}
         Brai{"brayl"}
+        Cakm{"chakma"}
+        Cans{"kanada boʻgʻin yozuvi"}
+        Cher{"cheroki"}
         Cyrl{"kirill"}
         Deva{"devanagari"}
         Ethi{"habash"}
@@ -435,8 +513,8 @@ uz{
         Hanb{"hanb"}
         Hang{"hangul"}
         Hani{"xitoy"}
-        Hans{"soddalashgan xitoy"}
-        Hant{"an’anaviy xitoy"}
+        Hans{"soddalashgan"}
+        Hant{"anʼanaviy"}
         Hebr{"ivrit"}
         Hira{"hiragana"}
         Hrkt{"katakana yoki hiragana"}
@@ -450,14 +528,23 @@ uz{
         Latn{"lotin"}
         Mlym{"malayalam"}
         Mong{"mongol"}
+        Mtei{"manipuri"}
         Mymr{"myanma"}
+        Nkoo{"nko"}
+        Olck{"ol chiki"}
         Orya{"oriya"}
+        Rohg{"hanifi"}
         Sinh{"singal"}
+        Sund{"sundan"}
+        Syrc{"suryoniy"}
         Taml{"tamil"}
         Telu{"telugu"}
+        Tfng{"tifinag"}
         Thaa{"taana"}
         Thai{"tay"}
         Tibt{"tibet"}
+        Vaii{"vay"}
+        Yiii{"i"}
         Zmth{"matematik ifodalar"}
         Zsye{"emoji"}
         Zsym{"belgilar"}
@@ -473,24 +560,60 @@ uz{
         calendar{
             buddhist{"buddizm taqvimi"}
             chinese{"xitoy taqvimi"}
+            coptic{"qibtiy taqvim"}
             dangi{"dangi taqvimi"}
             ethiopic{"habash taqvimi"}
+            ethiopic-amete-alem{"Amete Alem habash taqvimi"}
             gregorian{"grigorian taqvimi"}
             hebrew{"yahudiy taqvimi"}
-            islamic{"islomiy taqvim"}
+            islamic{"hijriy taqvim"}
+            islamic-civil{"jadvalli hijriy taqvim"}
+            islamic-tbla{"jadvalli hijriy taqvim (astronomik davr)"}
+            islamic-umalqura{"hijriy taqvim (Ummul Quro)"}
             iso8601{"ISO-8601 taqvimi"}
             japanese{"yapon taqvimi"}
             persian{"fors taqvimi"}
-            roc{"Mingo taqvimi"}
+            roc{"mingo taqvimi"}
+        }
+        calendar%core{
+            buddhist{"buddist"}
+            chinese{"xitoy"}
+            coptic{"qibtiy"}
+            dangi{"dangi"}
+            ethiopic{"habash"}
+            ethiopic-amete-alem{"Amete Alem habash"}
+            gregorian{"grigorian"}
+            hebrew{"yahudiy"}
+            islamic{"hijriy"}
+            islamic-civil{"jadvalli hijriy"}
+            islamic-tbla{"jadvalli hijriy (atronomik davr)"}
+            islamic-umalqura{"hijriy (Ummul Quro)"}
+            japanese{"yapon"}
+            persian{"fors"}
+            roc{"mingo"}
         }
         cf{
             account{"moliyaviy valyuta formati"}
             standard{"standart valyuta formati"}
         }
+        cf%core{
+            account{"moliyaviy"}
+            standard{"standart"}
+        }
         collation{
             ducet{"standart Unicode saralash tartibi"}
             search{"qidiruv"}
             standard{"standart saralash tartibi"}
+        }
+        collation%core{
+            ducet{"standart Unicode"}
+            search{"qidiruv"}
+            standard{"standart"}
+        }
+        em%core{
+            default{"birlamchi"}
+            emoji{"emoji"}
+            text{"matn"}
         }
         hc{
             h11{"12 soatlik tizim (0–11)"}
@@ -498,15 +621,37 @@ uz{
             h23{"24 soatlik tizim (0–23)"}
             h24{"24 soatlik tizim (1–24)"}
         }
+        hc%core{
+            h11{"12 (0–11)"}
+            h12{"12 (1–12)"}
+            h23{"24 (0–23)"}
+            h24{"24 (1–24)"}
+        }
         lb{
             loose{"qatorni yumshoq uzish"}
             normal{"qatorni odatiy uzish"}
             strict{"qatorni qat’iy uzish"}
         }
+        lb%core{
+            loose{"yumshoq"}
+            normal{"odatiy"}
+            strict{"qatʼiy"}
+        }
+        lw%core{
+            breakall{"hammasini koʻchirish"}
+            keepall{"hammasini saqlash"}
+            normal{"oddiy uslub"}
+            phrase{"iboralarda saqlash"}
+        }
         ms{
             metric{"metrik tizim"}
             uksystem{"Britaniya o‘lchov tizimi"}
             ussystem{"AQSH o‘lchov tizimi"}
+        }
+        ms%core{
+            metric{"metrik"}
+            uksystem{"Birlashgan Qirollik"}
+            ussystem{"AQSH"}
         }
         numbers{
             arab{"arab-hind raqamlari"}
@@ -514,6 +659,7 @@ uz{
             armn{"arman raqamlari"}
             armnlow{"arman kichik raqamlari"}
             beng{"bengal raqamlari"}
+            cakm{"chakma raqamlari"}
             deva{"devanagari raqamlari"}
             ethi{"habash raqamlari"}
             fullwide{"to‘liq enli raqamlar"}
@@ -528,6 +674,7 @@ uz{
             hant{"an’anaviy xitoy raqamlari"}
             hantfin{"an’anaviy xitoy raqamlari (moliyaviy)"}
             hebr{"ivrit raqamlari"}
+            java{"yava raqamlari"}
             jpan{"yapon raqamlari"}
             jpanfin{"yapon raqamlari (moliyaviy)"}
             khmr{"kxmer raqamlari"}
@@ -535,7 +682,9 @@ uz{
             laoo{"laos raqamlari"}
             latn{"zamonaviy arab raqamlari"}
             mlym{"malayalam raqamlari"}
+            mtei{"manipuri raqamlari"}
             mymr{"birma raqamlari"}
+            olck{"ol chiki taqamlari"}
             orya{"oriya raqamlari"}
             roman{"rim raqamlari"}
             romanlow{"kichik rim raqamlari"}
@@ -544,15 +693,20 @@ uz{
             telu{"telugu raqamlari"}
             thai{"tay raqamlari"}
             tibt{"tibet raqamlari"}
+            vaii{"vay raqamlari"}
+        }
+        ss%core{
+            none{"oʻchiq"}
+            standard{"yoniq"}
         }
     }
-    Version{"2.1.48.17"}
     characterLabelPattern{
         all{"{0} — hammasi"}
-        category-list{"{0}: {1}"}
         compatibility{"{0} — mos"}
         enclosed{"{0} — biriktirilgan"}
         extended{"{0} — kengaytirilgan"}
+        facing-left{"chapga qaragan {0}"}
+        facing-right{"o‘ngga qaragan {0}"}
         historic{"{0} — tarixiy"}
         miscellaneous{"{0} — har xil"}
         other{"{0} — boshqa"}
@@ -561,15 +715,12 @@ uz{
             one{"{0} ta chiziq"}
             other{"{0} ta chiziq"}
         }
+        subscript{"{0} pastki yozuv"}
+        superscript{"{0} ustki yozuv"}
     }
     codePatterns{
         language{"Til: {0}"}
         script{"Yozuv: {0}"}
         territory{"Mintaqa: {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
     }
 }

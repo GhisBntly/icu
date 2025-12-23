@@ -64,6 +64,9 @@
     <ClCompile Include="itrbbi.cpp">
       <Filter>break iteration</Filter>
     </ClCompile>
+    <ClCompile Include="lstmbetst.cpp">
+      <Filter>break iteration</Filter>
+    </ClCompile>
     <ClCompile Include="rbbiapts.cpp">
       <Filter>break iteration</Filter>
     </ClCompile>
@@ -217,6 +220,9 @@
     <ClCompile Include="fldset.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
+    <ClCompile Include="formatted_string_builder_test.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
     <ClCompile Include="genderinfotest.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
@@ -274,13 +280,13 @@
     <ClCompile Include="numbertest_patternstring.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
-    <ClCompile Include="numbertest_stringbuilder.cpp">
-      <Filter>formatting</Filter>
-    </ClCompile>
-    <ClCompile Include="numbertest_stringsegment.cpp">
+    <ClCompile Include="string_segment_test.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="numbertest_parse.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="displayoptions_test.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="numbertest_doubleconversion.cpp">
@@ -290,6 +296,12 @@
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="numbertest_range.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="numbertest_simple.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="numbertest_permutation.cpp">
       <Filter>formatting</Filter>
     </ClCompile>
     <ClCompile Include="numfmtst.cpp">
@@ -478,6 +490,12 @@
     <ClCompile Include="ustrtest.cpp">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="utfiteratortest.cpp">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="utfstringtest.cpp">
+      <Filter>strings</Filter>
+    </ClCompile>
     <ClCompile Include="utxttest.cpp">
       <Filter>strings</Filter>
     </ClCompile>
@@ -540,8 +558,45 @@
     </ClCompile>
     <ClCompile Include="formattedvaluetest.cpp">
       <Filter>formatting</Filter>
+    </ClCompile>
     <ClCompile Include="localebuildertest.cpp">
       <Filter>locales &amp; resources</Filter>
+    </ClCompile>
+    <ClCompile Include="localematchertest.cpp">
+      <Filter>locales &amp; resources</Filter>
+    </ClCompile>
+    <ClCompile Include="units_data_test.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="units_router_test.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="units_test.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="cplusplus_header_api_build_test.cpp">
+      <Filter>configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="uchar_type_build_test.cpp">
+      <Filter>configuration</Filter>
+    </ClCompile>
+    <ClCompile Include="messageformat2test.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="messageformat2test_custom.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="messageformat2test_read_json.cpp">
+      <Filter>formatting</Filter>
+    </ClCompile>
+    <ClCompile Include="ucolheaderonlytest.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="usetheaderonlytest.cpp">
+      <Filter>misc</Filter>
+    </ClCompile>
+    <ClCompile Include="intltesttest.cpp">
+      <Filter>misc</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,13 +1,8 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 en_AE{
-    Version{"2.1.48.67"}
     zoneStrings{
-        "Pacific:Honolulu"{
-            sd{"∅∅∅"}
-            sg{"∅∅∅"}
-            ss{"∅∅∅"}
-        }
         "meta:Alaska"{
             sd{"∅∅∅"}
             sg{"∅∅∅"}
@@ -40,6 +35,9 @@ en_AE{
         }
         "meta:Gulf"{
             ss{"GST"}
+        }
+        "meta:Hawaii"{
+            ss{"∅∅∅"}
         }
         "meta:Hawaii_Aleutian"{
             sd{"∅∅∅"}

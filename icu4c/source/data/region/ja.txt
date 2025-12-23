@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 ja{
     Countries{
         001{"世界"}
@@ -84,6 +85,7 @@ ja{
         CN{"中国"}
         CO{"コロンビア"}
         CP{"クリッパートン島"}
+        CQ{"サーク島"}
         CR{"コスタリカ"}
         CU{"キューバ"}
         CV{"カーボベルデ"}
@@ -287,6 +289,8 @@ ja{
         VU{"バヌアツ"}
         WF{"ウォリス・フツナ"}
         WS{"サモア"}
+        XA{"疑似アクセント"}
+        XB{"疑似 BIDI"}
         XK{"コソボ"}
         YE{"イエメン"}
         YT{"マヨット"}
@@ -294,6 +298,9 @@ ja{
         ZM{"ザンビア"}
         ZW{"ジンバブエ"}
         ZZ{"不明な地域"}
+    }
+    Countries%chagos{
+        IO{"チャゴス諸島"}
     }
     Countries%short{
         GB{"英国"}
@@ -309,8 +316,9 @@ ja{
         CI{"象牙海岸"}
         CZ{"チェコ共和国"}
         FK{"フォークランド諸島 (マルビーナス諸島)"}
+        NZ{"アオテアロア・ニュージーランド"}
         SZ{"スワジランド"}
         TL{"東チモール"}
+        TR{"テュルキエ"}
     }
-    Version{"2.1.48.42"}
 }

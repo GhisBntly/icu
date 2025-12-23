@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 sr_Latn{
     %%Parent{"root"}
     Countries{
@@ -32,7 +33,7 @@ sr_Latn{
         151{"Istočna Evropa"}
         154{"Severna Evropa"}
         155{"Zapadna Evropa"}
-        202{"Afrika južno od Sahare"}
+        202{"Podsaharska Afrika"}
         419{"Latinska Amerika"}
         AC{"Ostrvo Asension"}
         AD{"Andora"}
@@ -61,7 +62,7 @@ sr_Latn{
         BI{"Burundi"}
         BJ{"Benin"}
         BL{"Sveti Bartolomej"}
-        BM{"Bermuda"}
+        BM{"Bermudi"}
         BN{"Brunej"}
         BO{"Bolivija"}
         BQ{"Karipska Holandija"}
@@ -85,6 +86,7 @@ sr_Latn{
         CN{"Kina"}
         CO{"Kolumbija"}
         CP{"Ostrvo Kliperton"}
+        CQ{"Sark"}
         CR{"Kostarika"}
         CU{"Kuba"}
         CV{"Zelenortska Ostrva"}
@@ -107,7 +109,7 @@ sr_Latn{
         ER{"Eritreja"}
         ES{"Španija"}
         ET{"Etiopija"}
-        EU{"Evropska Unija"}
+        EU{"Evropska unija"}
         EZ{"Evrozona"}
         FI{"Finska"}
         FJ{"Fidži"}
@@ -228,7 +230,7 @@ sr_Latn{
         PW{"Palau"}
         PY{"Paragvaj"}
         QA{"Katar"}
-        QO{"Okeanija (udaljena ostrva)"}
+        QO{"udaljena ostrva Okeanije"}
         RE{"Reinion"}
         RO{"Rumunija"}
         RS{"Srbija"}
@@ -288,15 +290,18 @@ sr_Latn{
         VU{"Vanuatu"}
         WF{"Valis i Futuna"}
         WS{"Samoa"}
-        XA{"XA"}
-        XB{"XB"}
+        XA{"simulirane dijakritike"}
+        XB{"Pseudobidi"}
         XK{"Kosovo"}
         YE{"Jemen"}
         YT{"Majot"}
         ZA{"Južnoafrička Republika"}
         ZM{"Zambija"}
         ZW{"Zimbabve"}
-        ZZ{"Nepoznat region"}
+        ZZ{"nepoznat region"}
+    }
+    Countries%chagos{
+        IO{"arhipelag Čagos"}
     }
     Countries%short{
         GB{"UK"}
@@ -314,5 +319,4 @@ sr_Latn{
         FK{"Foklandska (Malvinska) ostrva"}
         TL{"Istočni Timor"}
     }
-    Version{"2.1.48.77"}
 }

@@ -20,6 +20,8 @@
 
 #if !UCONFIG_NO_FORMATTING
 
+#include <stdbool.h>
+
 #include "unicode/uloc.h"
 #include "unicode/udat.h"
 #include "unicode/ucal.h"
@@ -48,7 +50,7 @@ void addDtFrDepTest(TestNode** root)
 /**
  * Test the parsing of 2-digit years.
  */
-void TestTwoDigitYearDSTParse()
+void TestTwoDigitYearDSTParse(void)
 {
     UDateFormat *fullFmt, *fmt;
     UErrorCode status = U_ZERO_ERROR;
@@ -67,7 +69,7 @@ void TestTwoDigitYearDSTParse()
             myErrorName(status) );
     }
     else {
-        log_verbose("PASS: creating dateformat using udat_openPattern() succesful\n");
+        log_verbose("PASS: creating dateformat using udat_openPattern() successful\n");
     
         u_uastrcpy(pattern, "dd-MMM-yy h:mm:ss 'o''clock' a z");
         fmt= udat_open(UDAT_PATTERN,UDAT_PATTERN,"en_US", NULL, 0,pattern, u_strlen(pattern), &status);
@@ -112,7 +114,7 @@ void TestTwoDigitYearDSTParse()
  * correctly.  In some instances, this means not being parsed at all, and
  * returning an appropriate error.
  */
-void TestPartialParse994()
+void TestPartialParse994(void)
 {
     int32_t pos;
     UDateFormat *f;
@@ -135,7 +137,7 @@ void TestPartialParse994()
     pos=0;
     d = udat_parse(f, s, u_strlen(s), &pos, &status);
     if(U_FAILURE(status)) {
-      log_data_err("FAIL: could not parse - exitting");
+      log_data_err("FAIL: could not parse - exiting");
       return;
     }
     fmtChars = myDateFormat(f, d);
@@ -169,7 +171,7 @@ void tryPat994(UDateFormat* format, const char* pattern, const char* s, UDate ex
     pat=(UChar*)malloc(sizeof(UChar) * (strlen(pattern) + 1) );
     u_uastrcpy(pat, pattern);
     log_verbose("Pattern : %s ;  String : %s\n", austrdup(pat), austrdup(str));
-    udat_applyPattern(format, FALSE, pat, u_strlen(pat));
+    udat_applyPattern(format, false, pat, u_strlen(pat));
     pos=0;
     date = udat_parse(format, str, u_strlen(str), &pos, &status);
     if(U_FAILURE(status) || date == null) {
@@ -195,7 +197,7 @@ void tryPat994(UDateFormat* format, const char* pattern, const char* s, UDate ex
  * Verify the behavior of patterns in which digits for different fields run together
  * without intervening separators.
  */
-void TestRunTogetherPattern985()
+void TestRunTogetherPattern985(void)
 {
     int32_t pos;
     UChar *pattern=NULL, *now=NULL, *then=NULL;
@@ -207,6 +209,7 @@ void TestRunTogetherPattern985()
     format = udat_open(UDAT_PATTERN, UDAT_PATTERN, NULL, NULL, 0,pattern, u_strlen(pattern), &status);
     if(U_FAILURE(status)){
         log_data_err("FAIL: Error in date format construction with pattern: %s - (Are you missing data?)\n", myErrorName(status));
+        free(pattern);
         return;
     }
     date1 = ucal_getNow();
@@ -228,7 +231,7 @@ void TestRunTogetherPattern985()
  * Verify the handling of Czech June and July, which have the unique attribute that
  * one is a proper prefix substring of the other.
  */
-void TestCzechMonths459()
+void TestCzechMonths459(void)
 {
     int32_t lneed, pos;
     UChar *pattern=NULL, *tzID=NULL;
@@ -247,11 +250,11 @@ void TestCzechMonths459()
         return;
     }
     lneed=0;
-    lneed=udat_toPattern(fmt, TRUE, NULL, lneed, &status);
+    lneed=udat_toPattern(fmt, true, NULL, lneed, &status);
     if(status==U_BUFFER_OVERFLOW_ERROR){
         status=U_ZERO_ERROR;
         pattern=(UChar*)malloc(sizeof(UChar) * (lneed+1) );
-        udat_toPattern(fmt, TRUE, pattern, lneed+1, &status);
+        udat_toPattern(fmt, true, pattern, lneed+1, &status);
     }
     if(U_FAILURE(status)){ log_err("Error in extracting the pattern\n"); }
     tzID=(UChar*)malloc(sizeof(UChar) * 4);
@@ -302,12 +305,14 @@ void TestCzechMonths459()
 /**
  * Test the handling of single quotes in patterns.
  */
-void TestQuotePattern161()
+void TestQuotePattern161(void)
 {
-    UDateFormat *format;
-    UCalendar *cal;
+    UDateFormat *format = NULL;
+    UCalendar *cal = NULL;
     UDate currentTime_1;
-    UChar *pattern, *tzID, *exp;
+    UChar *pattern = NULL;
+    UChar *tzID = NULL;
+    UChar *exp = NULL;
     UChar *dateString;
     UErrorCode status = U_ZERO_ERROR;
     const char* expStr = "04/13/1999 at 10:42:28 AM ";
@@ -323,27 +328,27 @@ void TestQuotePattern161()
     format= udat_open(UDAT_PATTERN, UDAT_PATTERN,"en_US", NULL, 0,pattern, u_strlen(pattern), &status);
     if(U_FAILURE(status)){
         log_data_err("error in udat_open: %s - (Are you missing data?)\n", myErrorName(status));
-        return;
-    }
-    tzID=(UChar*)malloc(sizeof(UChar) * 4);
-    u_uastrcpy(tzID, "PST");
-    /* this is supposed to open default date format, but later on it treats it like it is "en_US" 
-       - very bad if you try to run the tests on machine where default locale is NOT "en_US" */
-    /* cal=ucal_open(tzID, u_strlen(tzID), NULL, UCAL_TRADITIONAL, &status); */
-    cal=ucal_open(tzID, u_strlen(tzID), "en_US", UCAL_TRADITIONAL, &status);
-    if(U_FAILURE(status)){ log_err("error in ucal_open cal : %s\n", myErrorName(status));    }
-    
-    ucal_setDateTime(cal, 1999, UCAL_APRIL, 13, 10, 42, 28, &status);
-    currentTime_1 = ucal_getMillis(cal, &status);
-    
-    dateString = myDateFormat(format, currentTime_1);
-    exp=(UChar*)malloc(sizeof(UChar) * (strlen(expStr) + 1) );
-    u_uastrcpy(exp, expStr);
-    
-    log_verbose("%s\n", austrdup(dateString) );
-    if(u_strncmp(dateString, exp, (int32_t)strlen(expStr)) !=0)
-        log_err("Error in formatting a pattern with single quotes\n");
+    } else {
+        tzID=(UChar*)malloc(sizeof(UChar) * 4);
+        u_uastrcpy(tzID, "PST");
+        /* this is supposed to open default date format, but later on it treats it like it is "en_US" 
+           - very bad if you try to run the tests on machine where default locale is NOT "en_US" */
+        /* cal=ucal_open(tzID, u_strlen(tzID), NULL, UCAL_TRADITIONAL, &status); */
+        cal=ucal_open(tzID, u_strlen(tzID), "en_US", UCAL_TRADITIONAL, &status);
+        if(U_FAILURE(status)){ log_err("error in ucal_open cal : %s\n", myErrorName(status));    }
 
+        ucal_setDateTime(cal, 1999, UCAL_APRIL, 13, 10, 42, 28, &status);
+        currentTime_1 = ucal_getMillis(cal, &status);
+
+        dateString = myDateFormat(format, currentTime_1);
+        exp=(UChar*)malloc(sizeof(UChar) * (strlen(expStr) + 1) );
+        u_uastrcpy(exp, expStr);
+
+        log_verbose("%s\n", austrdup(dateString) );
+        if(u_strncmp(dateString, exp, (int32_t)strlen(expStr)) !=0) {
+            log_err("Error in formatting a pattern with single quotes\n");
+        }
+    }
     udat_close(format);
     ucal_close(cal);
     free(exp);
@@ -360,8 +365,8 @@ void TestBooleanAttributes(void)
 {
     UDateFormat *en;
     UErrorCode status=U_ZERO_ERROR;
-    UBool initialState = TRUE;
-    UBool switchedState = FALSE;
+    UBool initialState = true;
+    UBool switchedState = false;
         
     log_verbose("\ncreating a date format with english locale\n");
     en = udat_open(UDAT_FULL, UDAT_DEFAULT, "en_US", NULL, 0, NULL, 0, &status);
@@ -373,7 +378,7 @@ void TestBooleanAttributes(void)
     
     
     initialState = udat_getBooleanAttribute(en, UDAT_PARSE_ALLOW_NUMERIC, &status);
-    if(initialState != TRUE) switchedState = TRUE;  // if it wasn't the default of TRUE, then flip what we expect
+    if(initialState != true) switchedState = true;  // if it wasn't the default of true, then flip what we expect
 
     udat_setBooleanAttribute(en, UDAT_PARSE_ALLOW_NUMERIC, switchedState, &status);
     if(switchedState != udat_getBooleanAttribute(en, UDAT_PARSE_ALLOW_NUMERIC, &status)) {

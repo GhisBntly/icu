@@ -12,13 +12,19 @@
 #include "unicode/putil.h"
 #include "unicode/uscript.h"
 #include "unicode/uset.h"
+#include "charstr.h"
 #include "cstring.h"
 #include "hash.h"
 #include "patternprops.h"
+#include "ppucd.h"
 #include "normalizer2impl.h"
 #include "testutil.h"
 #include "uparse.h"
 #include "ucdtest.h"
+#include "uprops.h"
+#include "usettest.h"
+
+#include <iostream>
 
 static const char *ignorePropNames[]={
     "FC_NFKC",
@@ -30,7 +36,9 @@ static const char *ignorePropNames[]={
     "Expands_On_NFC",
     "Expands_On_NFKD",
     "Expands_On_NFKC",
-    "NFKC_CF"
+    "InCB",
+    "NFKC_CF",
+    "NFKC_SCF"
 };
 
 UnicodeTest::UnicodeTest()
@@ -39,7 +47,7 @@ UnicodeTest::UnicodeTest()
     unknownPropertyNames=new U_NAMESPACE_QUALIFIER Hashtable(errorCode);
     if(U_FAILURE(errorCode)) {
         delete unknownPropertyNames;
-        unknownPropertyNames=NULL;
+        unknownPropertyNames=nullptr;
     }
     // Ignore some property names altogether.
     for(int32_t i=0; i<UPRV_LENGTHOF(ignorePropNames); ++i) {
@@ -65,6 +73,7 @@ void UnicodeTest::runIndexedTest( int32_t index, UBool exec, const char* &name, 
     TESTCASE_AUTO(TestScriptMetadata);
     TESTCASE_AUTO(TestBidiPairedBracketType);
     TESTCASE_AUTO(TestEmojiProperties);
+    TESTCASE_AUTO(TestEmojiPropertiesOfStrings);
     TESTCASE_AUTO(TestIndicPositionalCategory);
     TESTCASE_AUTO(TestIndicSyllabicCategory);
     TESTCASE_AUTO(TestVerticalOrientation);
@@ -74,6 +83,13 @@ void UnicodeTest::runIndexedTest( int32_t index, UBool exec, const char* &name, 
     TESTCASE_AUTO(TestBinaryCharacterProperties);
     TESTCASE_AUTO(TestIntCharacterProperties);
 #endif
+    TESTCASE_AUTO(TestPropertyNames);
+    TESTCASE_AUTO(TestIDSUnaryOperator);
+    TESTCASE_AUTO(TestIDCompatMath);
+    TESTCASE_AUTO(TestPropertiesUsingPpucd);
+    TESTCASE_AUTO(TestIDStatus);
+    TESTCASE_AUTO(TestIDType);
+    TESTCASE_AUTO(TestScriptExtensionsCodePoints);
     TESTCASE_AUTO_END;
 }
 
@@ -92,7 +108,7 @@ getTokenIndex(const char *const tokens[], int32_t countTokens, const char *s) {
     s=u_skipWhitespace(s);
     for(i=0; i<countTokens; ++i) {
         t=tokens[i];
-        if(t!=NULL) {
+        if(t!=nullptr) {
             for(j=0;; ++j) {
                 if(t[j]!=0) {
                     if(s[j]!=t[j]) {
@@ -171,7 +187,7 @@ derivedPropsLineFn(void *context,
                    char *fields[][2], int32_t /* fieldCount */,
                    UErrorCode *pErrorCode)
 {
-    UnicodeTest *me=(UnicodeTest *)context;
+    UnicodeTest *me=static_cast<UnicodeTest*>(context);
     uint32_t start, end;
     int32_t i;
 
@@ -186,7 +202,7 @@ derivedPropsLineFn(void *context,
     if(i<0) {
         UnicodeString propName(fields[1][0], (int32_t)(fields[1][1]-fields[1][0]));
         propName.trim();
-        if(me->unknownPropertyNames->find(propName)==NULL) {
+        if(me->unknownPropertyNames->find(propName)==nullptr) {
             UErrorCode errorCode=U_ZERO_ERROR;
             me->unknownPropertyNames->puti(propName, 1, errorCode);
             me->errln("UnicodeTest warning: unknown property name '%s' in DerivedCoreProperties.txt or DerivedNormalizationProps.txt\n", fields[1][0]);
@@ -211,7 +227,7 @@ void UnicodeTest::TestAdditionalProperties() {
     }
 
     char path[500];
-    if(getUnidataPath(path) == NULL) {
+    if(getUnidataPath(path) == nullptr) {
         errln("unable to find path to source/data/unidata/");
         return;
     }
@@ -239,7 +255,7 @@ void UnicodeTest::TestAdditionalProperties() {
     uint32_t i;
     UChar32 start, end;
 
-    // test all TRUE properties
+    // test all true properties
     for(i=0; i<UPRV_LENGTHOF(derivedPropsNames); ++i) {
         rangeCount=derivedProps[i].getRangeCount();
         for(range=0; range<rangeCount && numErrors[i]<MAX_ERRORS; ++range) {
@@ -247,7 +263,7 @@ void UnicodeTest::TestAdditionalProperties() {
             end=derivedProps[i].getRangeEnd(range);
             for(; start<=end; ++start) {
                 if(!u_hasBinaryProperty(start, derivedPropsIndex[i])) {
-                    dataerrln("UnicodeTest error: u_hasBinaryProperty(U+%04lx, %s)==FALSE is wrong", start, derivedPropsNames[i]);
+                    dataerrln("UnicodeTest error: u_hasBinaryProperty(U+%04lx, %s)==false is wrong", start, derivedPropsNames[i]);
                     if(++numErrors[i]>=MAX_ERRORS) {
                       dataerrln("Too many errors, moving to the next test");
                       break;
@@ -262,7 +278,7 @@ void UnicodeTest::TestAdditionalProperties() {
         derivedProps[i].complement();
     }
 
-    // test all FALSE properties
+    // test all false properties
     for(i=0; i<UPRV_LENGTHOF(derivedPropsNames); ++i) {
         rangeCount=derivedProps[i].getRangeCount();
         for(range=0; range<rangeCount && numErrors[i]<MAX_ERRORS; ++range) {
@@ -270,7 +286,7 @@ void UnicodeTest::TestAdditionalProperties() {
             end=derivedProps[i].getRangeEnd(range);
             for(; start<=end; ++start) {
                 if(u_hasBinaryProperty(start, derivedPropsIndex[i])) {
-                    errln("UnicodeTest error: u_hasBinaryProperty(U+%04lx, %s)==TRUE is wrong\n", start, derivedPropsNames[i]);
+                    errln("UnicodeTest error: u_hasBinaryProperty(U+%04lx, %s)==true is wrong\n", start, derivedPropsNames[i]);
                     if(++numErrors[i]>=MAX_ERRORS) {
                       errln("Too many errors, moving to the next test");
                       break;
@@ -350,7 +366,7 @@ void UnicodeTest::TestConsistency() {
     UnicodeSet set1, set2;
     if (nfcImpl->getCanonStartSet(0x49, set1)) {
         /* enumerate all characters that are plausible to be latin letters */
-        for(UChar start=0xa0; start<0x2000; ++start) {
+        for(char16_t start=0xa0; start<0x2000; ++start) {
             UnicodeString decomp=nfd->normalize(UnicodeString(start), errorCode);
             if(decomp.length()>1 && decomp[0]==0x49) {
                 set2.add(start);
@@ -364,9 +380,9 @@ void UnicodeTest::TestConsistency() {
         // because the new internal normalization functions are in C++.
         //compareUSets(set1, set2,
         //             "[canon start set of 0049]", "[all c with canon decomp with 0049]",
-        //             TRUE);
+        //             true);
     } else {
-        errln("NFC.getCanonStartSet() returned FALSE");
+        errln("NFC.getCanonStartSet() returned false");
     }
 #endif
 }
@@ -401,16 +417,16 @@ void UnicodeTest::TestPatternProperties() {
         }
     }
     compareUSets(syn_pp, syn_prop,
-                 "PatternProps.isSyntax()", "[:Pattern_Syntax:]", TRUE);
+                 "PatternProps.isSyntax()", "[:Pattern_Syntax:]", true);
     compareUSets(syn_pp, syn_list,
-                 "PatternProps.isSyntax()", "[Pattern_Syntax ranges]", TRUE);
+                 "PatternProps.isSyntax()", "[Pattern_Syntax ranges]", true);
     compareUSets(ws_pp, ws_prop,
-                 "PatternProps.isWhiteSpace()", "[:Pattern_White_Space:]", TRUE);
+                 "PatternProps.isWhiteSpace()", "[:Pattern_White_Space:]", true);
     compareUSets(ws_pp, ws_list,
-                 "PatternProps.isWhiteSpace()", "[Pattern_White_Space ranges]", TRUE);
+                 "PatternProps.isWhiteSpace()", "[Pattern_White_Space ranges]", true);
     compareUSets(syn_ws_pp, syn_ws_prop,
                  "PatternProps.isSyntaxOrWhiteSpace()",
-                 "[[:Pattern_Syntax:][:Pattern_White_Space:]]", TRUE);
+                 "[[:Pattern_Syntax:][:Pattern_White_Space:]]", true);
 }
 
 // So far only minimal port of Java & cucdtst.c compareUSets().
@@ -457,7 +473,7 @@ void UnicodeTest::TestScriptMetadata() {
     // Georgian is special.
     UnicodeSet cased("[[:Lu:]-[:sc=Common:]-[:sc=Geor:]]", errorCode);
     for(int32_t sci = 0; sci < USCRIPT_CODE_LIMIT; ++sci) {
-        UScriptCode sc = (UScriptCode)sci;
+        UScriptCode sc = static_cast<UScriptCode>(sci);
         // Run the test with -v to see which script has failures:
         // .../intltest$ make && ./intltest utility/UnicodeTest/TestScriptMetadata -v | grep -C 6 FAIL
         logln(uscript_getShortName(sc));
@@ -476,10 +492,10 @@ void UnicodeTest::TestScriptMetadata() {
             UChar32 firstChar = sample.char32At(0);
             UScriptCode charScript = getCharScript(sc);
             assertEquals("script(sample(script))",
-                         (int32_t)charScript, (int32_t)uscript_getScript(firstChar, errorCode));
-            assertEquals("RTL vs. set", (UBool)rtl.contains(firstChar), (UBool)uscript_isRightToLeft(sc));
-            assertEquals("cased vs. set", (UBool)cased.contains(firstChar), (UBool)uscript_isCased(sc));
-            assertEquals("encoded, has characters", (UBool)(sc == charScript), (UBool)(!scriptSet.isEmpty()));
+                         static_cast<int32_t>(charScript), static_cast<int32_t>(uscript_getScript(firstChar, errorCode)));
+            assertEquals("RTL vs. set", rtl.contains(firstChar), uscript_isRightToLeft(sc));
+            assertEquals("cased vs. set", cased.contains(firstChar), uscript_isCased(sc));
+            assertEquals("encoded, has characters", sc == charScript, !scriptSet.isEmpty());
             if(uscript_isRightToLeft(sc)) {
                 rtl.removeAll(scriptSet);
             }
@@ -545,154 +561,27 @@ void UnicodeTest::TestEmojiProperties() {
                u_hasBinaryProperty(0xA9, UCHAR_EXTENDED_PICTOGRAPHIC));
 }
 
-void UnicodeTest::TestIndicPositionalCategory() {
-    IcuTestErrorCode errorCode(*this, "TestIndicPositionalCategory()");
-    UnicodeSet na(u"[:InPC=NA:]", errorCode);
-    assertTrue("mostly NA", 1000000 <= na.size() && na.size() <= UCHAR_MAX_VALUE - 500);
-    UnicodeSet vol(u"[:InPC=Visual_Order_Left:]", errorCode);
-    assertTrue("some Visual_Order_Left", 19 <= vol.size() && vol.size() <= 100);
-    assertEquals("U+08FF: NA", U_INPC_NA,
-                 u_getIntPropertyValue(0x08FF, UCHAR_INDIC_POSITIONAL_CATEGORY));
-    assertEquals("U+0900: Top", U_INPC_TOP,
-                 u_getIntPropertyValue(0x0900, UCHAR_INDIC_POSITIONAL_CATEGORY));
-    assertEquals("U+10A06: Overstruck", U_INPC_OVERSTRUCK,
-                 u_getIntPropertyValue(0x10A06, UCHAR_INDIC_POSITIONAL_CATEGORY));
+namespace {
+
+UBool hbp(const char16_t *s, int32_t length, UCharProperty which) {
+    return u_stringHasBinaryProperty(s, length, which);
 }
 
-void UnicodeTest::TestIndicSyllabicCategory() {
-    IcuTestErrorCode errorCode(*this, "TestIndicSyllabicCategory()");
-    UnicodeSet other(u"[:InSC=Other:]", errorCode);
-    assertTrue("mostly Other", 1000000 <= other.size() && other.size() <= UCHAR_MAX_VALUE - 500);
-    UnicodeSet ava(u"[:InSC=Avagraha:]", errorCode);
-    assertTrue("some Avagraha", 16 <= ava.size() && ava.size() <= 100);
-    assertEquals("U+08FF: Other", U_INSC_OTHER,
-                 u_getIntPropertyValue(0x08FF, UCHAR_INDIC_SYLLABIC_CATEGORY));
-    assertEquals("U+0900: Bindu", U_INSC_BINDU,
-                 u_getIntPropertyValue(0x0900, UCHAR_INDIC_SYLLABIC_CATEGORY));
-    assertEquals("U+11065: Brahmi_Joining_Number", U_INSC_BRAHMI_JOINING_NUMBER,
-                 u_getIntPropertyValue(0x11065, UCHAR_INDIC_SYLLABIC_CATEGORY));
+UBool hbp(const char16_t *s, UCharProperty which) {
+    return u_stringHasBinaryProperty(s, -1, which);
 }
 
-void UnicodeTest::TestVerticalOrientation() {
-    IcuTestErrorCode errorCode(*this, "TestVerticalOrientation()");
-    UnicodeSet r(u"[:vo=R:]", errorCode);
-    assertTrue("mostly R", 0xc0000 <= r.size() && r.size() <= 0xd0000);
-    UnicodeSet u(u"[:vo=U:]", errorCode);
-    assertTrue("much U", 0x40000 <= u.size() && u.size() <= 0x50000);
-    UnicodeSet tu(u"[:vo=Tu:]", errorCode);
-    assertTrue("some Tu", 147 <= tu.size() && tu.size() <= 300);
-    assertEquals("U+0E01: Rotated", U_VO_ROTATED,
-                 u_getIntPropertyValue(0x0E01, UCHAR_VERTICAL_ORIENTATION));
-    assertEquals("U+3008: Transformed_Rotated", U_VO_TRANSFORMED_ROTATED,
-                 u_getIntPropertyValue(0x3008, UCHAR_VERTICAL_ORIENTATION));
-    assertEquals("U+33333: Upright", U_VO_UPRIGHT,
-                 u_getIntPropertyValue(0x33333, UCHAR_VERTICAL_ORIENTATION));
-}
+}  // namespace
 
-void UnicodeTest::TestDefaultScriptExtensions() {
-    // Block 3000..303F CJK Symbols and Punctuation defaults to scx=Bopo Hang Hani Hira Kana Yiii
-    // but some of its characters revert to scx=<script> which is usually Common.
-    IcuTestErrorCode errorCode(*this, "TestDefaultScriptExtensions()");
-    UScriptCode scx[20];
-    scx[0] = USCRIPT_INVALID_CODE;
-    assertEquals("U+3000 num scx", 1,  // IDEOGRAPHIC SPACE
-                 uscript_getScriptExtensions(0x3000, scx, UPRV_LENGTHOF(scx), errorCode));
-    assertEquals("U+3000 num scx[0]", USCRIPT_COMMON, scx[0]);
-    scx[0] = USCRIPT_INVALID_CODE;
-    assertEquals("U+3012 num scx", 1,  // POSTAL MARK
-                 uscript_getScriptExtensions(0x3012, scx, UPRV_LENGTHOF(scx), errorCode));
-    assertEquals("U+3012 num scx[0]", USCRIPT_COMMON, scx[0]);
-}
-
-void UnicodeTest::TestInvalidCodePointFolding(void) {
-    // Test behavior when an invalid code point is passed to u_foldCase
-    static const UChar32 invalidCodePoints[] = {
-            0xD800, // lead surrogate
-            0xDFFF, // trail surrogate
-            0xFDD0, // noncharacter
-            0xFFFF, // noncharacter
-            0x110000, // out of range
-            -1 // negative
-    };
-    for (int32_t i=0; i<UPRV_LENGTHOF(invalidCodePoints); ++i) {
-        UChar32 cp = invalidCodePoints[i];
-        assertEquals("Invalid code points should be echoed back",
-                cp, u_foldCase(cp, U_FOLD_CASE_DEFAULT));
-        assertEquals("Invalid code points should be echoed back",
-                cp, u_foldCase(cp, U_FOLD_CASE_EXCLUDE_SPECIAL_I));
-    }
-}
-
-void UnicodeTest::TestBinaryCharacterProperties() {
-#if !UCONFIG_NO_NORMALIZATION
-    IcuTestErrorCode errorCode(*this, "TestBinaryCharacterProperties()");
-    // Spot-check getBinaryPropertySet() vs. hasBinaryProperty().
-    for (int32_t prop = 0; prop < UCHAR_BINARY_LIMIT; ++prop) {
-        const USet *uset = u_getBinaryPropertySet((UCharProperty)prop, errorCode);
-        if (errorCode.errIfFailureAndReset("u_getBinaryPropertySet(%d)", (int)prop)) {
-            continue;
-        }
-        const UnicodeSet &set = *UnicodeSet::fromUSet(uset);
-        int32_t size = set.size();
-        if (size == 0) {
-            assertFalse(UnicodeString("!hasBinaryProperty(U+0020, ") + prop + u")",
-                u_hasBinaryProperty(0x20, (UCharProperty)prop));
-            assertFalse(UnicodeString("!hasBinaryProperty(U+0061, ") + prop + u")",
-                u_hasBinaryProperty(0x61, (UCharProperty)prop));
-            assertFalse(UnicodeString("!hasBinaryProperty(U+4E00, ") + prop + u")",
-                u_hasBinaryProperty(0x4e00, (UCharProperty)prop));
-        } else {
-            UChar32 c = set.charAt(0);
-            if (c > 0) {
-                assertFalse(
-                    UnicodeString("!hasBinaryProperty(") + TestUtility::hex(c - 1) +
-                        u", " + prop + u")",
-                    u_hasBinaryProperty(c - 1, (UCharProperty)prop));
-            }
-            assertTrue(
-                UnicodeString("hasBinaryProperty(") + TestUtility::hex(c) +
-                    u", " + prop + u")",
-                u_hasBinaryProperty(c, (UCharProperty)prop));
-            c = set.charAt(size - 1);
-            assertTrue(
-                UnicodeString("hasBinaryProperty(") + TestUtility::hex(c) +
-                    u", " + prop + u")",
-                u_hasBinaryProperty(c, (UCharProperty)prop));
-            if (c < 0x10ffff) {
-                assertFalse(
-                    UnicodeString("!hasBinaryProperty(") + TestUtility::hex(c + 1) +
-                        u", " + prop + u")",
-                    u_hasBinaryProperty(c + 1, (UCharProperty)prop));
-            }
-        }
-    }
-#endif
-}
-
-void UnicodeTest::TestIntCharacterProperties() {
-#if !UCONFIG_NO_NORMALIZATION
-    IcuTestErrorCode errorCode(*this, "TestIntCharacterProperties()");
-    // Spot-check getIntPropertyMap() vs. getIntPropertyValue().
-    for (int32_t prop = UCHAR_INT_START; prop < UCHAR_INT_LIMIT; ++prop) {
-        const UCPMap *map = u_getIntPropertyMap((UCharProperty)prop, errorCode);
-        if (errorCode.errIfFailureAndReset("u_getIntPropertyMap(%d)", (int)prop)) {
-            continue;
-        }
-        uint32_t value;
-        UChar32 end = ucpmap_getRange(map, 0, UCPMAP_RANGE_NORMAL, 0, nullptr, nullptr, &value);
-        assertTrue("int property first range", end >= 0);
-        UChar32 c = end / 2;
-        assertEquals(UnicodeString("int property first range value at ") + TestUtility::hex(c),
-            u_getIntPropertyValue(c, (UCharProperty)prop), value);
-        end = ucpmap_getRange(map, 0x5000, UCPMAP_RANGE_NORMAL, 0, nullptr, nullptr, &value);
-        assertTrue("int property later range", end >= 0);
-        assertEquals(UnicodeString("int property later range value at ") + TestUtility::hex(end),
-            u_getIntPropertyValue(end, (UCharProperty)prop), value);
-        // ucpmap_get() API coverage
-        // TODO: move to cucdtst.c
-        assertEquals(
-            "int property upcmap_get(U+0061)",
-            u_getIntPropertyValue(0x61, (UCharProperty)prop), ucpmap_get(map, 0x61));
-    }
-#endif
-}
+void UnicodeTest::TestEmojiPropertiesOfStrings() {
+    // Property of code points, for coverage
+    assertFalse("null is not Ideographic", hbp(nullptr, 1, UCHAR_IDEOGRAPHIC));
+    assertFalse("null/0 is not Ideographic", hbp(nullptr, -1, UCHAR_IDEOGRAPHIC));
+    assertFalse("empty string is not Ideographic", hbp(u"", 0, UCHAR_IDEOGRAPHIC));
+    assertFalse("empty string/0 is not Ideographic", hbp(u"", -1, UCHAR_IDEOGRAPHIC));
+    assertFalse("L is not Ideographic", hbp(u"L", 1, UCHAR_IDEOGRAPHIC));
+    assertFalse("L/0 is not Ideographic", hbp(u"L", -1, UCHAR_IDEOGRAPHIC));
+    assertTrue("U+4E02 is Ideographic", hbp(u"丂", 1, UCHAR_IDEOGRAPHIC));
+    assertTrue("U+4E02/0 is Ideographic", hbp(u"丂", -1, UCHAR_IDEOGRAPHIC));
+    assertFalse("2*U+4E02 is not Ideographic", hbp(u"丂丂", 2, UCHAR_IDEOGRAPHIC));
+    assertFalse("2*U+4E02/0 is not Ideographic", hbp(u"丂丂", -1, UCHAR_IDEOGRAPHIC));

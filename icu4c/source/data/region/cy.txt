@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 cy{
     Countries{
         001{"Y Byd"}
@@ -49,8 +50,8 @@ cy{
         AU{"Awstralia"}
         AW{"Aruba"}
         AX{"Ynysoedd Åland"}
-        AZ{"Azerbaijan"}
-        BA{"Bosnia & Herzegovina"}
+        AZ{"Aserbaijan"}
+        BA{"Bosnia a Herzegovina"}
         BB{"Barbados"}
         BD{"Bangladesh"}
         BE{"Gwlad Belg"}
@@ -84,6 +85,7 @@ cy{
         CN{"Tsieina"}
         CO{"Colombia"}
         CP{"Ynys Clipperton"}
+        CQ{"Sarc"}
         CR{"Costa Rica"}
         CU{"Ciwba"}
         CV{"Cabo Verde"}
@@ -124,16 +126,16 @@ cy{
         GI{"Gibraltar"}
         GL{"Yr Ynys Las"}
         GM{"Gambia"}
-        GN{"Guinée"}
+        GN{"Gini"}
         GP{"Guadeloupe"}
-        GQ{"Guinea Gyhydeddol"}
+        GQ{"Gini Gyhydeddol"}
         GR{"Gwlad Groeg"}
         GS{"De Georgia ac Ynysoedd Sandwich y De"}
         GT{"Guatemala"}
         GU{"Guam"}
         GW{"Guiné-Bissau"}
         GY{"Guyana"}
-        HK{"Hong Kong SAR Tseina"}
+        HK{"Hong Kong SAR Tsieina"}
         HM{"Ynys Heard ac Ynysoedd McDonald"}
         HN{"Honduras"}
         HR{"Croatia"}
@@ -160,11 +162,11 @@ cy{
         KI{"Kiribati"}
         KM{"Comoros"}
         KN{"Saint Kitts a Nevis"}
-        KP{"Gogledd Korea"}
-        KR{"De Korea"}
+        KP{"Gogledd Corea"}
+        KR{"De Corea"}
         KW{"Kuwait"}
         KY{"Ynysoedd Cayman"}
-        KZ{"Kazakstan"}
+        KZ{"Kazakhstan"}
         LA{"Laos"}
         LB{"Libanus"}
         LC{"Saint Lucia"}
@@ -172,7 +174,7 @@ cy{
         LK{"Sri Lanka"}
         LR{"Liberia"}
         LS{"Lesotho"}
-        LT{"Lithuania"}
+        LT{"Lithwania"}
         LU{"Lwcsembwrg"}
         LV{"Latfia"}
         LY{"Libya"}
@@ -183,11 +185,11 @@ cy{
         MF{"Saint Martin"}
         MG{"Madagascar"}
         MH{"Ynysoedd Marshall"}
-        MK{"Macedonia"}
+        MK{"Gogledd Macedonia"}
         ML{"Mali"}
         MM{"Myanmar (Burma)"}
         MN{"Mongolia"}
-        MO{"Macau RhGA Tsieina"}
+        MO{"Macau SAR Tsieina"}
         MP{"Ynysoedd Gogledd Mariana"}
         MQ{"Martinique"}
         MR{"Mauritania"}
@@ -217,7 +219,7 @@ cy{
         PF{"Polynesia Ffrengig"}
         PG{"Papua Guinea Newydd"}
         PH{"Y Philipinau"}
-        PK{"Pakistan"}
+        PK{"Pacistan"}
         PL{"Gwlad Pwyl"}
         PM{"Saint-Pierre-et-Miquelon"}
         PN{"Ynysoedd Pitcairn"}
@@ -256,15 +258,15 @@ cy{
         SZ{"Eswatini"}
         TA{"Tristan da Cunha"}
         TC{"Ynysoedd Turks a Caicos"}
-        TD{"Tchad"}
+        TD{"Tsiad"}
         TF{"Tiroedd Deheuol ac Antarctig Ffrainc"}
         TG{"Togo"}
         TH{"Gwlad Thai"}
-        TJ{"Tajikistan"}
+        TJ{"Tajicistan"}
         TK{"Tokelau"}
         TL{"Timor-Leste"}
-        TM{"Turkmenistan"}
-        TN{"Tunisia"}
+        TM{"Tyrcmenistan"}
+        TN{"Tiwnisia"}
         TO{"Tonga"}
         TR{"Twrci"}
         TT{"Trinidad a Tobago"}
@@ -274,7 +276,7 @@ cy{
         UA{"Wcráin"}
         UG{"Uganda"}
         UM{"Ynysoedd Pellennig UDA"}
-        UN{"y Cenhedloedd Unedig"}
+        UN{"Y Cenhedloedd Unedig"}
         US{"Yr Unol Daleithiau"}
         UY{"Uruguay"}
         UZ{"Uzbekistan"}
@@ -297,12 +299,15 @@ cy{
         ZW{"Zimbabwe"}
         ZZ{"Rhanbarth Anhysbys"}
     }
+    Countries%chagos{
+        IO{"Ynysfor Chagos"}
+    }
     Countries%short{
         GB{"DU"}
         HK{"Hong Kong"}
         MO{"Macau"}
         PS{"Palesteina"}
-        UN{"UN"}
+        UN{"CU"}
         US{"UDA"}
     }
     Countries%variant{
@@ -311,9 +316,9 @@ cy{
         CI{"Arfordir Ifori"}
         CZ{"Gweriniaeth Tsiec"}
         FK{"Ynysoedd y Falkland (Ynysoedd y Malfinas)"}
-        MK{"Macedonia (CWIM)"}
+        NZ{"Aotearoa Seland Newydd"}
         SZ{"Gwlad Swazi"}
         TL{"Dwyrain Timor"}
+        TR{"Türkiye"}
     }
-    Version{"2.1.48.17"}
 }

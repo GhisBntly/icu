@@ -44,8 +44,8 @@ You need both the main icu4j and a subproject called unicodetools. See:
 http://www.ibm.com/software/globalization/icu/repository.jsp</a>. Inside unicodetools, look at com/ibm/text. The 
 main directories of interest are UCD, UCA and utility.</p>
 <h4>0a. If you are using Eclipse for your IDE, look at the instructions on
-<a href="http://icu.sourceforge.net/docs/eclipse_howto/eclipse_howto.html">
-http://icu.sourceforge.net/docs/eclipse_howto/eclipse_howto.html</a> </h4>
+<a href="https://icu-project.org/docs/eclipse_howto/eclipse_howto.html">
+https://icu-project.org/docs/eclipse_howto/eclipse_howto.html</a> </h4>
 <p>Set up Eclipse to build two projects: ICU4J and UnicodeTools:<br>
 <br>
 <b>Project Name: </b>ICU4J<br>
@@ -269,11 +269,11 @@ TestFailureCount=1</pre>
 		A-B, then in B-A, then in A&amp;B.</li>
 		<li>For example, here is a listing of a problem that must be corrected. 
 		Note that usually there is a comment that explains what the following 
-		line or lines are supposed to test. Then will come FALSE (indicating 
+		line or lines are supposed to test. Then will come false (indicating 
 		that the test failed), then the detailed error report.<pre><span style="font-size: 9pt"># Canonical decompositions (minus exclusions) must be identical across releases
 [$Decomposition_Type:Canonical - $Full_Composition_Exclusion] = [$×Decomposition_Type:Canonical - $×Full_Composition_Exclusion]
 
-FALSE
+false
 **** START Error Info ****
 
 In [$×Decomposition_Type:Canonical - $×Full_Composition_Exclusion], but not in [$Decomposition_Type:Canonical - $Full_Composition_Exclusion] :

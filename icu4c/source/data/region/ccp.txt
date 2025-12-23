@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 ccp{
     Countries{
         001{"𑄛𑄨𑄖𑄴𑄗𑄨𑄟𑄨"}
@@ -148,7 +149,6 @@ ccp{
         IL{"𑄄𑄎𑄴𑄢𑄠𑄬𑄣𑄴"}
         IM{"𑄃𑄭𑄣𑄴 𑄃𑄧𑄜𑄴 𑄟𑄳𑄠𑄚𑄴"}
         IN{"𑄞𑄢𑄧𑄖𑄴"}
-        IO{"𑄝𑄳𑄢𑄨𑄑𑄨𑄌𑄴 𑄞𑄢𑄧𑄖𑄴 𑄟𑄧𑄦𑄥𑄉𑄧𑄢𑄨𑄠𑄧 𑄞𑄨𑄘𑄳𑄠"}
         IQ{"𑄄𑄢𑄇𑄴"}
         IR{"𑄄𑄢𑄚𑄴"}
         IS{"𑄃𑄭𑄥𑄴𑄣𑄳𑄠𑄚𑄴𑄓𑄴"}
@@ -318,8 +318,6 @@ ccp{
             "𑄜𑄧𑄇𑄴𑄣𑄳𑄠𑄚𑄴𑄓𑄴 𑄃𑄭𑄣𑄳𑄠𑄚𑄴𑄓𑄴 (𑄄𑄥𑄴𑄣𑄳𑄠𑄌𑄴 "
             "𑄟𑄥𑄴𑄞𑄬𑄚𑄨𑄌𑄴)"
         }
-        MK{"𑄟𑄬𑄥𑄨𑄓𑄮𑄚𑄠(FYROM)"}
         TL{"𑄛𑄪𑄉𑄮 𑄖𑄨𑄟𑄪𑄢𑄴"}
     }
-    Version{"2.1.48.88"}
 }

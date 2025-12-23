@@ -1,5 +1,5 @@
 // © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
 /*
  *******************************************************************************
  * Copyright (C) 2012-2013, International Business Machines Corporation and    *
@@ -336,6 +336,7 @@ public class NumericCodeData {
         {"SHP", "654"},
         {"SIT", "705"},
         {"SKK", "703"},
+        {"SLE", "925"},
         {"SLL", "694"},
         {"SOS", "706"},
         {"SRD", "968"},
@@ -375,12 +376,14 @@ public class NumericCodeData {
         {"UYW", "927"},
         {"UZS", "860"},
         {"VEB", "862"},
+        {"VED", "926"},
         {"VEF", "937"},
         {"VES", "928"},
         {"VNC", "704"},
         {"VND", "704"},
         {"VUV", "548"},
         {"WST", "882"},
+        {"XAD", "396"},
         {"XAF", "950"},
         {"XAG", "961"},
         {"XAU", "959"},
@@ -389,6 +392,7 @@ public class NumericCodeData {
         {"XBC", "957"},
         {"XBD", "958"},
         {"XCD", "951"},
+        {"XCG", "532"},
         {"XDR", "960"},
         {"XEU", "954"},
         {"XOF", "952"},
@@ -412,6 +416,7 @@ public class NumericCodeData {
         {"ZRZ", "180"},
         {"ZWC", "716"},
         {"ZWD", "716"},
+        {"ZWG", "924"},
         {"ZWL", "932"},
         {"ZWN", "942"},
         {"ZWR", "935"},

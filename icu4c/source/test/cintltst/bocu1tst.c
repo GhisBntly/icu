@@ -30,6 +30,8 @@
 *   ### links in design doc to here and to ucnvbocu.c
 */
 
+#include <stdbool.h>
+
 #include "unicode/utypes.h"
 #include "unicode/ustring.h"
 #include "unicode/ucnv.h"
@@ -205,21 +207,21 @@ bocu1TrailToByte[BOCU1_TRAIL_CONTROLS_COUNT]={
  * what we need here.
  * This macro adjust the results so that the modulo-value m is always >=0.
  *
- * For positive n, the if() condition is always FALSE.
+ * For positive n, the if() condition is always false.
  *
  * @param n Number to be split into quotient and rest.
  *          Will be modified to contain the quotient.
  * @param d Divisor.
  * @param m Output variable for the rest (modulo result).
  */
-#define NEGDIVMOD(n, d, m) { \
+#define NEGDIVMOD(n, d, m) UPRV_BLOCK_MACRO_BEGIN { \
     (m)=(n)%(d); \
     (n)/=(d); \
     if((m)<0) { \
         --(n); \
         (m)+=(d); \
     } \
-}
+} UPRV_BLOCK_MACRO_END
 
 /* State for BOCU-1 decoder function. */
 struct Bocu1Rx {
@@ -273,7 +275,7 @@ bocu1Prev(int32_t c) {
  * Encode a difference -0x10ffff..0x10ffff in 1..4 bytes
  * and return a packed integer with them.
  *
- * The encoding favors small absolut differences with short encodings
+ * The encoding favors small absolute differences with short encodings
  * to compress runs of same-script characters.
  *
  * @param diff difference value -0x10ffff..0x10ffff
@@ -613,12 +615,16 @@ writePacked(int32_t packed, uint8_t *p) {
     switch(count) {
     case 4:
         *p++=(uint8_t)(packed>>24);
+        U_FALLTHROUGH;
     case 3:
         *p++=(uint8_t)(packed>>16);
+        U_FALLTHROUGH;
     case 2:
         *p++=(uint8_t)(packed>>8);
+        U_FALLTHROUGH;
     case 1:
         *p++=(uint8_t)packed;
+        U_FALLTHROUGH;
     default:
         break;
     }
@@ -650,10 +656,13 @@ unpackDiff(int32_t initialPrev, int32_t packed) {
     switch(count) {
     case 4:
         decodeBocu1(&rx, (uint8_t)(packed>>24));
+        U_FALLTHROUGH;
     case 3:
         decodeBocu1(&rx, (uint8_t)(packed>>16));
+        U_FALLTHROUGH;
     case 2:
         decodeBocu1(&rx, (uint8_t)(packed>>8));
+        U_FALLTHROUGH;
     case 1:
         /* subtract initial prev */
         return decodeBocu1(&rx, (uint8_t)packed)-initialPrev;

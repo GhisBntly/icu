@@ -17,13 +17,20 @@
 #include "unicode/numfmt.h"
 #include "unicode/plurrule.h"
 
+#define ASSERT_OK(status) UPRV_BLOCK_MACRO_BEGIN { \
+    if(U_FAILURE(status)) { \
+        errcheckln(status, #status " = %s @ %s:%d", u_errorName(status), __FILE__, __LINE__); \
+        return; \
+    } \
+} UPRV_BLOCK_MACRO_END
 
 class QuantityFormatterTest : public IntlTest {
 public:
     QuantityFormatterTest() {
     }
     void TestBasic();
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=0);
+    void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
+
 private:
 };
 
@@ -40,12 +47,12 @@ void QuantityFormatterTest::TestBasic() {
     assertFalse(
             "adding bad variant",
             fmt.addIfAbsent("a bad variant", "{0} pounds", status));
-    assertEquals("adding bad variant status", (int32_t)U_ILLEGAL_ARGUMENT_ERROR, status);
+    assertEquals("adding bad variant status", U_ILLEGAL_ARGUMENT_ERROR, status);
     status = U_ZERO_ERROR;
     assertFalse(
             "Adding bad pattern",
             fmt.addIfAbsent("other", "{0} {1} too many placeholders", status));
-    assertEquals("adding bad pattern status", (int32_t)U_ILLEGAL_ARGUMENT_ERROR, status);
+    assertEquals("adding bad pattern status", U_ILLEGAL_ARGUMENT_ERROR, status);
     status = U_ZERO_ERROR;
     assertFalse("isValid with no patterns", fmt.isValid());
     assertTrue(
@@ -117,6 +124,7 @@ void QuantityFormatterTest::TestBasic() {
                 NumberFormat::createInstance(Locale::getEnglish(), status));
         LocalPointer<PluralRules> plurrule(
                 PluralRules::forLocale("en", status));
+        ASSERT_OK(status);
         FieldPosition pos(FieldPosition::DONT_CARE);
         UnicodeString appendTo;
         assertEquals(
@@ -128,7 +136,7 @@ void QuantityFormatterTest::TestBasic() {
                         *plurrule,
                         appendTo,
                         pos,
-                        status), TRUE);
+                        status), true);
         appendTo.remove();
         assertEquals(
                 "format plural",
@@ -139,7 +147,7 @@ void QuantityFormatterTest::TestBasic() {
                         *plurrule,
                         appendTo,
                         pos,
-                        status), TRUE);
+                        status), true);
     }
     fmt.reset();
     assertFalse("isValid after reset", fmt.isValid());

@@ -24,7 +24,10 @@ $Regional_Indicator = [\p{Grapheme_Cluster_Break = Regional_Indicator}];
 $Prepend     = [\p{Grapheme_Cluster_Break = Prepend}];
 $SpacingMark = [\p{Grapheme_Cluster_Break = SpacingMark}];
 
-#
+$InCBConsonant = [\p{InCB=Consonant}];
+$InCBExtend = [\p{InCB=Extend}];
+$InCBLinker = [\p{InCB=Linker}];
+
 # Korean Syllable Definitions
 #
 $L           = [\p{Grapheme_Cluster_Break = L}];
@@ -34,7 +37,7 @@ $T           = [\p{Grapheme_Cluster_Break = T}];
 $LV          = [\p{Grapheme_Cluster_Break = LV}];
 $LVT         = [\p{Grapheme_Cluster_Break = LVT}];
 
-# Emoji defintions
+# Emoji definitions
 
 $Extended_Pict = [:ExtPict:];
 
@@ -56,6 +59,9 @@ $L ($L | $V | $LV | $LVT);
 
 # GB 9b
 $Prepend [^$Control $CR $LF];
+
+# GB 9c
+$InCBConsonant [ $InCBExtend $InCBLinker ]* $InCBLinker [ $InCBExtend $InCBLinker ]* $InCBConsonant;
 
 # GB 11 Do not break within emoji modifier sequences or emoji zwj sequences.
 $Extended_Pict $Extend* $ZWJ $Extended_Pict;

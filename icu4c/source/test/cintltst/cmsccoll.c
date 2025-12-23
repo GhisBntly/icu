@@ -15,6 +15,7 @@
  * to fit.
  */
 
+#include <stdbool.h>
 #include <stdio.h>
 
 #include "unicode/utypes.h"
@@ -50,7 +51,7 @@ typedef UCollationResult tst_strcoll(void *collator, const int object,
 
 
 
-const static char cnt1[][10] = {
+static const char cnt1[][10] = {
 
   "AA",
   "AC",
@@ -65,7 +66,7 @@ const static char cnt1[][10] = {
   "B"
 };
 
-const static char cnt2[][10] = {
+static const char cnt2[][10] = {
   "DA",
   "DAD",
   "DAZ",
@@ -144,7 +145,7 @@ static void IncompleteCntTest(void)
 
 }
 
-const static char shifted[][20] = {
+static const char shifted[][20] = {
   "black bird",
   "black-bird",
   "blackbird",
@@ -156,7 +157,7 @@ const static char shifted[][20] = {
   "blackbirds"
 };
 
-const static UCollationResult shiftedTert[] = {
+static const UCollationResult shiftedTert[] = {
   UCOL_EQUAL,
   UCOL_EQUAL,
   UCOL_EQUAL,
@@ -168,7 +169,7 @@ const static UCollationResult shiftedTert[] = {
   UCOL_EQUAL
 };
 
-const static char nonignorable[][20] = {
+static const char nonignorable[][20] = {
   "black bird",
   "black Bird",
   "black birds",
@@ -230,7 +231,7 @@ static void BlackBirdTest(void) {
   ucol_close(coll);
 }
 
-const static UChar testSourceCases[][MAX_TOKEN_LEN] = {
+static const UChar testSourceCases[][MAX_TOKEN_LEN] = {
     {0x0041/*'A'*/, 0x0300, 0x0301, 0x0000},
     {0x0041/*'A'*/, 0x0300, 0x0316, 0x0000},
     {0x0041/*'A'*/, 0x0300, 0x0000},
@@ -239,7 +240,7 @@ const static UChar testSourceCases[][MAX_TOKEN_LEN] = {
     {0x00C0, 0x0316, 0x0000}
 };
 
-const static UChar testTargetCases[][MAX_TOKEN_LEN] = {
+static const UChar testTargetCases[][MAX_TOKEN_LEN] = {
     {0x0041/*'A'*/, 0x0301, 0x0300, 0x0000},
     {0x0041/*'A'*/, 0x0316, 0x0300, 0x0000},
     {0x00C0, 0},
@@ -248,7 +249,7 @@ const static UChar testTargetCases[][MAX_TOKEN_LEN] = {
     {0x0041/*'A'*/, 0x0316, 0x0300, 0x0000}
 };
 
-const static UCollationResult results[] = {
+static const UCollationResult results[] = {
     UCOL_GREATER,
     UCOL_EQUAL,
     UCOL_EQUAL,
@@ -411,7 +412,7 @@ static void BillFairmanTest(void) {
     }
 }
 
-const static char chTest[][20] = {
+static const char chTest[][20] = {
   "c",
   "C",
   "ca", "cb", "cx", "cy", "CZ",
@@ -461,7 +462,7 @@ static void TestChMove(void) {
 
 
 /*
-const static char impTest[][20] = {
+static const char impTest[][20] = {
   "\\u4e00",
     "a",
     "A",
@@ -588,11 +589,13 @@ static void TestComposeDecompose(void) {
     coll = ucol_open("", &status);
     if (U_FAILURE(status)) {
         log_data_err("Error opening collator -> %s (Are you missing data?)\n", u_errorName(status));
+        uset_close(charsToTest);
         return;
     }
     charsToTestSize = uset_size(charsToTest);
     if (charsToTestSize <= 0) {
         log_err("Set was zero. Missing data?\n");
+        uset_close(charsToTest);
         return;
     }
     t = (tester **)malloc(charsToTestSize * sizeof(tester *));
@@ -759,7 +762,7 @@ However, in testing we got the following order:
 */
 
 static void TestBefore(void) {
-  const static char *data[] = {
+  static const char *data[] = {
       "\\u0101", "\\u00e1", "\\u01ce", "\\u00e0", "A",
       "\\u0113", "\\u00e9", "\\u011b", "\\u00e8", "E",
       "\\u012b", "\\u00ed", "\\u01d0", "\\u00ec", "I",
@@ -780,7 +783,7 @@ static void TestBefore(void) {
 #if 0
 /* superceded by TestBeforePinyin */
 static void TestJ784(void) {
-  const static char *data[] = {
+  static const char *data[] = {
       "A", "\\u0101", "\\u00e1", "\\u01ce", "\\u00e0",
       "E", "\\u0113", "\\u00e9", "\\u011b", "\\u00e8",
       "I", "\\u012b", "\\u00ed", "\\u01d0", "\\u00ec",
@@ -794,7 +797,7 @@ static void TestJ784(void) {
 #endif
 
 static void TestUpperCaseFirst(void) {
-  const static char *data[] = {
+  static const char *data[] = {
     "I",
       "i",
       "Y",
@@ -804,7 +807,7 @@ static void TestUpperCaseFirst(void) {
 }
 
 static void TestJ815(void) {
-  const static char *data[] = {
+  static const char *data[] = {
     "aa",
       "Aa",
       "ab",
@@ -827,11 +830,11 @@ static void TestJ815(void) {
 
 static void TestCase(void)
 {
-    const static UChar gRules[MAX_TOKEN_LEN] =
+    static const UChar gRules[MAX_TOKEN_LEN] =
     /*" & 0 < 1,\u2461<a,A"*/
     { 0x0026, 0x0030, 0x003C, 0x0031, 0x002C, 0x2460, 0x003C, 0x0061, 0x002C, 0x0041, 0x0000 };
 
-    const static UChar testCase[][MAX_TOKEN_LEN] =
+    static const UChar testCase[][MAX_TOKEN_LEN] =
     {
         /*0*/ {0x0031 /*'1'*/, 0x0061/*'a'*/, 0x0000},
         /*1*/ {0x0031 /*'1'*/, 0x0041/*'A'*/, 0x0000},
@@ -839,7 +842,7 @@ static void TestCase(void)
         /*3*/ {0x2460 /*circ'1'*/, 0x0041/*'A'*/, 0x0000}
     };
 
-    const static UCollationResult caseTestResults[][9] =
+    static const UCollationResult caseTestResults[][9] =
     {
         { UCOL_LESS,    UCOL_LESS, UCOL_LESS,    UCOL_EQUAL, UCOL_LESS,    UCOL_LESS, UCOL_EQUAL, UCOL_EQUAL, UCOL_LESS },
         { UCOL_GREATER, UCOL_LESS, UCOL_LESS,    UCOL_EQUAL, UCOL_LESS,    UCOL_LESS, UCOL_EQUAL, UCOL_EQUAL, UCOL_GREATER },
@@ -847,7 +850,7 @@ static void TestCase(void)
         { UCOL_GREATER, UCOL_LESS, UCOL_GREATER, UCOL_EQUAL, UCOL_LESS,    UCOL_LESS, UCOL_EQUAL, UCOL_EQUAL, UCOL_GREATER }
     };
 
-    const static UColAttributeValue caseTestAttributes[][2] =
+    static const UColAttributeValue caseTestAttributes[][2] =
     {
         { UCOL_LOWER_FIRST, UCOL_OFF},
         { UCOL_UPPER_FIRST, UCOL_OFF},
@@ -905,7 +908,7 @@ static void TestCase(void)
     }
     ucol_close(myCollation);
     {
-      const static char *lowerFirst[] = {
+      static const char *lowerFirst[] = {
         "h",
         "H",
         "ch",
@@ -921,7 +924,7 @@ static void TestCase(void)
         "I"
       };
 
-      const static char *upperFirst[] = {
+      static const char *upperFirst[] = {
         "H",
         "h",
         "CH",
@@ -1041,7 +1044,7 @@ static void TestIncrementalNormalize(void) {
         doTest(coll, strA, strB, UCOL_GREATER);
     }
 
-    /*  Test 4:  Imbedded nulls do not terminate a string when length is specified.*/
+    /*  Test 4:  Embedded nulls do not terminate a string when length is specified.*/
 
     {
         static const UChar strA[] = {0x41, 0x00, 0x42, 0x00};
@@ -1395,17 +1398,17 @@ static void TestSuppressContractions(void) {
 }
 
 static void TestContraction(void) {
-    const static char *testrules[] = {
+    static const char *testrules[] = {
         "&A = AB / B",
         "&A = A\\u0306/\\u0306",
         "&c = ch / h"
     };
-    const static UChar testdata[][2] = {
+    static const UChar testdata[][2] = {
         {0x0041 /* 'A' */, 0x0042 /* 'B' */},
         {0x0041 /* 'A' */, 0x0306 /* combining breve */},
         {0x0063 /* 'c' */, 0x0068 /* 'h' */}
     };
-    const static UChar testdata2[][2] = {
+    static const UChar testdata2[][2] = {
         {0x0063 /* 'c' */, 0x0067 /* 'g' */},
         {0x0063 /* 'c' */, 0x0068 /* 'h' */},
         {0x0063 /* 'c' */, 0x006C /* 'l' */}
@@ -1417,7 +1420,7 @@ static void TestContraction(void) {
      * which always yields different mappings for such pairs. See
      * http://www.unicode.org/reports/tr35/tr35-33/tr35-collation.html#Orderings
      */
-    const static char *testrules3[] = {
+    static const char *testrules3[] = {
         "&z < xyz &xyzw << B",
         "&z < xyz &xyz << B / w",
         "&z < ch &achm << B",
@@ -1454,14 +1457,14 @@ static void TestContraction(void) {
             UCollationElements *iter2 = ucol_openElements(coll,
                                                          &(testdata[i][j]),
                                                          1, &status);
-            uint32_t ce;
+            int32_t ce;
             if (U_FAILURE(status)) {
                 log_err("Collation iterator creation failed\n");
                 return;
             }
             ce = ucol_next(iter2, &status);
             while (ce != UCOL_NULLORDER) {
-                if ((uint32_t)ucol_next(iter1, &status) != ce) {
+                if (ucol_next(iter1, &status) != ce) {
                     log_err("Collation elements in contraction split does not match\n");
                     return;
                 }
@@ -1548,7 +1551,7 @@ static void TestContraction(void) {
 }
 
 static void TestExpansion(void) {
-    const static char *testrules[] = {
+    static const char *testrules[] = {
 #if 0
         /*
          * This seems to have tested that M was not mapped to an expansion.
@@ -1563,7 +1566,7 @@ static void TestExpansion(void) {
 #endif
         "&J << K / B << M"
     };
-    const static UChar testdata[][3] = {
+    static const UChar testdata[][3] = {
         {0x004A /*'J'*/, 0x0041 /*'A'*/, 0},
         {0x004D /*'M'*/, 0x0041 /*'A'*/, 0},
         {0x004B /*'K'*/, 0x0041 /*'A'*/, 0},
@@ -1788,7 +1791,7 @@ static void TestVariableTopSetting(void) {
     ucol_setVariableTop(coll, first, -1, &status);
 
     if(U_SUCCESS(status)) {
-      log_err("Invalid contraction succeded in setting variable top!\n");
+      log_err("Invalid contraction succeeded in setting variable top!\n");
     }
 
   }
@@ -2047,7 +2050,7 @@ static void TestPrefix(void) {
   }
 }
 
-/* This test uses data suplied by Masashiko Maedera to test the implementation */
+/* This test uses data supplied by Masashiko Maedera to test the implementation */
 /* JIS X 4061 collation order implementation                                   */
 static void TestNewJapanese(void) {
 
@@ -2953,7 +2956,7 @@ static void TestNumericCollation(void)
 {
     UErrorCode status = U_ZERO_ERROR;
 
-    const static char *basicTestStrings[]={
+    static const char *basicTestStrings[]={
     "hello1",
     "hello2",
     "hello2002",
@@ -2966,7 +2969,7 @@ static void TestNumericCollation(void)
     "hello10000000000",
     };
 
-    const static char *preZeroTestStrings[]={
+    static const char *preZeroTestStrings[]={
     "avery10000",
     "avery010000",
     "avery0010000",
@@ -2977,14 +2980,14 @@ static void TestNumericCollation(void)
     "avery000000010000",
     };
 
-    const static char *thirtyTwoBitNumericStrings[]={
+    static const char *thirtyTwoBitNumericStrings[]={
     "avery42949672960",
     "avery42949672961",
     "avery42949672962",
     "avery429496729610"
     };
 
-     const static char *longNumericStrings[]={
+     static const char *longNumericStrings[]={
      /* Some of these sort out of the order that would expected if digits-as-numbers handled arbitrarily-long digit strings.
         In fact, a single collation element can represent a maximum of 254 digits as a number. Digit strings longer than that
         are treated as multiple collation elements. */
@@ -3000,7 +3003,7 @@ static void TestNumericCollation(void)
     "num92345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234a", /*254digits, num + 9.23E253 + a, out of numeric order but expected */
     };
 
-    const static char *supplementaryDigits[] = {
+    static const char *supplementaryDigits[] = {
       "\\uD835\\uDFCE", /* 0 */
       "\\uD835\\uDFCF", /* 1 */
       "\\uD835\\uDFD0", /* 2 */
@@ -3013,7 +3016,7 @@ static void TestNumericCollation(void)
       "\\uD835\\uDFD0\\uD835\\uDFD0" /* 22 */
     };
 
-    const static char *foreignDigits[] = {
+    static const char *foreignDigits[] = {
       "\\u0661",
         "\\u0662",
         "\\u0663",
@@ -3028,7 +3031,7 @@ static void TestNumericCollation(void)
       "\\u0663\\u0663"
     };
 
-    const static char *evenZeroes[] = {
+    static const char *evenZeroes[] = {
       "2000",
       "2001",
         "2002",
@@ -3210,7 +3213,7 @@ static void TestSeparateTrees(void) {
     }
 
     /*
-U_DRAFT int32_t U_EXPORT2
+U_CAPI int32_t U_EXPORT2
 ucol_getFunctionalEquivalent(char* result, int32_t resultCapacity,
                              const char* locale, UBool* isAvailable,
                              UErrorCode* status);
@@ -3220,22 +3223,22 @@ ucol_getFunctionalEquivalent(char* result, int32_t resultCapacity,
                                      &isAvailable, &ec);
     if (assertSuccess("getFunctionalEquivalent", &ec)) {
         assertEquals("getFunctionalEquivalent(de)", "root", loc);
-        assertTrue("getFunctionalEquivalent(de).isAvailable==TRUE",
-                   isAvailable == TRUE);
+        assertTrue("getFunctionalEquivalent(de).isAvailable==true",
+                   isAvailable == true);
     }
 
     n = ucol_getFunctionalEquivalent(loc, sizeof(loc), "collation", "de_DE",
                                      &isAvailable, &ec);
     if (assertSuccess("getFunctionalEquivalent", &ec)) {
         assertEquals("getFunctionalEquivalent(de_DE)", "root", loc);
-        assertTrue("getFunctionalEquivalent(de_DE).isAvailable==FALSE",
-                   isAvailable == FALSE);
+        assertTrue("getFunctionalEquivalent(de_DE).isAvailable==false",
+                   isAvailable == false);
     }
 }
 
 /* supercedes TestJ784 */
 static void TestBeforePinyin(void) {
-    const static char rules[] = {
+    static const char rules[] = {
         "&[before 2]A<<\\u0101<<<\\u0100<<\\u00E1<<<\\u00C1<<\\u01CE<<<\\u01CD<<\\u00E0<<<\\u00C0"
         "&[before 2]e<<\\u0113<<<\\u0112<<\\u00E9<<<\\u00C9<<\\u011B<<<\\u011A<<\\u00E8<<<\\u00C8"
         "&[before 2]i<<\\u012B<<<\\u012A<<\\u00ED<<<\\u00CD<<\\u01D0<<<\\u01CF<<\\u00EC<<<\\u00CC"
@@ -3244,7 +3247,7 @@ static void TestBeforePinyin(void) {
         "&U<<\\u01D6<<<\\u01D5<<\\u01D8<<<\\u01D7<<\\u01DA<<<\\u01D9<<\\u01DC<<<\\u01DB<<\\u00FC"
     };
 
-    const static char *test[] = {
+    static const char *test[] = {
         "l\\u0101",
         "la",
         "l\\u0101n",
@@ -3255,7 +3258,7 @@ static void TestBeforePinyin(void) {
         "len"
     };
 
-    const static char *test2[] = {
+    static const char *test2[] = {
         "x\\u0101",
         "x\\u0100",
         "X\\u0101",
@@ -3446,7 +3449,7 @@ static void TestMoreBefore(void) {
 #endif
 
 static void TestTailorNULL( void ) {
-    const static char* rule = "&a <<< '\\u0000'";
+    static const char* rule = "&a <<< '\\u0000'";
     UErrorCode status = U_ZERO_ERROR;
     UChar rlz[RULE_BUFFER_LEN] = { 0 };
     uint32_t rlen = 0;
@@ -3520,7 +3523,7 @@ TestJ5223(void)
   ucol_setAttribute(coll, UCOL_STRENGTH, UCOL_PRIMARY, &status);
   ucol_setAttribute(coll, UCOL_NORMALIZATION_MODE, UCOL_ON, &status);
   if (U_FAILURE(status)) {
-    log_err("Failed setting atributes\n");
+    log_err("Failed setting attributes\n");
     return;
   }
   sortkey_length = ucol_getSortKey(coll, ustr, ustr_length, NULL, 0);
@@ -3557,7 +3560,7 @@ TestJ5223(void)
 static void
 TestJ5232(void)
 {
-    const static char *test[] = {
+    static const char *test[] = {
         "\\u0e40\\u0e01\\u0e47\\u0e1a\\u0e40\\u0e25\\u0e47\\u0e21",
         "\\u0e40\\u0e01\\u0e47\\u0e1a\\u0e40\\u0e25\\u0e48\\u0e21"
     };
@@ -3568,7 +3571,7 @@ TestJ5232(void)
 static void
 TestJ5367(void)
 {
-    const static char *test[] = { "a", "y" };
+    static const char *test[] = { "a", "y" };
     const char* rules = "&Ny << Y &[first secondary ignorable] <<< a";
     genericRulesStarter(rules, test, UPRV_LENGTHOF(test));
 }
@@ -4005,7 +4008,7 @@ TestOutOfBuffer5468(void)
     ucol_setAttribute(coll, UCOL_STRENGTH, UCOL_PRIMARY, &status);
     ucol_setAttribute(coll, UCOL_NORMALIZATION_MODE, UCOL_ON, &status);
     if (U_FAILURE(status)) {
-      log_err("Failed setting atributes\n");
+      log_err("Failed setting attributes\n");
       return;
     }
 
@@ -4030,7 +4033,7 @@ TestSortKeyConsistency(void)
     uint8_t bufPart[TSKC_DATA_SIZE][TSKC_BUF_SIZE];
     int32_t i, j, i2;
 
-    ucol = ucol_openFromShortString("LEN_S4", FALSE, NULL, &icuRC);
+    ucol = ucol_openFromShortString("LEN_S4", false, NULL, &icuRC);
     if (U_FAILURE(icuRC))
     {
         log_err_status(icuRC, "ucol_openFromShortString failed -> %s\n", u_errorName(icuRC));
@@ -4060,8 +4063,8 @@ TestSortKeyConsistency(void)
 
         for (i2=0; i2<i; i2++)
         {
-            UBool fullMatch = TRUE;
-            UBool partMatch = TRUE;
+            UBool fullMatch = true;
+            UBool partMatch = true;
             for (j=0; j<TSKC_BUF_SIZE; j++)
             {
                 fullMatch = fullMatch && (bufFull[i][j] != bufFull[i2][j]);
@@ -4096,7 +4099,7 @@ static void TestCroatianSortKey(void) {
     size_t actualSortKeyLen;
     uint32_t uStateInfo[2] = { 0, 0 };
 
-    ucol = ucol_openFromShortString(collString, FALSE, NULL, &status);
+    ucol = ucol_openFromShortString(collString, false, NULL, &status);
     if (U_FAILURE(status)) {
         log_err_status(status, "ucol_openFromShortString error in Craotian test. -> %s\n", u_errorName(status));
         return;
@@ -4140,7 +4143,7 @@ static void TestHiragana(void) {
     int32_t keySize1;
     int32_t keySize2;
 
-    ucol = ucol_openFromShortString("LJA_AN_CX_EX_FX_HO_NX_S4", FALSE, NULL,
+    ucol = ucol_openFromShortString("LJA_AN_CX_EX_FX_HO_NX_S4", false, NULL,
             &status);
     if (U_FAILURE(status)) {
         log_err_status(status, "Error status: %s; Unable to open collator from short string.\n", u_errorName(status));
@@ -4247,7 +4250,7 @@ static void doTestOneTestCase(const OneTestCase testcases[],
   }
 }
 
-const static OneTestCase rangeTestcases[] = {
+static const OneTestCase rangeTestcases[] = {
   { {0x0061},                            {0x0062},                          UCOL_LESS }, /* "a" < "b" */
   { {0x0062},                            {0x0063},                          UCOL_LESS }, /* "b" < "c" */
   { {0x0061},                            {0x0063},                          UCOL_LESS }, /* "a" < "c" */
@@ -4275,7 +4278,7 @@ const static OneTestCase rangeTestcases[] = {
 
 static int nRangeTestcases = UPRV_LENGTHOF(rangeTestcases);
 
-const static OneTestCase rangeTestcasesSupplemental[] = {
+static const OneTestCase rangeTestcasesSupplemental[] = {
   { {0x4e00},                            {0xfffb},                          UCOL_LESS }, /* U+4E00 < U+FFFB */
   { {0xfffb},                            {0xd800, 0xdc00},                  UCOL_LESS }, /* U+FFFB < U+10000 */
   { {0xd800, 0xdc00},                    {0xd800, 0xdc01},                  UCOL_LESS }, /* U+10000 < U+10001 */
@@ -4287,7 +4290,7 @@ const static OneTestCase rangeTestcasesSupplemental[] = {
 
 static int nRangeTestcasesSupplemental = UPRV_LENGTHOF(rangeTestcasesSupplemental);
 
-const static OneTestCase rangeTestcasesQwerty[] = {
+static const OneTestCase rangeTestcasesQwerty[] = {
   { {0x0071},                            {0x0077},                          UCOL_LESS }, /* "q" < "w" */
   { {0x0077},                            {0x0065},                          UCOL_LESS }, /* "w" < "e" */
 
@@ -4359,7 +4362,7 @@ static void TestSameStrengthListQwerty(void)
     /* Quoted characters also will work if two quoted characters are not consecutive.  */
     "&\\u0071<*'\\u0077'\\u0065\\u0072 &\\u0077<<*\\u0074'\\u0079'\\u0075 &\\u0074<<<*\\u0069\\u006f'\\u0070' &'\\u006f'=*\\u0061\\u0073\\u0064",
 
-    /* Consecutive quoted charactes do not work, because a '' will be treated as a quote character. */
+    /* Consecutive quoted characters do not work, because a '' will be treated as a quote character. */
     /* "&\\u0071<*'\\u0077''\\u0065''\\u0072' &\\u0077<<*'\\u0074''\\u0079''\\u0075' &\\u0074<<<*'\\u0069''\\u006f''\\u0070' &'\\u006f'=*\\u0061\\u0073\\u0064",*/
 
  };
@@ -4409,7 +4412,7 @@ static void TestSpecialCharacters(void)
     "&';'<*'+'-'-&*'", 
   };
 
-  const static OneTestCase specialCharacterStrings[] = {
+  static const OneTestCase specialCharacterStrings[] = {
     { {0x003b}, {0x002b}, UCOL_LESS },  /* ; < + */
     { {0x002b}, {0x002c}, UCOL_LESS },  /* + < , */
     { {0x002c}, {0x002d}, UCOL_LESS },  /* , < - */
@@ -4426,7 +4429,7 @@ static void TestPrivateUseCharacters(void)
     "&\\u5ea7<\\uE2D8<\\uE2D9<\\uE2DA<\\uE2DB<\\uE2DC<\\u4e8d", 
   };
 
-  const static OneTestCase privateUseCharacterStrings[] = {
+  static const OneTestCase privateUseCharacterStrings[] = {
     { {0x5ea7}, {0xe2d8}, UCOL_LESS },
     { {0xe2d8}, {0xe2d9}, UCOL_LESS },
     { {0xe2d9}, {0xe2da}, UCOL_LESS },
@@ -4446,7 +4449,7 @@ static void TestPrivateUseCharactersInList(void)
     "&\\u5ea7<*\\uE2D8\\uE2D9\\uE2DA\\uE2DB\\uE2DC\\u4e8d",
   };
 
-  const static OneTestCase privateUseCharacterStrings[] = {
+  static const OneTestCase privateUseCharacterStrings[] = {
     { {0x5ea7}, {0xe2d8}, UCOL_LESS },
     { {0xe2d8}, {0xe2d9}, UCOL_LESS },
     { {0xe2d9}, {0xe2da}, UCOL_LESS },
@@ -4466,7 +4469,7 @@ static void TestPrivateUseCharactersInRange(void)
     /* "&\\u5ea7<\\uE2D8'\\uE2D8'-'\\uE2D9'\\uE2DA-\\uE2DB\\uE2DC\\u4e8d", */
   };
 
-  const static OneTestCase privateUseCharacterStrings[] = {
+  static const OneTestCase privateUseCharacterStrings[] = {
     { {0x5ea7}, {0xe2d8}, UCOL_LESS },
     { {0xe2d8}, {0xe2d9}, UCOL_LESS },
     { {0xe2d9}, {0xe2da}, UCOL_LESS },
@@ -4595,7 +4598,7 @@ static void TestBeforeRuleWithScriptReordering(void)
     ucol_getSortKey(myCollation, base, baseLen, baseKey, 256);
     ucol_getSortKey(myCollation, before, beforeLen, beforeKey, 256);
     if (baseKey[0] != beforeKey[0]) {
-        log_err("Different lead byte for sort keys using before fule and after script reordering. base character lead byte = %02x, before character lead byte = %02x\n", baseKey[0], beforeKey[0]);
+        log_err("Different lead byte for sort keys using before rule and after script reordering. base character lead byte = %02x, before character lead byte = %02x\n", baseKey[0], beforeKey[0]);
     }
 
     ucol_close(myCollation);
@@ -4942,9 +4945,9 @@ static void TestReorderingAPIWithRuleCreatedCollator(void)
 static UBool containsExpectedScript(const int32_t scripts[], int32_t length, int32_t expectedScript) {
     int32_t i;
     for (i = 0; i < length; ++i) {
-        if (expectedScript == scripts[i]) { return TRUE; }
+        if (expectedScript == scripts[i]) { return true; }
     }
-    return FALSE;
+    return false;
 }
 
 static void TestEquivalentReorderingScripts(void) {
@@ -5161,7 +5164,7 @@ static void TestGreekFirstReorder(void)
         USCRIPT_GREEK
     };
     
-    const static OneTestCase privateUseCharacterStrings[] = {
+    static const OneTestCase privateUseCharacterStrings[] = {
         { {0x0391}, {0x0391}, UCOL_EQUAL },
         { {0x0041}, {0x0391}, UCOL_GREATER },
         { {0x03B1, 0x0041}, {0x03B1, 0x0391}, UCOL_GREATER },
@@ -5187,7 +5190,7 @@ static void TestGreekLastReorder(void)
         USCRIPT_UNKNOWN, USCRIPT_GREEK
     };
     
-    const static OneTestCase privateUseCharacterStrings[] = {
+    static const OneTestCase privateUseCharacterStrings[] = {
         { {0x0391}, {0x0391}, UCOL_EQUAL },
         { {0x0041}, {0x0391}, UCOL_LESS },
         { {0x03B1, 0x0041}, {0x03B1, 0x0391}, UCOL_LESS },
@@ -5214,7 +5217,7 @@ static void TestNonScriptReorder(void)
         UCOL_REORDER_CODE_CURRENCY
     };
 
-    const static OneTestCase privateUseCharacterStrings[] = {
+    static const OneTestCase privateUseCharacterStrings[] = {
         { {0x0391}, {0x0041}, UCOL_LESS },
         { {0x0041}, {0x0391}, UCOL_GREATER },
         { {0x0060}, {0x0041}, UCOL_LESS },
@@ -5238,7 +5241,7 @@ static void TestHaniReorder(void)
         USCRIPT_HAN
     };
 
-    const static OneTestCase privateUseCharacterStrings[] = {
+    static const OneTestCase privateUseCharacterStrings[] = {
         { {0x4e00}, {0x0041}, UCOL_LESS },
         { {0x4e00}, {0x0060}, UCOL_GREATER },
         { {0xD86D, 0xDF40}, {0x0041}, UCOL_LESS },
@@ -5264,7 +5267,7 @@ static void TestHaniReorderWithOtherRules(void)
         USCRIPT_HAN
     };*/
 
-    const static OneTestCase privateUseCharacterStrings[] = {
+    static const OneTestCase privateUseCharacterStrings[] = {
         { {0x4e00}, {0x0041}, UCOL_LESS },
         { {0x4e00}, {0x0060}, UCOL_GREATER },
         { {0xD86D, 0xDF40}, {0x0041}, UCOL_LESS },
@@ -5289,7 +5292,7 @@ static void TestMultipleReorder(void)
         USCRIPT_GREEK, USCRIPT_UNKNOWN, UCOL_REORDER_CODE_DIGIT, USCRIPT_LATIN, USCRIPT_HAN
     };
         
-    const static OneTestCase collationTestCases[] = {
+    static const OneTestCase collationTestCases[] = {
         { {0x0391}, {0x0041}, UCOL_LESS},
         { {0x0031}, {0x0041}, UCOL_LESS},
         { {0x0041}, {0x4e00}, UCOL_LESS},

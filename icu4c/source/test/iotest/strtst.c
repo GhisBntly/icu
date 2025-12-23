@@ -19,6 +19,7 @@
 #include "cmemory.h"
 #include "iotest.h"
 
+#include <stdbool.h>
 #include <string.h>
 
 static void TestString(void) {
@@ -313,17 +314,19 @@ static void TestLocalizedString(void) {
 }
 
 #if !UCONFIG_NO_FORMATTING
-#define Test_u_snprintf(limit, format, value, expectedSize, expectedStr) \
+#define Test_u_snprintf(limit, format, value, expectedSize, expectedStr) UPRV_BLOCK_MACRO_BEGIN { \
     u_uastrncpy(testStr, "xxxxxxxxxxxxxx", UPRV_LENGTHOF(testStr));\
-    size = u_snprintf(testStr, limit, format, value);\
+    size = u_snprintf(0, 0, format, value);\
+    written = u_snprintf(testStr, limit, format, value);\
     u_austrncpy(cTestResult, testStr, UPRV_LENGTHOF(cTestResult));\
-    if (size != expectedSize || strcmp(cTestResult, expectedStr) != 0) {\
+    if (size != written || size != expectedSize || strcmp(cTestResult, expectedStr) != 0) {\
         log_err("Unexpected formatting. size=%d expectedSize=%d cTestResult=%s expectedStr=%s\n",\
             size, expectedSize, cTestResult, expectedStr);\
     }\
     else {\
         log_verbose("Got: %s\n", cTestResult);\
     }\
+} UPRV_BLOCK_MACRO_END
 
 #endif
 
@@ -331,7 +334,7 @@ static void TestSnprintf(void) {
 #if !UCONFIG_NO_FORMATTING
     UChar testStr[256];
     char cTestResult[256];
-    int32_t size;
+    int32_t size, written;
 
     Test_u_snprintf(0, "%d", 123, 3, "xxxxxxxxxxxxxx");
     Test_u_snprintf(2, "%d", 123, 3, "12xxxxxxxxxxxx");
@@ -358,7 +361,7 @@ static void TestSnprintf(void) {
 #endif
 }
 
-#define TestSPrintFormat(uFormat, uValue, cFormat, cValue) \
+#define TestSPrintFormat(uFormat, uValue, cFormat, cValue) UPRV_BLOCK_MACRO_BEGIN { \
     /* Reinitialize the buffer to verify null termination works. */\
     u_memset(uBuffer, 0x2a, UPRV_LENGTHOF(uBuffer));\
     memset(buffer, '*', UPRV_LENGTHOF(buffer));\
@@ -375,6 +378,7 @@ static void TestSnprintf(void) {
     if (buffer[uNumPrinted+1] != '*') {\
         log_err("%" uFormat " too much stored\n");\
     }\
+} UPRV_BLOCK_MACRO_END
 
 static void TestSprintfFormat(void) {
 #if !UCONFIG_NO_FORMATTING
@@ -645,39 +649,39 @@ static void TestSScanset(void) {
     static const UChar abcUChars[] = {0x61,0x62,0x63,0x63,0x64,0x65,0x66,0x67,0};
     static const char abcChars[] = "abccdefg";
 
-    TestSScanSetFormat("%[bc]S", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[cb]S", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[bc]S", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[cb]S", abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%[ab]S", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[ba]S", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[ab]S", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[ba]S", abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%[ab]", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[ba]", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[ab]", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[ba]", abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%[abcdefgh]", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[;hgfedcba]", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[abcdefgh]", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[;hgfedcba]", abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%[^a]", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[^e]", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[^ed]", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[^dc]", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%[^e]  ", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[^a]", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[^e]", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[^ed]", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[^dc]", abcUChars, abcChars, true);
+    TestSScanSetFormat("%[^e]  ", abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%1[ab]  ", abcUChars, abcChars, TRUE);
-    TestSScanSetFormat("%2[^f]", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%1[ab]  ", abcUChars, abcChars, true);
+    TestSScanSetFormat("%2[^f]", abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%[qrst]", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[qrst]", abcUChars, abcChars, true);
 
     /* Extra long string for testing */
     TestSScanSetFormat("                                                                                                                         %[qrst]",
-        abcUChars, abcChars, TRUE);
+        abcUChars, abcChars, true);
 
-    TestSScanSetFormat("%[a-]", abcUChars, abcChars, TRUE);
+    TestSScanSetFormat("%[a-]", abcUChars, abcChars, true);
 
     /* Bad format */
-    TestSScanSetFormat("%[a", abcUChars, abcChars, FALSE);
-    TestSScanSetFormat("%[f-a]", abcUChars, abcChars, FALSE);
-    TestSScanSetFormat("%[c-a]", abcUChars, abcChars, FALSE);
+    TestSScanSetFormat("%[a", abcUChars, abcChars, false);
+    TestSScanSetFormat("%[f-a]", abcUChars, abcChars, false);
+    TestSScanSetFormat("%[c-a]", abcUChars, abcChars, false);
     /* The following is not deterministic on Windows */
 /*    TestSScanSetFormat("%[a-", abcUChars, abcChars);*/
 
@@ -687,6 +691,7 @@ static void TestSScanset(void) {
 
 static void TestBadSScanfFormat(const char *format, const UChar *uValue, const char *cValue) {
 #if !UCONFIG_NO_FORMATTING
+    (void)cValue; // suppress compiler warnings about unused variable
     UChar uBuffer[256];
     int32_t uNumScanned;
 

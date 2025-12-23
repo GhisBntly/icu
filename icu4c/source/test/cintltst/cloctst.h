@@ -25,6 +25,8 @@
  **/
 static void TestBasicGetters(void);
 static void TestPrefixes(void);
+static void TestVariantLengthLimit(void);
+
 /**
  * Use Locale to access Resource file data and compare against expected values
  **/
@@ -33,10 +35,13 @@ static void TestSimpleResourceInfo(void);
  * Use Locale to access Resource file display names and compare against expected values
  **/
 static  void TestDisplayNames(void);
+static  void TestGetDisplayScriptPreFlighting21160(void);
+
 /**
  * Test getAvailableLocales
  **/
- static  void TestGetAvailableLocales(void);
+static void TestGetAvailableLocales(void);
+static void TestGetAvailableLocalesByType(void);
 /**
  * Test functions to set and access a custom data directory
  **/
@@ -85,6 +90,7 @@ static  void TestDisplayNames(void);
 
  static void TestCanonicalization(void);
  static void TestCanonicalizationBuffer(void);
+static  void TestCanonicalization21749StackUseAfterScope(void);
 
  static void TestDisplayKeywords(void);
 
@@ -97,7 +103,7 @@ static void TestTrailingNull(void);
 static void TestGetLocale(void);
 
 /**
- * additional intialization for datatables storing expected values
+ * additional initialization for datatables storing expected values
  */
 static void setUpDataTable(void);
 static void cleanUpDataTable(void);
@@ -121,10 +127,14 @@ static void TestOrientation(void);
 static void TestLikelySubtags(void);
 
 /**
+ * test terminate correctly.
+ */
+static void Test21157CorrectTerminating(void);
+
+/**
  * language tag
  */
 static void TestForLanguageTag(void);
-static void TestInvalidLanguageTag(void);
 static void TestToLanguageTag(void);
 static void TestBug20132(void);
 static void TestLangAndRegionCanonicalize(void);
@@ -133,6 +143,18 @@ static void TestToUnicodeLocaleKey(void);
 static void TestToLegacyKey(void);
 static void TestToUnicodeLocaleType(void);
 static void TestToLegacyType(void);
+static void TestBug20149(void);
+static void TestCDefaultLocale(void);
+static void TestBug21449InfiniteLoop(void);
+static void TestBug23031VaPosix(void);
+static void TestBug23031VaPosixManyExtensions(void);
+static void TestBug23031VaPosixManyVariants(void);
+
+
+/**
+ * U_USING_DEFAULT_WARNING
+ */
+static void TestUsingDefaultWarning(void);
 
 /**
  * locale data

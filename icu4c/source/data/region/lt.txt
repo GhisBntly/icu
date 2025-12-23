@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 lt{
     Countries{
         001{"pasaulis"}
@@ -84,6 +85,7 @@ lt{
         CN{"Kinija"}
         CO{"Kolumbija"}
         CP{"Klipertono sala"}
+        CQ{"Sarkas"}
         CR{"Kosta Rika"}
         CU{"Kuba"}
         CV{"Žaliasis Kyšulys"}
@@ -110,7 +112,7 @@ lt{
         EZ{"euro zona"}
         FI{"Suomija"}
         FJ{"Fidžis"}
-        FK{"Folklando Salos"}
+        FK{"Folklando salos"}
         FM{"Mikronezija"}
         FO{"Farerų Salos"}
         FR{"Prancūzija"}
@@ -254,7 +256,7 @@ lt{
         SX{"Sint Martenas"}
         SY{"Sirija"}
         SZ{"Svazilandas"}
-        TA{"Tristanas da Kunja"}
+        TA{"Tristano da Kunjos"}
         TC{"Terkso ir Kaikoso Salos"}
         TD{"Čadas"}
         TF{"Prancūzijos Pietų sritys"}
@@ -287,8 +289,8 @@ lt{
         VU{"Vanuatu"}
         WF{"Volisas ir Futūna"}
         WS{"Samoa"}
-        XA{"XA"}
-        XB{"XB"}
+        XA{"pseudo A"}
+        XB{"pseudo B"}
         XK{"Kosovas"}
         YE{"Jemenas"}
         YT{"Majotas"}
@@ -296,6 +298,9 @@ lt{
         ZM{"Zambija"}
         ZW{"Zimbabvė"}
         ZZ{"nežinoma sritis"}
+    }
+    Countries%chagos{
+        IO{"Čagoso salynas"}
     }
     Countries%short{
         GB{"JK"}
@@ -310,8 +315,6 @@ lt{
         CG{"Kongo Respublika"}
         CI{"Dramblio Kaulo Kranto Respublika"}
         CZ{"Čekijos Respublika"}
-        FK{"Folklando (Malvinų) Salos"}
-        TL{"TL"}
+        FK{"Folklando (Malvinų) salos"}
     }
-    Version{"2.1.48.42"}
 }

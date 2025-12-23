@@ -42,24 +42,27 @@ addHeapMutexTest(TestNode** root)
 
 static int32_t gMutexFailures = 0;
 
-#define TEST_STATUS(status, expected) \
-if (status != expected) { \
-log_err_status(status, "FAIL at  %s:%d. Actual status = \"%s\";  Expected status = \"%s\"\n", \
-  __FILE__, __LINE__, u_errorName(status), u_errorName(expected)); gMutexFailures++; }
+#define TEST_STATUS(status, expected) UPRV_BLOCK_MACRO_BEGIN { \
+    if (status != expected) { \
+        log_err_status(status, "FAIL at  %s:%d. Actual status = \"%s\";  Expected status = \"%s\"\n", \
+                       __FILE__, __LINE__, u_errorName(status), u_errorName(expected)); gMutexFailures++; \
+    } \
+} UPRV_BLOCK_MACRO_END
 
 
-#define TEST_ASSERT(expr) \
-if (!(expr)) { \
-    log_err("FAILED Assertion \"" #expr "\" at  %s:%d.\n", __FILE__, __LINE__); \
-    gMutexFailures++; \
-}
+#define TEST_ASSERT(expr) UPRV_BLOCK_MACRO_BEGIN { \
+    if (!(expr)) { \
+        log_err("FAILED Assertion \"" #expr "\" at  %s:%d.\n", __FILE__, __LINE__); \
+        gMutexFailures++; \
+    } \
+} UPRV_BLOCK_MACRO_END
 
 
 /*  These tests do cleanup and reinitialize ICU in the course of their operation.
  *    The ICU data directory must be preserved across these operations.
  *    Here is a helper function to assist with that.
  */
-static char *safeGetICUDataDirectory() {
+static char *safeGetICUDataDirectory(void) {
     const char *dataDir = u_getDataDirectory();  /* Returned string vanashes with u_cleanup */
     char *retStr = NULL;
     if (dataDir != NULL) {
@@ -74,7 +77,7 @@ static char *safeGetICUDataDirectory() {
 /*
  *  Test Heap Functions.
  *    Implemented on top of the standard malloc heap.
- *    All blocks increased in size by 8 to 16 bytes, and the poiner returned to ICU is
+ *    All blocks increased in size by 8 to 16 bytes, and the pointer returned to ICU is
  *       offset up by 8 to 16, which should cause a good heap corruption if one of our "blocks"
  *       ends up being freed directly, without coming through us.
  *    Allocations are counted, to check that ICU actually does call back to us.
@@ -83,6 +86,7 @@ int    gBlockCount = 0;
 const void  *gContext;
 
 static void * U_CALLCONV myMemAlloc(const void *context, size_t size) {
+    (void)context; // suppress compiler warnings about unused variable
     char *retPtr = (char *)malloc(size+sizeof(ctest_AlignedMemory));
     if (retPtr != NULL) {
         retPtr += sizeof(ctest_AlignedMemory);
@@ -92,6 +96,7 @@ static void * U_CALLCONV myMemAlloc(const void *context, size_t size) {
 }
 
 static void U_CALLCONV myMemFree(const void *context, void *mem) {
+    (void)context; // suppress compiler warnings about unused variable
     char *freePtr = (char *)mem;
     if (freePtr != NULL) {
         freePtr -= sizeof(ctest_AlignedMemory);
@@ -102,6 +107,7 @@ static void U_CALLCONV myMemFree(const void *context, void *mem) {
 
 
 static void * U_CALLCONV myMemRealloc(const void *context, void *mem, size_t size) {
+    (void)context; // suppress compiler warnings about unused variable
     char *p = (char *)mem;
     char *retPtr;
 
@@ -110,13 +116,13 @@ static void * U_CALLCONV myMemRealloc(const void *context, void *mem, size_t siz
     }
     retPtr = realloc(p, size+sizeof(ctest_AlignedMemory));
     if (retPtr != NULL) {
-        p += sizeof(ctest_AlignedMemory);
+        retPtr += sizeof(ctest_AlignedMemory);
     }
     return retPtr;
 }
 
 
-static void TestHeapFunctions() {
+static void TestHeapFunctions(void) {
     UErrorCode       status = U_ZERO_ERROR;
     UResourceBundle *rb     = NULL;
     char            *icuDataDir;
@@ -128,7 +134,7 @@ static void TestHeapFunctions() {
 
     /* Verify that ICU can be cleaned up and reinitialized successfully.
      *  Failure here usually means that some ICU service didn't clean up successfully,
-     *  probably because some earlier test accidently left something open. */
+     *  probably because some earlier test accidentally left something open. */
     ctest_resetICU();
 
     /* Un-initialize ICU */

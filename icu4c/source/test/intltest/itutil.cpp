@@ -35,6 +35,11 @@
 #include "usettest.h"
 
 extern IntlTest *createBytesTrieTest();
+#if !UCONFIG_NO_COLLATION
+extern IntlTest *createUColHeaderOnlyTest();
+#endif
+extern IntlTest *createUSetHeaderOnlyTest();
+extern IntlTest *createLocaleMatcherTest();
 static IntlTest *createLocalPointerTest();
 extern IntlTest *createUCharsTrieTest();
 static IntlTest *createEnumSetTest();
@@ -45,114 +50,53 @@ extern IntlTest *createPluralMapTest();
 #if !UCONFIG_NO_FORMATTING
 extern IntlTest *createStaticUnicodeSetsTest();
 #endif
-
-
-#define CASE(id, test) case id:                               \
-                          name = #test;                       \
-                          if (exec) {                         \
-                              logln(#test "---"); logln();    \
-                              test t;                         \
-                              callTest(t, par);               \
-                          }                                   \
-                          break
+static IntlTest *createUHashTest();
+extern IntlTest *createUTFIteratorTest();
+extern IntlTest *createUTFStringTest();
+extern IntlTest *createIntlTestTest();
 
 void IntlTestUtilities::runIndexedTest( int32_t index, UBool exec, const char* &name, char* par )
 {
     if (exec) logln("TestSuite Utilities: ");
-    switch (index) {
-        CASE(0, MultithreadTest);
-        CASE(1, StringTest);
-        CASE(2, UnicodeStringTest);
-        CASE(3, LocaleTest);
-        CASE(4, CharIterTest);
-        CASE(5, UObjectTest);
-        CASE(6, UnicodeTest);
-        CASE(7, ResourceBundleTest);
-        CASE(8, NewResourceBundleTest);
-        CASE(9, PUtilTest);
-        CASE(10, UVector32Test);
-        CASE(11, UVectorTest);
-        CASE(12, UTextTest);
-        CASE(13, LocaleAliasTest);
-        CASE(14, UnicodeSetTest);
-        CASE(15, ErrorCodeTest);
-        case 16:
-            name = "LocalPointerTest";
-            if (exec) {
-                logln("TestSuite LocalPointerTest---"); logln();
-                LocalPointer<IntlTest> test(createLocalPointerTest());
-                callTest(*test, par);
-            }
-            break;
-        case 17:
-            name = "BytesTrieTest";
-            if (exec) {
-                logln("TestSuite BytesTrieTest---"); logln();
-                LocalPointer<IntlTest> test(createBytesTrieTest());
-                callTest(*test, par);
-            }
-            break;
-        case 18:
-            name = "UCharsTrieTest";
-            if (exec) {
-                logln("TestSuite UCharsTrieTest---"); logln();
-                LocalPointer<IntlTest> test(createUCharsTrieTest());
-                callTest(*test, par);
-            }
-            break;
-        case 19:
-            name = "EnumSetTest";
-            if (exec) {
-                logln("TestSuite EnumSetTest---"); logln();
-                LocalPointer<IntlTest> test(createEnumSetTest());
-                callTest(*test, par);
-            }
-            break;
-        case 20:
-            name = "SimpleFormatterTest";
-            if (exec) {
-                logln("TestSuite SimpleFormatterTest---"); logln();
-                LocalPointer<IntlTest> test(createSimpleFormatterTest());
-                callTest(*test, par);
-            }
-            break;
-        case 21:
-            name = "UnifiedCacheTest";
-            if (exec) {
-                logln("TestSuite UnifiedCacheTest---"); logln();
-                LocalPointer<IntlTest> test(createUnifiedCacheTest());
-                callTest(*test, par);
-            }
-            break;
-        case 22:
-            name = "QuantityFormatterTest";
-            if (exec) {
-                logln("TestSuite QuantityFormatterTest---"); logln();
-                LocalPointer<IntlTest> test(createQuantityFormatterTest());
-                callTest(*test, par);
-            }
-            break;
-        case 23: 
-            name = "PluralMapTest"; 
-            if (exec) { 
-                logln("TestSuite PluralMapTest---"); logln(); 
-                LocalPointer<IntlTest> test(createPluralMapTest()); 
-                callTest(*test, par); 
-            } 
-            break;
-        case 24:
-            name = "StaticUnicodeSetsTest";
+    TESTCASE_AUTO_BEGIN;
+    TESTCASE_AUTO_CREATE_CLASS(IntlTestTest);
+    TESTCASE_AUTO_CLASS(MultithreadTest);
+    TESTCASE_AUTO_CLASS(StringTest);
+    TESTCASE_AUTO_CLASS(UnicodeStringTest);
+    TESTCASE_AUTO_CLASS(LocaleTest);
+    TESTCASE_AUTO_CLASS(CharIterTest);
+    TESTCASE_AUTO_CLASS(UObjectTest);
+    TESTCASE_AUTO_CLASS(UnicodeTest);
+    TESTCASE_AUTO_CLASS(ResourceBundleTest);
+    TESTCASE_AUTO_CLASS(NewResourceBundleTest);
+    TESTCASE_AUTO_CLASS(PUtilTest);
+    TESTCASE_AUTO_CLASS(UVector32Test);
+    TESTCASE_AUTO_CLASS(UVectorTest);
+    TESTCASE_AUTO_CLASS(UTextTest);
+    TESTCASE_AUTO_CLASS(LocaleAliasTest);
+    TESTCASE_AUTO_CLASS(UnicodeSetTest);
+    TESTCASE_AUTO_CLASS(ErrorCodeTest);
+    TESTCASE_AUTO_CREATE_CLASS(LocalPointerTest);
+    TESTCASE_AUTO_CREATE_CLASS(BytesTrieTest);
+    TESTCASE_AUTO_CREATE_CLASS(UCharsTrieTest);
+    TESTCASE_AUTO_CREATE_CLASS(EnumSetTest);
+    TESTCASE_AUTO_CREATE_CLASS(SimpleFormatterTest);
+    TESTCASE_AUTO_CREATE_CLASS(UnifiedCacheTest);
+    TESTCASE_AUTO_CREATE_CLASS(QuantityFormatterTest);
+    TESTCASE_AUTO_CREATE_CLASS(PluralMapTest);
 #if !UCONFIG_NO_FORMATTING
-            if (exec) {
-                logln("TestSuite StaticUnicodeSetsTest---"); logln();
-                LocalPointer<IntlTest> test(createStaticUnicodeSetsTest());
-                callTest(*test, par);
-            }
+    TESTCASE_AUTO_CREATE_CLASS(StaticUnicodeSetsTest);
 #endif
-            break;
-        CASE(25, LocaleBuilderTest);
-        default: name = ""; break; //needed to end loop
-    }
+    TESTCASE_AUTO_CLASS(LocaleBuilderTest);
+    TESTCASE_AUTO_CREATE_CLASS(LocaleMatcherTest);
+    TESTCASE_AUTO_CREATE_CLASS(UHashTest);
+#if !UCONFIG_NO_COLLATION
+    TESTCASE_AUTO_CREATE_CLASS(UColHeaderOnlyTest);
+#endif
+    TESTCASE_AUTO_CREATE_CLASS(USetHeaderOnlyTest);
+    TESTCASE_AUTO_CREATE_CLASS(UTFIteratorTest);
+    TESTCASE_AUTO_CREATE_CLASS(UTFStringTest);
+    TESTCASE_AUTO_END;
 }
 
 void ErrorCodeTest::runIndexedTest(int32_t index, UBool exec, const char* &name, char* /*par*/) {
@@ -165,8 +109,8 @@ void ErrorCodeTest::runIndexedTest(int32_t index, UBool exec, const char* &name,
     }
 }
 
-static void RefPlusOne(UErrorCode &code) { code=(UErrorCode)(code+1); }
-static void PtrPlusTwo(UErrorCode *code) { *code=(UErrorCode)(*code+2); }
+static void RefPlusOne(UErrorCode &code) { code = static_cast<UErrorCode>(code + 1); }
+static void PtrPlusTwo(UErrorCode *code) { *code = static_cast<UErrorCode>(*code + 2); }
 
 void ErrorCodeTest::TestErrorCode() {
     ErrorCode errorCode;
@@ -207,7 +151,7 @@ public:
         }
     }
 private:
-    virtual void handleFailure() const {
+    virtual void handleFailure() const override {
         ++checks;
     }
     int32_t &checks;
@@ -274,19 +218,19 @@ void ErrorCodeTest::TestSubclass() {
 
 class IcuTestErrorCodeTestHelper : public IntlTest {
   public:
-    void errln( const UnicodeString &message ) U_OVERRIDE {
+    void errln(std::u16string_view message) override {
         test->assertFalse("Already saw an error", seenError);
-        seenError = TRUE;
-        test->assertEquals("Message for Error", expectedErrln, message);
+        seenError = true;
+        test->assertEquals("Message for Error", std::u16string_view{expectedErrln}, message);
         if (expectedDataErr) {
             test->errln("Got non-data error, but expected data error");
         }
     }
 
-    void dataerrln( const UnicodeString &message ) U_OVERRIDE {
+    void dataerrln(std::u16string_view message) override {
         test->assertFalse("Already saw an error", seenError);
-        seenError = TRUE;
-        test->assertEquals("Message for Error", expectedErrln, message);
+        seenError = true;
+        test->assertEquals("Message for Error", std::u16string_view{expectedErrln}, message);
         if (!expectedDataErr) {
             test->errln("Got data error, but expected non-data error");
         }
@@ -304,8 +248,8 @@ void ErrorCodeTest::TestIcuTestErrorCode() {
 
     // Test destructor message
     helper.expectedErrln = u"AAA destructor: expected success but got error: U_ILLEGAL_PAD_POSITION";
-    helper.expectedDataErr = FALSE;
-    helper.seenError = FALSE;
+    helper.expectedDataErr = false;
+    helper.seenError = false;
     {
         IcuTestErrorCode testStatus(helper, "AAA");
         testStatus.set(U_ILLEGAL_PAD_POSITION);
@@ -314,8 +258,8 @@ void ErrorCodeTest::TestIcuTestErrorCode() {
 
     // Test destructor message with scope
     helper.expectedErrln = u"BBB destructor: expected success but got error: U_ILLEGAL_PAD_POSITION scope: foo";
-    helper.expectedDataErr = FALSE;
-    helper.seenError = FALSE;
+    helper.expectedDataErr = false;
+    helper.seenError = false;
     {
         IcuTestErrorCode testStatus(helper, "BBB");
         testStatus.setScope("foo");
@@ -325,15 +269,15 @@ void ErrorCodeTest::TestIcuTestErrorCode() {
 
     // Check errIfFailure message with scope
     helper.expectedErrln = u"CCC expected success but got error: U_ILLEGAL_PAD_POSITION scope: foo";
-    helper.expectedDataErr = FALSE;
-    helper.seenError = FALSE;
+    helper.expectedDataErr = false;
+    helper.seenError = false;
     {
         IcuTestErrorCode testStatus(helper, "CCC");
         testStatus.setScope("foo");
         testStatus.set(U_ILLEGAL_PAD_POSITION);
         testStatus.errIfFailureAndReset();
         assertTrue("Should have seen an error", helper.seenError);
-        helper.seenError = FALSE;
+        helper.seenError = false;
         helper.expectedErrln = u"CCC expected success but got error: U_ILLEGAL_CHAR_FOUND scope: foo - 5.4300";
         testStatus.set(U_ILLEGAL_CHAR_FOUND);
         testStatus.errIfFailureAndReset("%6.4f", 5.43);
@@ -342,14 +286,14 @@ void ErrorCodeTest::TestIcuTestErrorCode() {
 
     // Check errDataIfFailure message without scope
     helper.expectedErrln = u"DDD data: expected success but got error: U_ILLEGAL_PAD_POSITION";
-    helper.expectedDataErr = TRUE;
-    helper.seenError = FALSE;
+    helper.expectedDataErr = true;
+    helper.seenError = false;
     {
         IcuTestErrorCode testStatus(helper, "DDD");
         testStatus.set(U_ILLEGAL_PAD_POSITION);
         testStatus.errDataIfFailureAndReset();
         assertTrue("Should have seen an error", helper.seenError);
-        helper.seenError = FALSE;
+        helper.seenError = false;
         helper.expectedErrln = u"DDD data: expected success but got error: U_ILLEGAL_CHAR_FOUND - 5.4300";
         testStatus.set(U_ILLEGAL_CHAR_FOUND);
         testStatus.errDataIfFailureAndReset("%6.4f", 5.43);
@@ -358,8 +302,8 @@ void ErrorCodeTest::TestIcuTestErrorCode() {
 
     // Check expectFailure
     helper.expectedErrln = u"EEE expected: U_ILLEGAL_CHAR_FOUND but got error: U_ILLEGAL_PAD_POSITION";
-    helper.expectedDataErr = FALSE;
-    helper.seenError = FALSE;
+    helper.expectedDataErr = false;
+    helper.seenError = false;
     {
         IcuTestErrorCode testStatus(helper, "EEE");
         testStatus.set(U_ILLEGAL_PAD_POSITION);
@@ -368,7 +312,7 @@ void ErrorCodeTest::TestIcuTestErrorCode() {
         testStatus.set(U_ILLEGAL_PAD_POSITION);
         testStatus.expectErrorAndReset(U_ILLEGAL_CHAR_FOUND);
         assertTrue("Should have seen an error", helper.seenError);
-        helper.seenError = FALSE;
+        helper.seenError = false;
         helper.expectedErrln = u"EEE expected: U_ILLEGAL_CHAR_FOUND but got error: U_ZERO_ERROR scope: scopety scope - 5.4300";
         testStatus.setScope("scopety scope");
         testStatus.set(U_ILLEGAL_PAD_POSITION);
@@ -384,7 +328,7 @@ class LocalPointerTest : public IntlTest {
 public:
     LocalPointerTest() {}
 
-    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
+    void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=nullptr) override;
 
     void TestLocalPointer();
     void TestLocalPointerMoveSwap();
@@ -423,10 +367,10 @@ void LocalPointerTest::runIndexedTest(int32_t index, UBool exec, const char *&na
 // Exercise almost every LocalPointer and LocalPointerBase method.
 void LocalPointerTest::TestLocalPointer() {
     // constructor
-    LocalPointer<UnicodeString> s(new UnicodeString((UChar32)0x50005));
+    LocalPointer<UnicodeString> s(new UnicodeString(static_cast<UChar32>(0x50005)));
     // isNULL(), isValid(), operator==(), operator!=()
-    if(s.isNull() || !s.isValid() || s==NULL || !(s!=NULL)) {
-        errln("LocalPointer constructor or NULL test failure");
+    if(s.isNull() || !s.isValid() || s==nullptr || !(s!=nullptr)) {
+        errln("LocalPointer constructor or nullptr test failure");
         return;
     }
     // getAlias(), operator->, operator*
@@ -434,12 +378,12 @@ void LocalPointerTest::TestLocalPointer() {
         errln("LocalPointer access failure");
     }
     // adoptInstead(), orphan()
-    s.adoptInstead(new UnicodeString((UChar)0xfffc));
+    s.adoptInstead(new UnicodeString(static_cast<char16_t>(0xfffc)));
     if(s->length()!=1) {
         errln("LocalPointer adoptInstead(U+FFFC) failure");
     }
     UnicodeString *orphan=s.orphan();
-    if(orphan==NULL || orphan->length()!=1 || s.isValid() || s!=NULL) {
+    if(orphan==nullptr || orphan->length()!=1 || s.isValid() || s!=nullptr) {
         errln("LocalPointer orphan() failure");
     }
     delete orphan;
@@ -448,7 +392,7 @@ void LocalPointerTest::TestLocalPointer() {
         errln("LocalPointer adoptInstead(empty) failure");
     }
 
-    // LocalPointer(p, errorCode) sets U_MEMORY_ALLOCATION_ERROR if p==NULL.
+    // LocalPointer(p, errorCode) sets U_MEMORY_ALLOCATION_ERROR if p==nullptr.
     UErrorCode errorCode = U_ZERO_ERROR;
     LocalPointer<CharString> csx(new CharString("some chars", errorCode), errorCode);
     if(csx.isNull() && U_SUCCESS(errorCode)) {
@@ -469,19 +413,19 @@ void LocalPointerTest::TestLocalPointer() {
         return;
     }
     errorCode = U_ZERO_ERROR;
-    csx.adoptInsteadAndCheckErrorCode(NULL, errorCode);
+    csx.adoptInsteadAndCheckErrorCode(nullptr, errorCode);
     if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
-        errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
+        errln("adoptInsteadAndCheckErrorCode(nullptr, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
         return;
     }
     if(csx.isValid()) {
-        errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) kept the object");
+        errln("adoptInsteadAndCheckErrorCode(nullptr, errorCode) kept the object");
         return;
     }
     errorCode = U_ZERO_ERROR;
-    LocalPointer<CharString> null(NULL, errorCode);
+    LocalPointer<CharString> null(nullptr, errorCode);
     if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
-        errln("LocalPointer(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
+        errln("LocalPointer(nullptr, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
         return;
     }
 
@@ -495,8 +439,8 @@ void moveFrom(T &dest, T &src) {
 }
 
 void LocalPointerTest::TestLocalPointerMoveSwap() {
-    UnicodeString *p1 = new UnicodeString((UChar)0x61);
-    UnicodeString *p2 = new UnicodeString((UChar)0x62);
+    UnicodeString* p1 = new UnicodeString(static_cast<char16_t>(0x61));
+    UnicodeString* p2 = new UnicodeString(static_cast<char16_t>(0x62));
     LocalPointer<UnicodeString> s1(p1);
     LocalPointer<UnicodeString> s2(p2);
     s1.swap(s2);
@@ -530,7 +474,7 @@ void LocalPointerTest::TestLocalPointerMoveSwap() {
 }
 
 void LocalPointerTest::TestLocalPointerStdUniquePtr() {
-    auto* ptr = new UnicodeString((UChar32)0x50005);
+    auto* ptr = new UnicodeString(static_cast<UChar32>(0x50005));
     // Implicit conversion operator
     std::unique_ptr<UnicodeString> s = LocalPointer<UnicodeString>(ptr);
     // Explicit move constructor
@@ -547,19 +491,19 @@ void LocalPointerTest::TestLocalArray() {
     // constructor
     LocalArray<UnicodeString> a(new UnicodeString[2]);
     // operator[]()
-    a[0].append((UChar)0x61);
-    a[1].append((UChar32)0x60006);
+    a[0].append(static_cast<char16_t>(0x61));
+    a[1].append(static_cast<UChar32>(0x60006));
     if(a[0].length()!=1 || a[1].length()!=2) {
         errln("LocalArray access failure");
     }
     // adoptInstead()
     a.adoptInstead(new UnicodeString[4]);
-    a[3].append((UChar)0x62).append((UChar)0x63).reverse();
+    a[3].append(static_cast<char16_t>(0x62)).append(static_cast<char16_t>(0x63)).reverse();
     if(a[3].length()!=2 || a[3][1]!=0x62) {
         errln("LocalArray adoptInstead() failure");
     }
 
-    // LocalArray(p, errorCode) sets U_MEMORY_ALLOCATION_ERROR if p==NULL.
+    // LocalArray(p, errorCode) sets U_MEMORY_ALLOCATION_ERROR if p==nullptr.
     UErrorCode errorCode = U_ZERO_ERROR;
     LocalArray<UnicodeString> ua(new UnicodeString[3], errorCode);
     if(ua.isNull() && U_SUCCESS(errorCode)) {
@@ -581,19 +525,19 @@ void LocalPointerTest::TestLocalArray() {
         return;
     }
     errorCode = U_ZERO_ERROR;
-    ua.adoptInsteadAndCheckErrorCode(NULL, errorCode);
+    ua.adoptInsteadAndCheckErrorCode(nullptr, errorCode);
     if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
-        errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
+        errln("adoptInsteadAndCheckErrorCode(nullptr, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
         return;
     }
     if(ua.isValid()) {
-        errln("adoptInsteadAndCheckErrorCode(NULL, errorCode) kept the array");
+        errln("adoptInsteadAndCheckErrorCode(nullptr, errorCode) kept the array");
         return;
     }
     errorCode = U_ZERO_ERROR;
-    LocalArray<UnicodeString> null(NULL, errorCode);
+    LocalArray<UnicodeString> null(nullptr, errorCode);
     if(errorCode != U_MEMORY_ALLOCATION_ERROR) {
-        errln("LocalArray(NULL, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
+        errln("LocalArray(nullptr, errorCode) did not set U_MEMORY_ALLOCATION_ERROR");
         return;
     }
 
@@ -665,7 +609,7 @@ void LocalPointerTest::TestLocalXyzPointer() {
 
     static const char *const encoding="ISO-8859-1";
     LocalUConverterSelectorPointer sel(
-        ucnvsel_open(&encoding, 1, NULL, UCNV_ROUNDTRIP_SET, errorCode));
+        ucnvsel_open(&encoding, 1, nullptr, UCNV_ROUNDTRIP_SET, errorCode));
     if(errorCode.errIfFailureAndReset("ucnvsel_open()")) {
         return;
     }
@@ -675,7 +619,7 @@ void LocalPointerTest::TestLocalXyzPointer() {
     }
 
 #if !UCONFIG_NO_FORMATTING
-    LocalUCalendarPointer cal(ucal_open(NULL, 0, "root", UCAL_GREGORIAN, errorCode));
+    LocalUCalendarPointer cal(ucal_open(nullptr, 0, "root", UCAL_GREGORIAN, errorCode));
     if(errorCode.errDataIfFailureAndReset("ucal_open()")) {
         return;
     }
@@ -704,7 +648,7 @@ void LocalPointerTest::TestLocalXyzPointer() {
 
     UnicodeString hello=UNICODE_STRING_SIMPLE("Hello {0}!");
     LocalUMessageFormatPointer msg(
-        umsg_open(hello.getBuffer(), hello.length(), "root", NULL, errorCode));
+        umsg_open(hello.getBuffer(), hello.length(), "root", nullptr, errorCode));
     if(errorCode.errIfFailureAndReset("umsg_open()")) {
         return;
     }
@@ -741,7 +685,7 @@ void LocalPointerTest::TestLocalXyzPointer() {
 #if !UCONFIG_NO_REGULAR_EXPRESSIONS
     UnicodeString pattern=UNICODE_STRING_SIMPLE("abc|xy+z");
     LocalURegularExpressionPointer regex(
-        uregex_open(pattern.getBuffer(), pattern.length(), 0, NULL, errorCode));
+        uregex_open(pattern.getBuffer(), pattern.length(), 0, nullptr, errorCode));
     if(errorCode.errIfFailureAndReset("uregex_open()")) {
         return;
     }
@@ -754,7 +698,7 @@ void LocalPointerTest::TestLocalXyzPointer() {
 #if !UCONFIG_NO_TRANSLITERATION
     UnicodeString id=UNICODE_STRING_SIMPLE("Grek-Latn");
     LocalUTransliteratorPointer trans(
-        utrans_openU(id.getBuffer(), id.length(), UTRANS_FORWARD, NULL, 0, NULL, errorCode));
+        utrans_openU(id.getBuffer(), id.length(), UTRANS_FORWARD, nullptr, 0, nullptr, errorCode));
     if(errorCode.errIfFailureAndReset("utrans_open()")) {
         return;
     }
@@ -817,38 +761,38 @@ void LocalPointerTest::TestLocalXyzPointerMoveSwap() {
 #endif /* !UCONFIG_NO_NORMALIZATION */
 }
 
-// Try LocalXyzPointer types with NULL pointers.
+// Try LocalXyzPointer types with nullptr pointers.
 void LocalPointerTest::TestLocalXyzPointerNull() {
     {
         IcuTestErrorCode errorCode(*this, "TestLocalXyzPointerNull/LocalUConverterSelectorPointer");
         static const char *const encoding="ISO-8859-1";
         LocalUConverterSelectorPointer null;
         LocalUConverterSelectorPointer sel(
-            ucnvsel_open(&encoding, 1, NULL, UCNV_ROUNDTRIP_SET, errorCode));
-        sel.adoptInstead(NULL);
+            ucnvsel_open(&encoding, 1, nullptr, UCNV_ROUNDTRIP_SET, errorCode));
+        sel.adoptInstead(nullptr);
     }
 #if !UCONFIG_NO_FORMATTING
     {
         IcuTestErrorCode errorCode(*this, "TestLocalXyzPointerNull/LocalUCalendarPointer");
         LocalUCalendarPointer null;
-        LocalUCalendarPointer cal(ucal_open(NULL, 0, "root", UCAL_GREGORIAN, errorCode));
+        LocalUCalendarPointer cal(ucal_open(nullptr, 0, "root", UCAL_GREGORIAN, errorCode));
         if(!errorCode.errDataIfFailureAndReset("ucal_open()")) {
-            cal.adoptInstead(NULL);
+            cal.adoptInstead(nullptr);
         }
     }
     {
         IcuTestErrorCode errorCode(*this, "TestLocalXyzPointerNull/LocalUDateTimePatternGeneratorPointer");
         LocalUDateTimePatternGeneratorPointer null;
         LocalUDateTimePatternGeneratorPointer patgen(udatpg_open("root", errorCode));
-        patgen.adoptInstead(NULL);
+        patgen.adoptInstead(nullptr);
     }
     {
         IcuTestErrorCode errorCode(*this, "TestLocalXyzPointerNull/LocalUMessageFormatPointer");
         UnicodeString hello=UNICODE_STRING_SIMPLE("Hello {0}!");
         LocalUMessageFormatPointer null;
         LocalUMessageFormatPointer msg(
-            umsg_open(hello.getBuffer(), hello.length(), "root", NULL, errorCode));
-        msg.adoptInstead(NULL);
+            umsg_open(hello.getBuffer(), hello.length(), "root", nullptr, errorCode));
+        msg.adoptInstead(nullptr);
     }
 #endif /* !UCONFIG_NO_FORMATTING */
 
@@ -858,9 +802,9 @@ void LocalPointerTest::TestLocalXyzPointerNull() {
         UnicodeString pattern=UNICODE_STRING_SIMPLE("abc|xy+z");
         LocalURegularExpressionPointer null;
         LocalURegularExpressionPointer regex(
-            uregex_open(pattern.getBuffer(), pattern.length(), 0, NULL, errorCode));
+            uregex_open(pattern.getBuffer(), pattern.length(), 0, nullptr, errorCode));
         if(!errorCode.errDataIfFailureAndReset("urege_open()")) {
-            regex.adoptInstead(NULL);
+            regex.adoptInstead(nullptr);
         }
     }
 #endif /* !UCONFIG_NO_REGULAR_EXPRESSIONS */
@@ -871,9 +815,9 @@ void LocalPointerTest::TestLocalXyzPointerNull() {
         UnicodeString id=UNICODE_STRING_SIMPLE("Grek-Latn");
         LocalUTransliteratorPointer null;
         LocalUTransliteratorPointer trans(
-            utrans_openU(id.getBuffer(), id.length(), UTRANS_FORWARD, NULL, 0, NULL, errorCode));
+            utrans_openU(id.getBuffer(), id.length(), UTRANS_FORWARD, nullptr, 0, nullptr, errorCode));
         if(!errorCode.errDataIfFailureAndReset("utrans_openU()")) {
-            trans.adoptInstead(NULL);
+            trans.adoptInstead(nullptr);
         }
     }
 #endif /* !UCONFIG_NO_TRANSLITERATION */
@@ -903,7 +847,7 @@ void LocalPointerTest::TestLocalXyzStdUniquePtr() {
 class EnumSetTest : public IntlTest {
 public:
   EnumSetTest() {}
-  virtual void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=NULL);
+  virtual void runIndexedTest(int32_t index, UBool exec, const char *&name, char *par=nullptr) override;
   void TestEnumSet();
 };
 
@@ -976,4 +920,46 @@ void EnumSetTest::TestEnumSet() {
     assertFalse(WHERE, flags.get(THING1));
     assertFalse(WHERE, flags.get(THING2));
     assertFalse(WHERE, flags.get(THING3));
+}
+
+/** UHashTest **/
+#include "uhash.h"
+#include <string_view>
+
+class UHashTest : public IntlTest {
+public:
+    UHashTest() = default;
+    virtual void runIndexedTest(int32_t index, UBool exec, const char*& name, char* par = nullptr) override;
+    void TestStringView();
+};
+
+static IntlTest* createUHashTest() {
+    return new UHashTest();
+}
+
+void UHashTest::runIndexedTest(int32_t index, UBool exec, const char*& name, char*  /*par*/) {
+    TESTCASE_AUTO_BEGIN;
+    TESTCASE_AUTO(TestStringView);
+    TESTCASE_AUTO_END;
+}
+
+void UHashTest::TestStringView() {
+    IcuTestErrorCode status(*this, "TestStringView");
+    LocalUHashtablePointer table(
+        uhash_open(uhash_hashIStringView, uhash_compareIStringView, nullptr, status));
+    if (status.errIfFailureAndReset("uhash_open") ||
+        !assertTrue("uhash_open", table.isValid())) {
+        return;
+    }
+
+    std::string_view key("aaa");
+    std::string_view value("bbb");
+
+    uhash_put(table.getAlias(), &key, &value, status);
+    if (status.errIfFailureAndReset("uhash_put")) return;
+
+    std::string_view lookup("AAA");
+
+    auto* result = static_cast<std::string_view*>(uhash_get(table.getAlias(), &lookup));
+    assertTrue("uhash_get", result == &value);
 }

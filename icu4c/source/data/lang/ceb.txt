@@ -1,71 +1,91 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 ceb{
     Languages{
+        ar{"Arabic"}
+        ar_001{"Modernong Standard nga Arabic"}
+        bn{"Bangla"}
         ceb{"Cebuano"}
-        de{"Aleman"}
-        de_AT{"Aleman (Austriano)"}
-        de_CH{"Aleman (Swiss Hataas nga Aleman)"}
-        en{"Ingles"}
-        en_AU{"Australyanong Ingles"}
-        en_CA{"Ingles (Kanada)"}
-        en_GB{"Ingles (Britaniko)"}
-        en_US{"Ingles (Amerika)"}
+        de{"German"}
+        de_CH{"Swiss High German"}
+        en{"English"}
+        en_GB{"English (British)"}
+        en_US{"English (America)"}
         es{"Espanyol"}
-        es_419{"Espanyol (Latino Amerikano)"}
-        es_ES{"Espanyol (Uropanhon)"}
-        es_MX{"Espanyol (Mexicano)"}
-        fr{"Pransesa"}
-        fr_CA{"Pranses (Kanada)"}
-        fr_CH{"Pransesa (Swiss)"}
-        it{"Italiano"}
-        ja{"Nipponggo"}
+        es_419{"Spanish (Latin America)"}
+        es_ES{"Spanish (Europe)"}
+        es_MX{"Spanish (Mexico)"}
+        fr{"French"}
+        fr_CA{"French (Canada)"}
+        fr_CH{"French (Switzerland)"}
+        hi{"Hindi"}
+        id{"Indonesian"}
+        it{"Italian"}
+        ja{"Japanese"}
+        ko{"Korean"}
+        nl{"Dutch"}
+        nl_BE{"Flemish"}
+        pl{"Polish"}
         pt{"Portuguese"}
-        pt_BR{"Portuguese (Brazilyano)"}
-        pt_PT{"Portuguese (Uropanhon)"}
-        ru{"Ruso"}
-        und{"Wala Mailhing Pinulongan"}
-        zh{"Intsik"}
-        zh_Hans{"Pinasimpleng Intsik"}
-        zh_Hant{"Tradisyonal Intsik"}
+        ru{"Russian"}
+        th{"Thai"}
+        tr{"Turkish"}
+        und{"Wala mailhi nga pinulongan"}
+        zh{"Chinese"}
+        zh_Hans{"Pinasimple nga Chinese"}
+        zh_Hant{"Tradisyonal nga Chinese"}
+    }
+    Languages%long{
+        zh_Hans{"Pinasimple nga Mandarin Chinese"}
+        zh_Hant{"Tradisyonal nga Mandarin Chinese"}
+    }
+    Languages%menu{
+        zh{"Chinese, Mandarin"}
     }
     Languages%short{
-        en_GB{"Ingles (Britaniko)"}
-        en_US{"Ingles (Amerika)"}
+        en_GB{"English (UK)"}
+        en_US{"English (US)"}
+    }
+    Languages%variant{
+        hi_Latn{"Hinglish"}
     }
     Scripts{
-        Arab{"Arabo"}
-        Cyrl{"Sirilisko"}
+        Arab{"Arabic"}
+        Cyrl{"Cyrillic"}
         Hans{"Pinasimple"}
         Hant{"Tradisyonal"}
+        Jpan{"Japanese"}
+        Kore{"Korean"}
         Latn{"Latin"}
-        Zxxx{"Dili-sinulat"}
-        Zzzz{"Wala Mailihing Alpabeto"}
+        Zxxx{"Dili Sinulat"}
+        Zzzz{"Wala Mailhing Script"}
     }
     Scripts%stand-alone{
-        Hans{"Pinasimpleng Han"}
+        Hans{"Pinasimple nga Han"}
         Hant{"Tradisyonal nga Han"}
     }
     Types{
         calendar{
             gregorian{"Gregorian nga Kalendaryo"}
+            iso8601{"Gregorian nga Kalendaryo (Tuig Una)"}
+        }
+        calendar%core{
+            gregorian{"Gregorian"}
         }
         collation{
-            standard{"Standard nga Paagi sa Pagpihig"}
+            standard{"Standard nga Paagi sa Paghan-ay"}
+        }
+        collation%core{
+            standard{"Standard"}
         }
         numbers{
-            latn{"Kasadpanhong mga Digit"}
+            latn{"Mga Western Digit"}
         }
     }
-    Version{"2.1.49.33"}
     codePatterns{
         language{"Pinulongan: {0}"}
-        script{"Alpabeto {0}"}
-        territory{"Rehiyon {0}"}
-    }
-    localeDisplayPattern{
-        keyTypePattern{"{0}: {1}"}
-        pattern{"{0} ({1})"}
-        separator{"{0}, {1}"}
+        script{"Script: {0}"}
+        territory{"Rehiyon: {0}"}
     }
 }

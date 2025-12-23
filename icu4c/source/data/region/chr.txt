@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 chr{
     Countries{
         001{"ᎡᎶᎯ"}
@@ -50,7 +51,7 @@ chr{
         AW{"ᎠᎷᏆ"}
         AX{"ᎣᎴᏅᏓ ᏚᎦᏚᏛᎢ"}
         AZ{"ᎠᏎᏆᏣᏂ"}
-        BA{"ᏉᏏᏂᎠ & ᎲᏤᎪᏫ"}
+        BA{"ᏉᏏᏂᎠ & ᎲᏤᎪᏫᎾ"}
         BB{"ᏆᏇᏙᏍ"}
         BD{"ᏆᏂᎦᎵᏕᏍ"}
         BE{"ᏇᎵᏥᎥᎻ"}
@@ -84,6 +85,7 @@ chr{
         CN{"ᏓᎶᏂᎨᏍᏛ"}
         CO{"ᎪᎸᎻᏈᎢᎠ"}
         CP{"ᎦᏂᏴᏔᏅᎣᏓᎸ ᎤᎦᏚᏛᎢ"}
+        CQ{"ᏌᎬ"}
         CR{"ᎪᏍᏓ ᎵᎧ"}
         CU{"ᎫᏆ"}
         CV{"ᎢᎬᎾᏕᎾ ᎢᏤᏳᏍᏗ"}
@@ -183,7 +185,7 @@ chr{
         MF{"ᎤᏓᏅᏘ ᏡᏡ"}
         MG{"ᎹᏓᎦᏍᎧᎵ"}
         MH{"ᎹᏌᎵ ᏚᎦᏚᏛᎢ"}
-        MK{"ᎹᏎᏙᏂᏯ"}
+        MK{"ᏧᏴᏜ ᎹᏎᏙᏂᏯ"}
         ML{"ᎹᎵ"}
         MM{"ᎹᏯᎹᎵ (ᏇᎵᎹ)"}
         MN{"ᎹᏂᎪᎵᎠ"}
@@ -298,7 +300,6 @@ chr{
         ZZ{"ᏄᏬᎵᏍᏛᎾ ᎤᏔᏂᏗᎦᏙᎯ"}
     }
     Countries%short{
-        GB{"UK"}
         HK{"ᎰᏂᎩ ᎪᏂᎩ"}
         MO{"ᎹᎧᎣ"}
         PS{"ᏆᎴᏍᏗᏂ"}
@@ -310,9 +311,9 @@ chr{
         CI{"ᎤᏁᎬ ᎪᎳ ᎠᎹᏳᎶᏗ"}
         CZ{"ᏤᎩ ᏍᎦᏚᎩ"}
         FK{"ᏩᎩ ᏚᎦᏚᏛᎢ (ᎢᏍᎳᏍ ᎹᎸᏫᎾᏍ)"}
-        MK{"ᎹᏎᏙᏂᏯ (FYROM)"}
+        NZ{"ᎠᏖᎠᏉᎠ ᎢᏤ ᏏᎢᎴᏂᏗ"}
         SZ{"ᎠᏂᏍᏩᏏᎢ"}
         TL{"ᏗᎧᎸᎬᎢ ᏘᎼᎵ"}
+        TR{"ᎬᎩᏰ"}
     }
-    Version{"2.1.48.17"}
 }

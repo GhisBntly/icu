@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 az{
     Countries{
         001{"Dünya"}
@@ -84,6 +85,7 @@ az{
         CN{"Çin"}
         CO{"Kolumbiya"}
         CP{"Klipperton adası"}
+        CQ{"sark (ingilis dili) dialekti"}
         CR{"Kosta Rika"}
         CU{"Kuba"}
         CV{"Kabo-Verde"}
@@ -133,7 +135,7 @@ az{
         GU{"Quam"}
         GW{"Qvineya-Bisau"}
         GY{"Qayana"}
-        HK{"Honq Konq Xüsusi İnzibati Ərazi Çin"}
+        HK{"Honq Konq Xüsusi İnzibati Rayonu Çin"}
         HM{"Herd və Makdonald adaları"}
         HN{"Honduras"}
         HR{"Xorvatiya"}
@@ -183,11 +185,11 @@ az{
         MF{"Sent Martin"}
         MG{"Madaqaskar"}
         MH{"Marşal adaları"}
-        MK{"Makedoniya"}
+        MK{"Şimali Makedoniya"}
         ML{"Mali"}
         MM{"Myanma"}
         MN{"Monqolustan"}
-        MO{"Makao Xüsusi İnzibati Ərazi Çin"}
+        MO{"Makao XİR Çin"}
         MP{"Şimali Marian adaları"}
         MQ{"Martinik"}
         MR{"Mavritaniya"}
@@ -297,6 +299,9 @@ az{
         ZW{"Zimbabve"}
         ZZ{"Naməlum Region"}
     }
+    Countries%chagos{
+        IO{"Çaqos arxipelaqı"}
+    }
     Countries%short{
         GB{"BK"}
         HK{"Honq Konq"}
@@ -311,9 +316,7 @@ az{
         CI{"Fil Dişi Sahili"}
         CZ{"Çex Respublikası"}
         FK{"Folklend adaları (Malvin adaları)"}
-        MK{"Makedoniya (KYRM)"}
+        NZ{"Aotearoa Yeni Zelandiya"}
         SZ{"Svazilend"}
-        TL{"Doğu Timor"}
     }
-    Version{"2.1.48.17"}
 }

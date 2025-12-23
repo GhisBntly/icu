@@ -1,4 +1,8 @@
+Double Conversion
+========
 https://github.com/google/double-conversion
+
+[![OpenSSF Scorecard](https://api.securityscorecards.dev/projects/github.com/google/double-conversion/badge)](https://securityscorecards.dev/viewer/?uri=github.com/google/double-conversion)
 
 This project (double-conversion) provides binary-decimal and decimal-binary
 routines for IEEE doubles.
@@ -7,8 +11,9 @@ The library consists of efficient conversion routines that have been extracted
 from the V8 JavaScript engine. The code has been refactored and improved so that
 it can be used more easily in other projects.
 
-There is extensive documentation in `double-conversion/double-conversion.h`. Other 
-examples can be found in `test/cctest/test-conversions.cc`.
+There is extensive documentation in `double-conversion/string-to-double.h` and
+`double-conversion/double-to-string.h`. Other examples can be found in
+`test/cctest/test-conversions.cc`.
 
 
 Building
@@ -48,7 +53,7 @@ Use `-DBUILD_TESTING=ON` to build the test executable.
 
     cmake . -DBUILD_TESTING=ON
     make
-    test/cctest/cctest --list | tr -d '<' | xargs test/cctest/cctest
+    test/cctest/cctest
 
 [0]: http://www.scons.org/
 [1]: https://cmake.org/

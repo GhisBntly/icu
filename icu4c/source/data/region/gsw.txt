@@ -1,5 +1,6 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 gsw{
     Countries{
         001{"Wält"}
@@ -136,7 +137,6 @@ gsw{
         IL{"Israel"}
         IM{"Insle vo Män"}
         IN{"Indie"}
-        IO{"Britischs Territoorium im Indische Oozean"}
         IQ{"Iraak"}
         IR{"Iraan"}
         IS{"Iisland"}
@@ -174,7 +174,6 @@ gsw{
         MF{"St. Martin"}
         MG{"Madagaschkar"}
         MH{"Marshallinsle"}
-        MK{"Mazedoonie"}
         ML{"Maali"}
         MM{"Myanmar (Burma)"}
         MN{"Mongolei"}
@@ -285,8 +284,4 @@ gsw{
         HK{"Hongkong"}
         MO{"Macao"}
     }
-    Countries%variant{
-        MK{"Mazedoonie (EJRM)"}
-    }
-    Version{"2.1.47.82"}
 }

@@ -1,7 +1,7 @@
 ﻿// © 2016 and later: Unicode, Inc. and others.
-// License & terms of use: http://www.unicode.org/copyright.html#License
+// License & terms of use: http://www.unicode.org/copyright.html
+// Generated using tools/cldr/cldr-to-icu/
 yue{
-    Version{"2.1.48.42"}
     zoneStrings{
         "Africa:Abidjan"{
             ec{"阿比讓"}
@@ -258,6 +258,9 @@ yue{
         "America:Chihuahua"{
             ec{"奇華華"}
         }
+        "America:Ciudad_Juarez"{
+            ec{"華雷斯城"}
+        }
         "America:Coral_Harbour"{
             ec{"阿蒂科肯"}
         }
@@ -266,6 +269,9 @@ yue{
         }
         "America:Costa_Rica"{
             ec{"哥斯大黎加"}
+        }
+        "America:Coyhaique"{
+            ec{"科伊艾克"}
         }
         "America:Creston"{
             ec{"克雷斯頓"}
@@ -462,9 +468,6 @@ yue{
         "America:New_York"{
             ec{"紐約"}
         }
-        "America:Nipigon"{
-            ec{"尼皮岡"}
-        }
         "America:Nome"{
             ec{"諾姆"}
         }
@@ -485,9 +488,6 @@ yue{
         }
         "America:Panama"{
             ec{"巴拿馬"}
-        }
-        "America:Pangnirtung"{
-            ec{"潘尼爾東"}
         }
         "America:Paramaribo"{
             ec{"巴拉馬利波"}
@@ -510,9 +510,6 @@ yue{
         "America:Punta_Arenas"{
             ec{"蓬塔阿雷納斯"}
         }
-        "America:Rainy_River"{
-            ec{"雨河鎮"}
-        }
         "America:Rankin_Inlet"{
             ec{"蘭今灣"}
         }
@@ -527,9 +524,6 @@ yue{
         }
         "America:Rio_Branco"{
             ec{"里約布蘭"}
-        }
-        "America:Santa_Isabel"{
-            ec{"聖伊薩貝爾"}
         }
         "America:Santarem"{
             ec{"聖塔倫"}
@@ -576,9 +570,6 @@ yue{
         "America:Thule"{
             ec{"杜里"}
         }
-        "America:Thunder_Bay"{
-            ec{"珊德灣"}
-        }
         "America:Tijuana"{
             ec{"提華納"}
         }
@@ -599,9 +590,6 @@ yue{
         }
         "America:Yakutat"{
             ec{"雅庫塔"}
-        }
-        "America:Yellowknife"{
-            ec{"耶洛奈夫"}
         }
         "Antarctica:Casey"{
             ec{"凱西"}
@@ -692,9 +680,6 @@ yue{
         }
         "Asia:Chita"{
             ec{"赤塔"}
-        }
-        "Asia:Choibalsan"{
-            ec{"喬巴山"}
         }
         "Asia:Colombo"{
             ec{"可倫坡"}
@@ -810,6 +795,9 @@ yue{
         "Asia:Qatar"{
             ec{"卡達"}
         }
+        "Asia:Qostanay"{
+            ec{"科斯塔奈"}
+        }
         "Asia:Qyzylorda"{
             ec{"克孜勒奧爾達"}
         }
@@ -923,9 +911,6 @@ yue{
         }
         "Australia:Broken_Hill"{
             ec{"布羅肯希爾"}
-        }
-        "Australia:Currie"{
-            ec{"克黎"}
         }
         "Australia:Darwin"{
             ec{"達爾文"}
@@ -1109,9 +1094,6 @@ yue{
         "Europe:Ulyanovsk"{
             ec{"烏里揚諾夫斯克"}
         }
-        "Europe:Uzhgorod"{
-            ec{"烏茲哥洛"}
-        }
         "Europe:Vaduz"{
             ec{"瓦都茲"}
         }
@@ -1132,9 +1114,6 @@ yue{
         }
         "Europe:Zagreb"{
             ec{"札格瑞布"}
-        }
-        "Europe:Zaporozhye"{
-            ec{"札波羅結"}
         }
         "Europe:Zurich"{
             ec{"蘇黎世"}
@@ -1191,7 +1170,7 @@ yue{
             ec{"埃法特"}
         }
         "Pacific:Enderbury"{
-            ec{"恩得伯理島"}
+            ec{"坎頓"}
         }
         "Pacific:Fakaofo"{
             ec{"法考福"}
@@ -1216,9 +1195,6 @@ yue{
         }
         "Pacific:Honolulu"{
             ec{"檀香山"}
-        }
-        "Pacific:Johnston"{
-            ec{"強斯頓"}
         }
         "Pacific:Kiritimati"{
             ec{"基里地馬地島"}
@@ -1307,9 +1283,7 @@ yue{
             ls{"南非標準時間"}
         }
         "meta:Africa_Western"{
-            ld{"西非夏令時間"}
-            lg{"西非時間"}
-            ls{"西非標準時間"}
+            ls{"西非時間"}
         }
         "meta:Alaska"{
             ld{"阿拉斯加夏令時間"}
@@ -1466,11 +1440,6 @@ yue{
             lg{"中國時間"}
             ls{"中國標準時間"}
         }
-        "meta:Choibalsan"{
-            ld{"喬巴山夏令時間"}
-            lg{"喬巴山時間"}
-            ls{"喬巴山標準時間"}
-        }
         "meta:Christmas"{
             ls{"聖誕島時間"}
         }
@@ -1579,6 +1548,9 @@ yue{
         "meta:Guyana"{
             ls{"蓋亞那時間"}
         }
+        "meta:Hawaii"{
+            ls{"夏威夷-阿留申標準時間"}
+        }
         "meta:Hawaii_Aleutian"{
             ld{"夏威夷-阿留申夏令時間"}
             lg{"夏威夷-阿留申時間"}
@@ -1637,6 +1609,9 @@ yue{
             lg{"彼得羅巴甫洛夫斯克時間"}
             ls{"彼得羅巴甫洛夫斯克標準時間"}
         }
+        "meta:Kazakhstan"{
+            ls{"哈薩克時間"}
+        }
         "meta:Kazakhstan_Eastern"{
             ls{"東哈薩克時間"}
         }
@@ -1675,9 +1650,6 @@ yue{
             lg{"澳門時間"}
             ls{"澳門標準時間"}
         }
-        "meta:Macquarie"{
-            ls{"麥覺理時間"}
-        }
         "meta:Magadan"{
             ld{"馬加丹夏令時間"}
             lg{"馬加丹時間"}
@@ -1702,11 +1674,6 @@ yue{
         }
         "meta:Mawson"{
             ls{"莫森時間"}
-        }
-        "meta:Mexico_Northwest"{
-            ld{"墨西哥西北部夏令時間"}
-            lg{"墨西哥西北部時間"}
-            ls{"墨西哥西北部標準時間"}
         }
         "meta:Mexico_Pacific"{
             ld{"墨西哥太平洋夏令時間"}
@@ -1751,7 +1718,9 @@ yue{
             ls{"紐埃島時間"}
         }
         "meta:Norfolk"{
-            ls{"諾福克島時間"}
+            ld{"諾福克島夏令時間"}
+            lg{"諾福克島時間"}
+            ls{"諾福克島標準時間"}
         }
         "meta:Noronha"{
             ld{"費爾南多 - 迪諾羅尼亞夏令時間"}
@@ -1935,10 +1904,9 @@ yue{
             lg{"葉卡捷琳堡時間"}
             ls{"葉卡捷琳堡標準時間"}
         }
-        fallbackFormat{"{1} ({0})"}
-        gmtFormat{"GMT{0}"}
-        gmtZeroFormat{"GMT"}
-        hourFormat{"+HH:mm;-HH:mm"}
+        "meta:Yukon"{
+            ls{"育空時間"}
+        }
         regionFormat{"{0}時間"}
         regionFormatDaylight{"{0}夏令時間"}
         regionFormatStandard{"{0}標準時間"}

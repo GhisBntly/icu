@@ -40,18 +40,17 @@ NamePrepTransform* NamePrepTransform::createInstance(UParseError& parseError, UE
     NamePrepTransform* transform = new NamePrepTransform(parseError, status);
     if(U_FAILURE(status)){
         delete transform;
-        return NULL;
+        return nullptr;
     }
     return transform;
 }
 
 //constructor
 NamePrepTransform::NamePrepTransform(UParseError& parseError, UErrorCode& status)
-: unassigned(), prohibited(), labelSeparatorSet(){
+    : mapping(nullptr), unassigned(), prohibited(), labelSeparatorSet(), bundle(nullptr) {
         
-    mapping = NULL;
-    bundle = NULL;
-
+    LocalPointer<Transliterator> lmapping;
+    LocalUResourceBundlePointer   lbundle;
 
     const char* testDataName = IntlTest::loadTestData(status);
     
@@ -59,31 +58,31 @@ NamePrepTransform::NamePrepTransform(UParseError& parseError, UErrorCode& status
         return;
     }
     
-    bundle = ures_openDirect(testDataName,"idna_rules",&status);
+    lbundle.adoptInstead(ures_openDirect(testDataName,"idna_rules",&status));
     
-    if(bundle != NULL && U_SUCCESS(status)){
+    if(lbundle.isValid() && U_SUCCESS(status)){
         // create the mapping transliterator
         int32_t ruleLen = 0;
-        const UChar* ruleUChar = ures_getStringByKey(bundle, "MapNFKC",&ruleLen, &status);
+        const char16_t* ruleUChar = ures_getStringByKey(lbundle.getAlias(), "MapNFKC",&ruleLen, &status);
         int32_t mapRuleLen = 0;
-        const UChar *mapRuleUChar = ures_getStringByKey(bundle, "MapNoNormalization", &mapRuleLen, &status);
+        const char16_t *mapRuleUChar = ures_getStringByKey(lbundle.getAlias(), "MapNoNormalization", &mapRuleLen, &status);
         UnicodeString rule(mapRuleUChar, mapRuleLen);
         rule.append(ruleUChar, ruleLen);
 
-        mapping = Transliterator::createFromRules(UnicodeString("NamePrepTransform", ""), rule,
-                                                   UTRANS_FORWARD, parseError,status);
+        lmapping.adoptInstead( Transliterator::createFromRules(UnicodeString("NamePrepTransform", ""), rule,
+                                                   UTRANS_FORWARD, parseError,status));
         if(U_FAILURE(status)) {
-          return;
+            return;
         }
 
         //create the unassigned set
         int32_t patternLen =0;
-        const UChar* pattern = ures_getStringByKey(bundle,"UnassignedSet",&patternLen, &status);
+        const char16_t* pattern = ures_getStringByKey(lbundle.getAlias(),"UnassignedSet",&patternLen, &status);
         unassigned.applyPattern(UnicodeString(pattern, patternLen), status);
 
         //create prohibited set
         patternLen=0;
-        pattern =  ures_getStringByKey(bundle,"ProhibitedSet",&patternLen, &status);
+        pattern =  ures_getStringByKey(lbundle.getAlias(),"ProhibitedSet",&patternLen, &status);
         UnicodeString test(pattern,patternLen);
         prohibited.applyPattern(test,status);
 #ifdef NPTRANS_DEBUG
@@ -92,11 +91,11 @@ NamePrepTransform::NamePrepTransform(UParseError& parseError, UErrorCode& status
         }
 
         if(U_SUCCESS(status)){
-            if(prohibited.contains((UChar) 0x644)){
+            if(prohibited.contains((char16_t) 0x644)){
                 printf("The string contains 0x644 ... !!\n");
             }
             UnicodeString temp;
-            prohibited.toPattern(temp,TRUE);
+            prohibited.toPattern(temp,true);
 
             for(int32_t i=0;i<temp.length();i++){
                 printf("%c", (char)temp.charAt(i));
@@ -107,39 +106,37 @@ NamePrepTransform::NamePrepTransform(UParseError& parseError, UErrorCode& status
         
         //create label separator set
         patternLen=0;
-        pattern =  ures_getStringByKey(bundle,"LabelSeparatorSet",&patternLen, &status);
+        pattern =  ures_getStringByKey(lbundle.getAlias(), "LabelSeparatorSet", &patternLen, &status);
         labelSeparatorSet.applyPattern(UnicodeString(pattern,patternLen),status);
     }
 
-    if(U_SUCCESS(status) && 
-        (mapping == NULL)
-      ){
+    if(U_SUCCESS(status) && (lmapping.isNull())) {
         status = U_MEMORY_ALLOCATION_ERROR;
-        delete mapping;
-        ures_close(bundle);
-        mapping = NULL;
-        bundle = NULL;
     }
-        
+    if (U_FAILURE(status)) {
+        return;
+    }
+    mapping = lmapping.orphan();
+    bundle  = lbundle.orphan();
 }
 
 
 UBool NamePrepTransform::isProhibited(UChar32 ch){ 
-    return (UBool)(ch != ASCII_SPACE); 
+    return ch != ASCII_SPACE;
 }
 
 NamePrepTransform::~NamePrepTransform(){
     delete mapping;
-    mapping = NULL;
+    mapping = nullptr;
     
     //close the bundle
     ures_close(bundle);
-    bundle = NULL;
+    bundle = nullptr;
 }
 
 
-int32_t NamePrepTransform::map(const UChar* src, int32_t srcLength, 
-                        UChar* dest, int32_t destCapacity, 
+int32_t NamePrepTransform::map(const char16_t* src, int32_t srcLength,
+                        char16_t* dest, int32_t destCapacity,
                         UBool allowUnassigned,
                         UParseError* /*parseError*/,
                         UErrorCode& status ){
@@ -148,7 +145,7 @@ int32_t NamePrepTransform::map(const UChar* src, int32_t srcLength,
         return 0;
     }
     //check arguments
-    if(src==NULL || srcLength<-1 || (dest==NULL && destCapacity!=0)) {
+    if(src==nullptr || srcLength<-1 || (dest==nullptr && destCapacity!=0)) {
         status=U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
@@ -158,10 +155,10 @@ int32_t NamePrepTransform::map(const UChar* src, int32_t srcLength,
     // transliteration also performs NFKC
     mapping->transliterate(rsource);
     
-    const UChar* buffer = rsource.getBuffer();
+    const char16_t* buffer = rsource.getBuffer();
     int32_t bufLen = rsource.length();
     // check if unassigned
-    if(allowUnassigned == FALSE){
+    if(allowUnassigned == false){
         int32_t bufIndex=0;
         UChar32 ch =0 ;
         for(;bufIndex<bufLen;){
@@ -183,8 +180,8 @@ int32_t NamePrepTransform::map(const UChar* src, int32_t srcLength,
 
 #define MAX_BUFFER_SIZE 300
 
-int32_t NamePrepTransform::process( const UChar* src, int32_t srcLength, 
-                                    UChar* dest, int32_t destCapacity, 
+int32_t NamePrepTransform::process( const char16_t* src, int32_t srcLength,
+                                    char16_t* dest, int32_t destCapacity,
                                     UBool allowUnassigned,
                                     UParseError* parseError,
                                     UErrorCode& status ){
@@ -194,18 +191,18 @@ int32_t NamePrepTransform::process( const UChar* src, int32_t srcLength,
     }
     
     //check arguments
-    if(src==NULL || srcLength<-1 || (dest==NULL && destCapacity!=0)) {
+    if(src==nullptr || srcLength<-1 || (dest==nullptr && destCapacity!=0)) {
         status=U_ILLEGAL_ARGUMENT_ERROR;
         return 0;
     }
 
     UnicodeString b1String;
-    UChar *b1 = b1String.getBuffer(MAX_BUFFER_SIZE);
+    char16_t *b1 = b1String.getBuffer(MAX_BUFFER_SIZE);
     int32_t b1Len;
 
     int32_t b1Index = 0;
     UCharDirection direction=U_CHAR_DIRECTION_COUNT, firstCharDir=U_CHAR_DIRECTION_COUNT;
-    UBool leftToRight=FALSE, rightToLeft=FALSE;
+    UBool leftToRight=false, rightToLeft=false;
 
     b1Len = map(src, srcLength, b1, b1String.getCapacity(), allowUnassigned, parseError, status);
     b1String.releaseBuffer(b1Len);
@@ -242,27 +239,27 @@ int32_t NamePrepTransform::process( const UChar* src, int32_t srcLength,
             firstCharDir = direction;
         }
         if(direction == U_LEFT_TO_RIGHT){
-            leftToRight = TRUE;
+            leftToRight = true;
         }
         if(direction == U_RIGHT_TO_LEFT || direction == U_RIGHT_TO_LEFT_ARABIC){
-            rightToLeft = TRUE;
+            rightToLeft = true;
         }
     }       
     
     // satisfy 2
-    if( leftToRight == TRUE && rightToLeft == TRUE){
+    if( leftToRight == true && rightToLeft == true){
         status = U_IDNA_CHECK_BIDI_ERROR;
         b1Len = 0;
         goto CLEANUP;
     }
 
     //satisfy 3
-    if( rightToLeft == TRUE && 
+    if( rightToLeft == true && 
         !((firstCharDir == U_RIGHT_TO_LEFT || firstCharDir == U_RIGHT_TO_LEFT_ARABIC) &&
           (direction == U_RIGHT_TO_LEFT || direction == U_RIGHT_TO_LEFT_ARABIC))
        ){
         status = U_IDNA_CHECK_BIDI_ERROR;
-        return FALSE;
+        return false;
     }
 
     if(b1Len <= destCapacity){
@@ -276,7 +273,7 @@ CLEANUP:
 UBool NamePrepTransform::isLabelSeparator(UChar32 ch, UErrorCode& status){
     // check error status
     if(U_FAILURE(status)){
-        return FALSE;
+        return false;
     }
 
     return labelSeparatorSet.contains(ch);

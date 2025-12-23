@@ -1,5 +1,5 @@
 # Copyright (C) 2018 and later: Unicode, Inc. and others.
-# License & terms of use: http://www.unicode.org/copyright.html 
+# License & terms of use: http://www.unicode.org/copyright.html
 # Author: shane@unicode.org
 
 [[source]]
@@ -12,6 +12,8 @@ python_version = "3"
 
 [packages]
 gitpython = "*"
-jira = "*"
+jira = "3.10.5"
 
 [dev-packages]
+pytest = "*"
+grip = "*"
