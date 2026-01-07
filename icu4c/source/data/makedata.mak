@@ -312,7 +312,7 @@ $(COREDATA_TS):
 		--tool_cfg "$(CFGTOOLS)" \
 		--out_dir "$(ICUBLD_PKG)" \
 		--tmp_dir "$(ICUTMP)" \
-		--filter_file "$(ICU_DATA_FILTER_FILE)" \
+		--filter_file "E:\\icu\\icu4c\\Filters\\English.json" \
 		$(ICU_DATA_BUILD_VERBOSE) \
 		$(ICU_DATA_BUILDTOOL_OPTS)
 	@echo "timestamp" > $(COREDATA_TS)
